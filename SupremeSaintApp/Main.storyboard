@@ -13,6 +13,7 @@
     <customFonts key="customFonts">
         <array key="Courier.ttc">
             <string>Courier</string>
+            <string>Courier-Bold</string>
         </array>
         <array key="CourierNew.ttf">
             <string>CourierNewPSMT</string>
@@ -558,14 +559,31 @@
                                 <color key="textColor" red="1" green="0.037429042760000003" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="f7Z-FG-ONr">
+                                <rect key="frame" x="137" y="435" width="100" height="50"/>
+                                <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="EMw-1C-xbj"/>
+                                    <constraint firstAttribute="width" constant="100" id="bGY-oD-TWZ"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Courier-Bold" family="Courier" pointSize="17"/>
+                                <state key="normal" title="Buy">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="btn_buy:" destination="sS5-zC-Jjw" eventType="touchUpInside" id="pNz-3k-Dh4"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="FJa-eK-jpZ" firstAttribute="top" secondItem="5Rh-cc-5kB" secondAttribute="top" constant="22" id="2Pw-n0-NQw"/>
+                            <constraint firstItem="f7Z-FG-ONr" firstAttribute="centerX" secondItem="6Yy-kP-BMs" secondAttribute="centerX" id="AhQ-hL-E9y"/>
                             <constraint firstItem="5Rh-cc-5kB" firstAttribute="trailing" secondItem="FJa-eK-jpZ" secondAttribute="trailing" constant="20" id="Hdc-5I-UNa"/>
                             <constraint firstItem="K5p-4B-dac" firstAttribute="top" secondItem="FJa-eK-jpZ" secondAttribute="bottom" constant="42" id="NWU-cs-Ll6"/>
                             <constraint firstItem="K5p-4B-dac" firstAttribute="centerX" secondItem="6Yy-kP-BMs" secondAttribute="centerX" id="j8g-70-au1"/>
                             <constraint firstItem="FJa-eK-jpZ" firstAttribute="leading" secondItem="5Rh-cc-5kB" secondAttribute="leading" constant="20" id="kxL-7D-BfU"/>
+                            <constraint firstItem="f7Z-FG-ONr" firstAttribute="top" secondItem="K5p-4B-dac" secondAttribute="bottom" constant="40" id="xvA-bx-Lzd"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="5Rh-cc-5kB"/>
                     </view>
@@ -576,7 +594,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YdX-rU-fif" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2791" y="-310"/>
+            <point key="canvasLocation" x="-2791.1999999999998" y="-310.79460269865069"/>
         </scene>
         <!--Slide Page View Controller-->
         <scene sceneID="W6z-0c-XjH">

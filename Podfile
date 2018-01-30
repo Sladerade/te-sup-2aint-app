@@ -11,7 +11,8 @@ target 'SupremeSaintApp' do
     pod 'Firebase/Core'
     pod ‘Firebase/Database’
     pod ‘Kingfisher’
-
+    pod ‘SwiftyJSON’
+    pod ‘Toaster’
 
 
   target 'SupremeSaintAppTests' do

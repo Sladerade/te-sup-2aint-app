@@ -28,6 +28,8 @@ PODS:
     - nanopb/encode (= 0.3.8)
   - nanopb/decode (0.3.8)
   - nanopb/encode (0.3.8)
+  - SwiftyJSON (4.0.0)
+  - Toaster (2.1.1)
   - TwitterCore (3.1.0)
   - TwitterKit (3.3.0):
     - TwitterCore (>= 3.1.0)
@@ -36,6 +38,8 @@ DEPENDENCIES:
   - Firebase/Core
   - Firebase/Database
   - Kingfisher
+  - SwiftyJSON
+  - Toaster
   - TwitterKit
 
 SPEC CHECKSUMS:
@@ -48,9 +52,11 @@ SPEC CHECKSUMS:
   Kingfisher: 1f9157d9c02b380cbd0b7cc890161195164eb634
   leveldb-library: 08cba283675b7ed2d99629a4bc5fd052cd2bb6a5
   nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
+  SwiftyJSON: 070dabdcb1beb81b247c65ffa3a79dbbfb3b48aa
+  Toaster: a6c9532de1ded8105e77376f7dffeb2e12b46dbb
   TwitterCore: 644d59e75abccb26cf0a9050d2c4dea0e5412241
   TwitterKit: a2e60ddcedbf54091eac6f27685ca7a87681e1d7
 
-PODFILE CHECKSUM: dab7eb48549360fa937d38695c4045cdeff0dfb0
+PODFILE CHECKSUM: 9dcb24b2e83b662510a7267fe5b83035fafdadab
 
 COCOAPODS: 1.3.1
