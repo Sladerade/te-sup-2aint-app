@@ -1,8 +1,6 @@
-
-
 import UIKit
 
-class HomeVC: TabBarViewControllerPage {
+class HomeVC: TabBarViewControllerPage, UIScrollViewDelegate {
     
     private let DROPLIST_COLOM_COUNT = 4
     private let THROWBACL_COLOM_COUNT = 4
@@ -20,12 +18,14 @@ class HomeVC: TabBarViewControllerPage {
     
     @IBOutlet weak var scrollView: UIScrollView!
     
+    @IBOutlet weak var loader: UIActivityIndicatorView!
+    
     @IBOutlet weak var throwbacksMessageLabel: UILabel!
     @IBOutlet weak var dropListMessageLabel: UILabel!
     @IBOutlet weak var versionLabel: UILabel!
     
-   lazy var throwBackDataSource = ThrowBackTableController(parentVC: self)
-   lazy var dropListDataSource = DropListCollectionController(parentVC: self)
+    lazy var throwBackDataSource = ThrowBackTableController(parentVC: self)
+    lazy var dropListDataSource = DropListCollectionController(parentVC: self)
     
     private var isBannerShowed = false
     private var slidePageViewController:SlidePageViewController? {
@@ -35,10 +35,12 @@ class HomeVC: TabBarViewControllerPage {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        loader.isHidden = true
+        
         throwBacksCollectionView.register(UINib(nibName:"FeedCollectionVCell",bundle:nil), forCellWithReuseIdentifier: "FeedCollectionVCell")
         
-         dropListCollectionView.register(UINib(nibName:"FeedCollectionVCell",bundle:nil), forCellWithReuseIdentifier: "FeedCollectionVCell")
-        
+        dropListCollectionView.register(UINib(nibName:"FeedCollectionVCell",bundle:nil), forCellWithReuseIdentifier: "FeedCollectionVCell")
+        scrollView.delegate = self
         throwBacksCollectionView.dataSource = throwBackDataSource
         throwBacksCollectionView.delegate = throwBackDataSource
         dropListCollectionView.dataSource = dropListDataSource
@@ -46,7 +48,7 @@ class HomeVC: TabBarViewControllerPage {
         
         //        let cell = throwBacksCollectionView.dequeueReusableCell(withReuseIdentifier: "FeedCollectionVCell", for: IndexPath())
         print("thriw Backs Collectuon View Width:\(throwBacksCollectionView.frame.width)")
-    
+        
         
         FirebaseService.instance.loadFeeds(callback: {(feeds) in
             print(feeds)
@@ -77,13 +79,48 @@ class HomeVC: TabBarViewControllerPage {
                 self.versionLabel.text = version
             }
         }
-
+        
     }
     
+    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>){
+        loader.isHidden = false
+        loader.startAnimating()
+        if targetContentOffset.pointee.y == 0.0 {
+            FirebaseService.instance.loadFeeds(callback: {(feeds) in
+                self.throwBackDataSource.feedList = feeds.filter({ $0.throwBack })
+                self.dropListDataSource.feedList = feeds.filter({$0.droplist})
+                self.throwBacksCollectionView.reloadData()
+                self.dropListCollectionView.reloadData()
+                self.refereshThrowBackCollectionSize()
+                
+            })
 
+            FirebaseService.instance.loadSlides(callback: {
+                (slides) in
+                self.slidePageViewController?.slides = slides
+            })
 
+            FirebaseService.instance.loadHomeMessage { (messages) in
+                if let messages = messages
+                {
+                    self.showBanner(message: messages.bannerMessage)
+                    self.dropListMessageLabel.text = messages.droplistMessage
+                    self.throwbacksMessageLabel.text = messages.throwBackMessage
+                }
+
+            }
+
+            FirebaseService.instance.loadVersion { (version) in
+                if let version = version{
+                    self.versionLabel.text = version
+                }
+            }
+        }
+    }
+    
+    
     override func viewDidLayoutSubviews() {
-
+        
         let cell = Bundle.main.loadNibNamed("FeedCollectionVCell", owner: nil, options: nil)!.first as! UICollectionViewCell
         print("cell width:\(cell.frame.width) height:\(cell.frame.height)")
         
@@ -104,10 +141,10 @@ class HomeVC: TabBarViewControllerPage {
         dropListLayout.itemSize = CGSize(width:dropCellWidth,height:dropCellWidth*cell.frame.height/cell.frame.width)
         dropListLayout.minimumLineSpacing = CGFloat(30)/CGFloat(DROPLIST_COLOM_COUNT-1)
         dropListLayout.minimumInteritemSpacing = CGFloat(30)/CGFloat(DROPLIST_COLOM_COUNT-1) - 1
-
+        
         refereshThrowBackCollectionSize()
         
-
+        
     }
     
     @IBAction func onClickPreviousInDropList(_ sender: Any) {
@@ -130,7 +167,7 @@ class HomeVC: TabBarViewControllerPage {
             return
         }
         
-       let targetPageIndex = currentPageIndex < rowCount/DROPLIST_COLOM_COUNT - 1 ? DROPLIST_COLOM_COUNT * (currentPageIndex + 1) : rowCount - 1
+        let targetPageIndex = currentPageIndex < rowCount/DROPLIST_COLOM_COUNT - 1 ? DROPLIST_COLOM_COUNT * (currentPageIndex + 1) : rowCount - 1
         
         dropListCollectionView.scrollToItem(at: IndexPath.init(row: targetPageIndex, section: 0), at: UICollectionViewScrollPosition.left, animated: true)
     }
@@ -154,16 +191,16 @@ class HomeVC: TabBarViewControllerPage {
         self.bannerTopAnchorConstraint.constant = 0
         UIView.animate(withDuration: 0.5) {
             self.view.layoutIfNeeded()
-
+            
         }
     }
     private func hideBanner()
     {
         self.scrollViewTopConstraint.constant = 0
-       self.bannerTopAnchorConstraint.constant = -self.homeBanner.frame.height
+        self.bannerTopAnchorConstraint.constant = -self.homeBanner.frame.height
         UIView.animate(withDuration: 0.5) {
-           self.view.layoutIfNeeded()
-
+            self.view.layoutIfNeeded()
+            
         }
     }
     
@@ -172,7 +209,7 @@ class HomeVC: TabBarViewControllerPage {
         throwBacksCollectionHeightConstraint.constant = max((throwBacksCollectionView.collectionViewLayout as! UICollectionViewFlowLayout).itemSize.height, throwBacksCollectionView.collectionViewLayout.collectionViewContentSize.height)
     }
     
-
+    
 }
 
 
@@ -207,7 +244,7 @@ extension HomeVC
         public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
             parentVC.tabBarViewController.performSegue(withIdentifier: "FeedGroupPageController", sender: FeedGroupPageController.ViewModel(feeds: feedList, selectedFeed: feedList[indexPath.row]))
         }
-
+        
     }
 }
 

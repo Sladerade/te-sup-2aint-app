@@ -15,6 +15,7 @@ class FeedViewController: UIViewController {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var imageView: UIImageView!
     
+    
     var feed:Feed?
     {
         didSet{

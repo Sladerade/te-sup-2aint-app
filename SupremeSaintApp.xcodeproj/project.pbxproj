@@ -37,6 +37,7 @@
 		8C35A67F200129C300BCE5B2 /* TwitterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C35A67E200129C300BCE5B2 /* TwitterViewController.swift */; };
 		AB6C7F8892AA28A9C29C099C /* Pods_SupremeSaintApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E441FF4F28141978A1D0FB18 /* Pods_SupremeSaintApp.framework */; };
 		B219664D200BCD930096F607 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B219664C200BCD930096F607 /* Main.storyboard */; };
+		F652981A2020A255006FC603 /* ShowItemDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F65298192020A255006FC603 /* ShowItemDetailsViewController.swift */; };
 		F666F56B201274520054D9C9 /* ItemTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F666F56A201274520054D9C9 /* ItemTableCell.swift */; };
 /* End PBXBuildFile section */
 
@@ -100,6 +101,7 @@
 		AEA01F5B6EB5E1F661E27297 /* Pods_SupremeSaintAppUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SupremeSaintAppUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B219664C200BCD930096F607 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		E441FF4F28141978A1D0FB18 /* Pods_SupremeSaintApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SupremeSaintApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F65298192020A255006FC603 /* ShowItemDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowItemDetailsViewController.swift; sourceTree = "<group>"; };
 		F666F56A201274520054D9C9 /* ItemTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemTableCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -225,6 +227,7 @@
 				549049362010BA1D006910AF /* FeedGroupPageController.swift */,
 				549049382010BB51006910AF /* FeedViewController.swift */,
 				54AB322A2011C2D9007E7218 /* RootNavigationController.swift */,
+				F65298192020A255006FC603 /* ShowItemDetailsViewController.swift */,
 			);
 			path = SupremeSaintApp;
 			sourceTree = "<group>";
@@ -578,6 +581,7 @@
 				54AB322D2011D2CF007E7218 /* HomeMessages.swift in Sources */,
 				5490492D201087CA006910AF /* Feed.swift in Sources */,
 				5490492A201080ED006910AF /* RemoveFileService.swift in Sources */,
+				F652981A2020A255006FC603 /* ShowItemDetailsViewController.swift in Sources */,
 				8C35A67F200129C300BCE5B2 /* TwitterViewController.swift in Sources */,
 				5490492F20108FD9006910AF /* FirebaseService.swift in Sources */,
 				8C1A5FC9200126C200BE0BD3 /* DroplistVC.swift in Sources */,

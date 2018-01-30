@@ -8,10 +8,17 @@ class ShopVC: TabBarViewControllerPage, UITableViewDataSource, UITableViewDelega
 
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var loader: UIActivityIndicatorView!
+    @IBOutlet weak var segment: UISegmentedControl!
     
     var images = [String]()
     var names = [String]()
     var prices = [String]()
+    var itemIds = [String]()
+    
+    var itemId:String!
+    var imageUrl:String!
+    var itemName:String!
+    
     
     var databaseRef:DatabaseReference!
     
@@ -24,11 +31,19 @@ class ShopVC: TabBarViewControllerPage, UITableViewDataSource, UITableViewDelega
         tableView.rowHeight = 100
         tableView.separatorColor = UIColor.clear
         databaseRef = Database.database().reference()
-        getData()
+        getData(check: "False")
         
         // Do any additional setup after loading the view.
     }
 
+    @IBAction func segmentAction(_ sender: UISegmentedControl) {
+        if segment.selectedSegmentIndex == 0 {
+            getData(check: "False")
+        }
+        else{
+            getData(check: "True")
+        }
+    }
     override func viewWillAppear(_ animated: Bool) {
         
     }
@@ -50,6 +65,7 @@ class ShopVC: TabBarViewControllerPage, UITableViewDataSource, UITableViewDelega
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
         return names.count
     }
     
@@ -62,18 +78,32 @@ class ShopVC: TabBarViewControllerPage, UITableViewDataSource, UITableViewDelega
         return cell
     }
     
-    func getData(){
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        imageUrl = images[indexPath.row]
+        itemName = names[indexPath.row]
+        itemId = itemIds[indexPath.row]
+        performSegue(withIdentifier: "showItemDetails", sender: self)
+    }
+    
+    func getData(check:String){
         loader.isHidden = false
         loader.startAnimating()
-        
+        print(check)
+        images.removeAll()
+        names.removeAll()
+        itemIds.removeAll()
+        prices.removeAll()
+
         databaseRef.child("Catalog").observe(.childAdded, with: { (snapshot) in
             let value = snapshot.value as? NSDictionary
             let Droplist = value?["Droplist"] as? String ?? ""
-            if Droplist == "True"{
+            if Droplist == check{
                 let image = value?["Photos"] as? String ?? ""
                 let name = value?["Name"] as? String ?? ""
                 let priceUS = value?["Price-US"] as? String ?? ""
                 let priceEU = value?["Price-EU"] as? String ?? ""
+                self.itemIds.append(snapshot.key)
                 self.images.append(image)
                 self.names.append(name)
                 self.prices.append("\(priceUS)/\(priceEU)")
@@ -87,6 +117,17 @@ class ShopVC: TabBarViewControllerPage, UITableViewDataSource, UITableViewDelega
             print(Error)
         }
     }
+    
+    
+    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let des = segue.destination as? ShowItemDetailsViewController{
+            des.titleForItem = itemName
+            des.imageUrl =  imageUrl
+            des.itemId = itemId
+        }
+    }
+    
     
 
 }
