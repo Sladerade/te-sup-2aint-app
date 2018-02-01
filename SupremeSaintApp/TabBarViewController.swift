@@ -39,6 +39,7 @@ class TabBarViewController: ViewControllerWithLogo {
         let storyBoard = UIStoryboard(name: "Main", bundle: nil)
         let vc = storyBoard.instantiateViewController(withIdentifier: "NewsVC") as! NewsVC
         vc.tabBarViewController = self
+        
         return vc
     }()
     
