@@ -15,6 +15,7 @@ class FeedViewController: UIViewController {
 
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var priceLabel: UILabel!
     
     @IBOutlet weak var likes: UILabel!
     @IBOutlet weak var disLikes: UILabel!
@@ -38,13 +39,9 @@ class FeedViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         id = Database.database().reference().childByAutoId().key
-        
         updateUIs()
-        
         getAllVotes()
         
-        
-
     }
     
     
@@ -82,6 +79,7 @@ class FeedViewController: UIViewController {
         if let feed = feed
         {
             titleLabel.text = feed.name
+            priceLabel.text = "\(feed.priceUS) / \(feed.priceEU)"
             imageView.downloadImage(from: feed.photoUrl)
         }
     }

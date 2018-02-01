@@ -31,9 +31,14 @@ class HomeVC: TabBarViewControllerPage, UIScrollViewDelegate {
     private var slidePageViewController:SlidePageViewController? {
         return isViewLoaded ? sliderContainer.subviews[0].next as? SlidePageViewController : nil
     }
-    
+    var refresher: UIRefreshControl!
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        refresher = UIRefreshControl()
+        refresher.tintColor = UIColor.red
+        refresher.addTarget(self, action: #selector(HomeVC.populate), for: UIControlEvents.valueChanged)
+        scrollView.addSubview(refresher)
         
         scrollView.delegate = self
         loader.isHidden = true
@@ -82,81 +87,156 @@ class HomeVC: TabBarViewControllerPage, UIScrollViewDelegate {
         }
         
     }
-    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>){
-        let a = scrollView.contentOffset.y
-        if a <= 0{
-            loader.isHidden = false
-            loader.startAnimating()
-            throwBacksCollectionView.register(UINib(nibName:"FeedCollectionVCell",bundle:nil), forCellWithReuseIdentifier: "FeedCollectionVCell")
-            
-            dropListCollectionView.register(UINib(nibName:"FeedCollectionVCell",bundle:nil), forCellWithReuseIdentifier: "FeedCollectionVCell")
-            throwBacksCollectionView.dataSource = throwBackDataSource
-            throwBacksCollectionView.delegate = throwBackDataSource
-            dropListCollectionView.dataSource = dropListDataSource
-            dropListCollectionView.delegate = dropListDataSource
-            
-            //        let cell = throwBacksCollectionView.dequeueReusableCell(withReuseIdentifier: "FeedCollectionVCell", for: IndexPath())
-            print("thriw Backs Collectuon View Width:\(throwBacksCollectionView.frame.width)")
-            
-            
-            FirebaseService.instance.loadFeeds(callback: {(feeds) in
-                print(feeds)
-                self.throwBackDataSource.feedList = feeds.filter({ $0.throwBack })
-                self.dropListDataSource.feedList = feeds.filter({$0.droplist})
-                self.throwBacksCollectionView.reloadData()
-                self.dropListCollectionView.reloadData()
-                self.refereshThrowBackCollectionSize()
-            })
-            
-            FirebaseService.instance.loadSlides(callback: {
-                (slides) in
-                self.slidePageViewController?.slides = slides
-            })
-            
-            FirebaseService.instance.loadHomeMessage { (messages) in
-                if let messages = messages
-                {
-                    self.showBanner(message: messages.bannerMessage)
-                    self.dropListMessageLabel.text = messages.droplistMessage
-                    self.throwbacksMessageLabel.text = messages.throwBackMessage
-                }
-                
+    
+    @objc func populate(){
+        loader.isHidden = false
+        loader.startAnimating()
+        throwBacksCollectionView.register(UINib(nibName:"FeedCollectionVCell",bundle:nil), forCellWithReuseIdentifier: "FeedCollectionVCell")
+        
+        dropListCollectionView.register(UINib(nibName:"FeedCollectionVCell",bundle:nil), forCellWithReuseIdentifier: "FeedCollectionVCell")
+        throwBacksCollectionView.dataSource = throwBackDataSource
+        throwBacksCollectionView.delegate = throwBackDataSource
+        dropListCollectionView.dataSource = dropListDataSource
+        dropListCollectionView.delegate = dropListDataSource
+        
+        //        let cell = throwBacksCollectionView.dequeueReusableCell(withReuseIdentifier: "FeedCollectionVCell", for: IndexPath())
+        print("thriw Backs Collectuon View Width:\(throwBacksCollectionView.frame.width)")
+        
+        
+        FirebaseService.instance.loadFeeds(callback: {(feeds) in
+            print(feeds)
+            self.throwBackDataSource.feedList = feeds.filter({ $0.throwBack })
+            self.dropListDataSource.feedList = feeds.filter({$0.droplist})
+            self.throwBacksCollectionView.reloadData()
+            self.dropListCollectionView.reloadData()
+            self.refereshThrowBackCollectionSize()
+        })
+        
+        FirebaseService.instance.loadSlides(callback: {
+            (slides) in
+            self.slidePageViewController?.slides = slides
+        })
+        
+        FirebaseService.instance.loadHomeMessage { (messages) in
+            if let messages = messages
+            {
+                self.showBanner(message: messages.bannerMessage)
+                self.dropListMessageLabel.text = messages.droplistMessage
+                self.throwbacksMessageLabel.text = messages.throwBackMessage
             }
-            
-            FirebaseService.instance.loadVersion { (version) in
-                if let version = version{
-                    self.versionLabel.text = version
-                }
-            }
-            
-            
-            let cell = Bundle.main.loadNibNamed("FeedCollectionVCell", owner: nil, options: nil)!.first as! UICollectionViewCell
-            print("cell width:\(cell.frame.width) height:\(cell.frame.height)")
-            
-            let throwBackCellWidth = (throwBacksCollectionView.frame.width/CGFloat(THROWBACL_COLOM_COUNT)) - 10
-            
-            let throwLayout = (throwBacksCollectionView.collectionViewLayout as! UICollectionViewFlowLayout)
-            throwLayout.itemSize = CGSize(width:throwBackCellWidth    ,height:throwBackCellWidth * cell.frame.height/cell.frame.width)
-            
-            
-            throwLayout.minimumLineSpacing = CGFloat(40)/CGFloat(THROWBACL_COLOM_COUNT)
-            throwLayout.minimumInteritemSpacing = CGFloat(40)/CGFloat(THROWBACL_COLOM_COUNT) - 1
-            
-            
-            
-            dropListCollectionView.contentInset = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 0)
-            let dropListLayout = (dropListCollectionView.collectionViewLayout as! UICollectionViewFlowLayout)
-            let dropCellWidth = dropListCollectionView.frame.width/CGFloat(DROPLIST_COLOM_COUNT) - 10
-            dropListLayout.itemSize = CGSize(width:dropCellWidth,height:dropCellWidth*cell.frame.height/cell.frame.width)
-            dropListLayout.minimumLineSpacing = CGFloat(30)/CGFloat(DROPLIST_COLOM_COUNT-1)
-            dropListLayout.minimumInteritemSpacing = CGFloat(30)/CGFloat(DROPLIST_COLOM_COUNT-1) - 1
-            
-            refereshThrowBackCollectionSize()
-            
             
         }
-        loader.isHidden = true
+        
+        FirebaseService.instance.loadVersion { (version) in
+            if let version = version{
+                self.versionLabel.text = version
+            }
+        }
+        
+        
+        let cell = Bundle.main.loadNibNamed("FeedCollectionVCell", owner: nil, options: nil)!.first as! UICollectionViewCell
+        print("cell width:\(cell.frame.width) height:\(cell.frame.height)")
+        
+        let throwBackCellWidth = (throwBacksCollectionView.frame.width/CGFloat(THROWBACL_COLOM_COUNT)) - 10
+        
+        let throwLayout = (throwBacksCollectionView.collectionViewLayout as! UICollectionViewFlowLayout)
+        throwLayout.itemSize = CGSize(width:throwBackCellWidth    ,height:throwBackCellWidth * cell.frame.height/cell.frame.width)
+        
+        
+        throwLayout.minimumLineSpacing = CGFloat(40)/CGFloat(THROWBACL_COLOM_COUNT)
+        throwLayout.minimumInteritemSpacing = CGFloat(40)/CGFloat(THROWBACL_COLOM_COUNT) - 1
+        
+        
+        
+        dropListCollectionView.contentInset = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 0)
+        let dropListLayout = (dropListCollectionView.collectionViewLayout as! UICollectionViewFlowLayout)
+        let dropCellWidth = dropListCollectionView.frame.width/CGFloat(DROPLIST_COLOM_COUNT) - 10
+        dropListLayout.itemSize = CGSize(width:dropCellWidth,height:dropCellWidth*cell.frame.height/cell.frame.width)
+        dropListLayout.minimumLineSpacing = CGFloat(30)/CGFloat(DROPLIST_COLOM_COUNT-1)
+        dropListLayout.minimumInteritemSpacing = CGFloat(30)/CGFloat(DROPLIST_COLOM_COUNT-1) - 1
+        
+        refereshThrowBackCollectionSize()
+        
+        
+        
+        refresher.endRefreshing()
     }
+    
+//    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>){
+//        let a = scrollView.contentOffset.y
+//        if a <= 0{
+//            loader.isHidden = false
+//            loader.startAnimating()
+//            throwBacksCollectionView.register(UINib(nibName:"FeedCollectionVCell",bundle:nil), forCellWithReuseIdentifier: "FeedCollectionVCell")
+//
+//            dropListCollectionView.register(UINib(nibName:"FeedCollectionVCell",bundle:nil), forCellWithReuseIdentifier: "FeedCollectionVCell")
+//            throwBacksCollectionView.dataSource = throwBackDataSource
+//            throwBacksCollectionView.delegate = throwBackDataSource
+//            dropListCollectionView.dataSource = dropListDataSource
+//            dropListCollectionView.delegate = dropListDataSource
+//
+//            //        let cell = throwBacksCollectionView.dequeueReusableCell(withReuseIdentifier: "FeedCollectionVCell", for: IndexPath())
+//            print("thriw Backs Collectuon View Width:\(throwBacksCollectionView.frame.width)")
+//
+//
+//            FirebaseService.instance.loadFeeds(callback: {(feeds) in
+//                print(feeds)
+//                self.throwBackDataSource.feedList = feeds.filter({ $0.throwBack })
+//                self.dropListDataSource.feedList = feeds.filter({$0.droplist})
+//                self.throwBacksCollectionView.reloadData()
+//                self.dropListCollectionView.reloadData()
+//                self.refereshThrowBackCollectionSize()
+//            })
+//
+//            FirebaseService.instance.loadSlides(callback: {
+//                (slides) in
+//                self.slidePageViewController?.slides = slides
+//            })
+//
+//            FirebaseService.instance.loadHomeMessage { (messages) in
+//                if let messages = messages
+//                {
+//                    self.showBanner(message: messages.bannerMessage)
+//                    self.dropListMessageLabel.text = messages.droplistMessage
+//                    self.throwbacksMessageLabel.text = messages.throwBackMessage
+//                }
+//
+//            }
+//
+//            FirebaseService.instance.loadVersion { (version) in
+//                if let version = version{
+//                    self.versionLabel.text = version
+//                }
+//            }
+//
+//
+//            let cell = Bundle.main.loadNibNamed("FeedCollectionVCell", owner: nil, options: nil)!.first as! UICollectionViewCell
+//            print("cell width:\(cell.frame.width) height:\(cell.frame.height)")
+//
+//            let throwBackCellWidth = (throwBacksCollectionView.frame.width/CGFloat(THROWBACL_COLOM_COUNT)) - 10
+//
+//            let throwLayout = (throwBacksCollectionView.collectionViewLayout as! UICollectionViewFlowLayout)
+//            throwLayout.itemSize = CGSize(width:throwBackCellWidth    ,height:throwBackCellWidth * cell.frame.height/cell.frame.width)
+//
+//
+//            throwLayout.minimumLineSpacing = CGFloat(40)/CGFloat(THROWBACL_COLOM_COUNT)
+//            throwLayout.minimumInteritemSpacing = CGFloat(40)/CGFloat(THROWBACL_COLOM_COUNT) - 1
+//
+//
+//
+//            dropListCollectionView.contentInset = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 0)
+//            let dropListLayout = (dropListCollectionView.collectionViewLayout as! UICollectionViewFlowLayout)
+//            let dropCellWidth = dropListCollectionView.frame.width/CGFloat(DROPLIST_COLOM_COUNT) - 10
+//            dropListLayout.itemSize = CGSize(width:dropCellWidth,height:dropCellWidth*cell.frame.height/cell.frame.width)
+//            dropListLayout.minimumLineSpacing = CGFloat(30)/CGFloat(DROPLIST_COLOM_COUNT-1)
+//            dropListLayout.minimumInteritemSpacing = CGFloat(30)/CGFloat(DROPLIST_COLOM_COUNT-1) - 1
+//
+//            refereshThrowBackCollectionSize()
+//
+//
+//        }
+//        loader.isHidden = true
+//    }
     
     
     

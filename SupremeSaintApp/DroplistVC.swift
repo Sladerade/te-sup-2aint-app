@@ -18,13 +18,20 @@ class ShopVC: TabBarViewControllerPage, UITableViewDataSource, UITableViewDelega
     var itemId:String!
     var imageUrl:String!
     var itemName:String!
+    var price:String!
     
     var value = 0
+    var refresher: UIRefreshControl!
     
     var databaseRef:DatabaseReference!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        refresher = UIRefreshControl()
+        refresher.tintColor = UIColor.red
+        refresher.addTarget(self, action: #selector(ShopVC.populate), for: UIControlEvents.valueChanged)
+        tableView.addSubview(refresher)
         
         loader.isHidden = true
         tableView.dataSource = self
@@ -86,8 +93,23 @@ class ShopVC: TabBarViewControllerPage, UITableViewDataSource, UITableViewDelega
         imageUrl = images[indexPath.row]
         itemName = names[indexPath.row]
         itemId = itemIds[indexPath.row]
+        price = prices[indexPath.row]
         performSegue(withIdentifier: "showItemDetails", sender: self)
     }
+    
+    
+    @objc func populate(){
+        if value == 0{
+            getData(check: "True")
+        }
+        else{
+            catalog()
+        }
+        refresher.endRefreshing()
+    }
+    
+    
+    
     
     func getData(check:String){
         loader.isHidden = false
@@ -137,10 +159,12 @@ class ShopVC: TabBarViewControllerPage, UITableViewDataSource, UITableViewDelega
             let name = value?["name"] as? String ?? ""
             let priceUS = value?["price_US"] as? String ?? ""
             let priceEU = value?["price_EU"] as? String ?? ""
+            
             self.itemIds.append(snapshot.key)
             self.images.append("http:\(image)")
             self.names.append(name)
             self.prices.append("\(priceUS)/\(priceEU)")
+            
             DispatchQueue.main.async {
                 self.loader.isHidden = true
                 self.loader.stopAnimating()
@@ -160,6 +184,7 @@ class ShopVC: TabBarViewControllerPage, UITableViewDataSource, UITableViewDelega
             des.imageUrl =  imageUrl
             des.itemId = itemId
             des.value = value
+            des.price = price
         }
     }
     

@@ -12,6 +12,7 @@ class NewsVC: TWTRTimelineViewController,TabBarPage {
         
         let client = TWTRAPIClient()
         self.dataSource = TWTRUserTimelineDataSource(screenName: "thesupremesaint", apiClient: client)
+        
 
     }
     

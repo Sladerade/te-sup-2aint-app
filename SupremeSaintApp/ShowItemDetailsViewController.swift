@@ -15,11 +15,13 @@ class ShowItemDetailsViewController: UIViewController {
     
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var priceLabel: UILabel!
     
     var id = ""
     var itemId = ""
     var titleForItem = ""
     var imageUrl = ""
+    var price = ""
     var value = 0
     
     @IBOutlet weak var likes: UILabel!
@@ -43,6 +45,7 @@ class ShowItemDetailsViewController: UIViewController {
     func updateUIs() {
         if titleForItem != ""{
             titleLabel.text = titleForItem
+            priceLabel.text = price
             imageView.downloadImage(from: imageUrl)
             getAllVotes(value: value)
         }
