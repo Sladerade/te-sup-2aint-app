@@ -19,6 +19,7 @@ class ShopVC: TabBarViewControllerPage, UITableViewDataSource, UITableViewDelega
     var imageUrl:String!
     var itemName:String!
     
+    var value = 0
     
     var databaseRef:DatabaseReference!
     
@@ -31,17 +32,19 @@ class ShopVC: TabBarViewControllerPage, UITableViewDataSource, UITableViewDelega
         tableView.rowHeight = 100
         tableView.separatorColor = UIColor.clear
         databaseRef = Database.database().reference()
-        getData(check: "False")
+        getData(check: "True")
         
         // Do any additional setup after loading the view.
     }
 
     @IBAction func segmentAction(_ sender: UISegmentedControl) {
         if segment.selectedSegmentIndex == 0 {
-            getData(check: "False")
+            value = 0
+            getData(check: "True")
         }
         else{
-            getData(check: "True")
+            value = 1
+            catalog()
         }
     }
     override func viewWillAppear(_ animated: Bool) {
@@ -118,6 +121,37 @@ class ShopVC: TabBarViewControllerPage, UITableViewDataSource, UITableViewDelega
         }
     }
     
+    func catalog(){
+        loader.isHidden = false
+        loader.startAnimating()
+        images.removeAll()
+        names.removeAll()
+        itemIds.removeAll()
+        prices.removeAll()
+        
+        databaseRef.child("Old Catalog").observe(.childAdded, with: { (snapshot) in
+            let value = snapshot.value as? NSDictionary
+            let photos = value?["photos"] as? NSArray
+            let image = photos![0] as? String ?? ""
+            
+            let name = value?["name"] as? String ?? ""
+            let priceUS = value?["price_US"] as? String ?? ""
+            let priceEU = value?["price_EU"] as? String ?? ""
+            self.itemIds.append(snapshot.key)
+            self.images.append("http:\(image)")
+            self.names.append(name)
+            self.prices.append("\(priceUS)/\(priceEU)")
+            DispatchQueue.main.async {
+                self.loader.isHidden = true
+                self.loader.stopAnimating()
+                self.tableView.reloadData()
+            }
+        }) { (Error) in
+            print(Error)
+        }
+    }
+    
+    
     
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -125,6 +159,7 @@ class ShopVC: TabBarViewControllerPage, UITableViewDataSource, UITableViewDelega
             des.titleForItem = itemName
             des.imageUrl =  imageUrl
             des.itemId = itemId
+            des.value = value
         }
     }
     
