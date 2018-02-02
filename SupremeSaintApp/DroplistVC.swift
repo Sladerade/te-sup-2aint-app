@@ -106,6 +106,7 @@ class ShopVC: TabBarViewControllerPage, UITableViewDataSource, UITableViewDelega
             cell.itemImage.kf.setImage(with: imageUrl!)
             cell.itemName.text = ""
             cell.itemPrice.text = ""
+            cell.btnNext.isHidden = true
         }
         
         return cell
