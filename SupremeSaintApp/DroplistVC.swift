@@ -182,7 +182,7 @@ class ShopVC: TabBarViewControllerPage, UITableViewDataSource, UITableViewDelega
             let throwback = value?["throwback"] as? Bool ?? false
             let week = value?["week"] as? Int ?? 0
             
-            let model = Feed(id: snapshot.key, description: description, droplist: true, name: name, photoUrl: image, priceEU: priceEU, priceUS: priceUS, season: season, throwBack: throwback, week: week)
+            let model = Feed(id: snapshot.key, description: description, droplist: true, name: name, photoUrl: "http:\(image)", priceEU: priceEU, priceUS: priceUS, season: season, throwBack: throwback, week: week)
             self.feedList.append(model)
             
             DispatchQueue.main.async {

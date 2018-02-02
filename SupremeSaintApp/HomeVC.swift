@@ -32,9 +32,13 @@ class HomeVC: TabBarViewControllerPage, UIScrollViewDelegate {
         return isViewLoaded ? sliderContainer.subviews[0].next as? SlidePageViewController : nil
     }
     var refresher: UIRefreshControl!
+    
+    @IBOutlet weak var myView: UIView!
+    
+    @IBOutlet weak var myViewsHeight: NSLayoutConstraint!
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        self.myView.frame.size.height = 0
         refresher = UIRefreshControl()
         refresher.tintColor = UIColor.red
         refresher.addTarget(self, action: #selector(HomeVC.populate), for: UIControlEvents.valueChanged)
@@ -42,6 +46,7 @@ class HomeVC: TabBarViewControllerPage, UIScrollViewDelegate {
         
         scrollView.delegate = self
         loader.isHidden = true
+        
         
         
         throwBacksCollectionView.register(UINib(nibName:"FeedCollectionVCell",bundle:nil), forCellWithReuseIdentifier: "FeedCollectionVCell")
@@ -89,8 +94,10 @@ class HomeVC: TabBarViewControllerPage, UIScrollViewDelegate {
     }
     
     @objc func populate(){
-        loader.isHidden = false
-        loader.startAnimating()
+        myViewsHeight.constant = 80
+        myView.layoutIfNeeded()
+        
+        
         throwBacksCollectionView.register(UINib(nibName:"FeedCollectionVCell",bundle:nil), forCellWithReuseIdentifier: "FeedCollectionVCell")
         
         dropListCollectionView.register(UINib(nibName:"FeedCollectionVCell",bundle:nil), forCellWithReuseIdentifier: "FeedCollectionVCell")
@@ -157,8 +164,8 @@ class HomeVC: TabBarViewControllerPage, UIScrollViewDelegate {
         
         refereshThrowBackCollectionSize()
         
-        
-        
+        myViewsHeight.constant = 0
+        myView.layoutIfNeeded()
         refresher.endRefreshing()
     }
     
@@ -167,7 +174,6 @@ class HomeVC: TabBarViewControllerPage, UIScrollViewDelegate {
     override func viewDidLayoutSubviews() {
         
         scrollView.delegate = self
-        
         let cell = Bundle.main.loadNibNamed("FeedCollectionVCell", owner: nil, options: nil)!.first as! UICollectionViewCell
         print("cell width:\(cell.frame.width) height:\(cell.frame.height)")
         

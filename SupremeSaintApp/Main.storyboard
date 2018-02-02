@@ -327,9 +327,16 @@
                                                 <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hkJ-Bg-WvJ">
+                                                <rect key="frame" x="0.0" y="0.0" width="375" height="0.0"/>
+                                                <color key="backgroundColor" red="1" green="0.79215686269999996" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" id="3WZ-cY-vMj"/>
+                                                </constraints>
+                                            </view>
                                         </subviews>
                                         <constraints>
-                                            <constraint firstItem="jwI-Z9-HQd" firstAttribute="top" secondItem="KME-Tt-6oc" secondAttribute="top" id="1xo-RF-ZBy"/>
+                                            <constraint firstItem="jwI-Z9-HQd" firstAttribute="top" secondItem="hkJ-Bg-WvJ" secondAttribute="bottom" id="2Iw-ts-SYh"/>
                                             <constraint firstItem="PaK-GR-SW7" firstAttribute="top" secondItem="Doc-bK-Hd2" secondAttribute="bottom" constant="70" id="3Jq-Ui-xvf"/>
                                             <constraint firstItem="8Fu-YM-MOX" firstAttribute="leading" secondItem="KME-Tt-6oc" secondAttribute="leading" constant="20" id="5bn-8K-A0f"/>
                                             <constraint firstAttribute="trailing" secondItem="3Uw-G3-nxQ" secondAttribute="trailing" constant="30" id="7cr-bV-Par"/>
@@ -337,6 +344,7 @@
                                             <constraint firstItem="mql-yG-AGZ" firstAttribute="top" secondItem="8Fu-YM-MOX" secondAttribute="bottom" constant="20" id="GG9-Sv-ABm"/>
                                             <constraint firstItem="UcQ-4V-jbs" firstAttribute="centerX" secondItem="KME-Tt-6oc" secondAttribute="centerX" id="K5h-ab-EKR"/>
                                             <constraint firstItem="Doc-bK-Hd2" firstAttribute="centerX" secondItem="KME-Tt-6oc" secondAttribute="centerX" id="Lz3-jf-l8c"/>
+                                            <constraint firstAttribute="trailing" secondItem="hkJ-Bg-WvJ" secondAttribute="trailing" id="MZ0-rc-czF"/>
                                             <constraint firstItem="8Fu-YM-MOX" firstAttribute="top" secondItem="UcQ-4V-jbs" secondAttribute="bottom" constant="8" id="QkS-MH-otS"/>
                                             <constraint firstItem="jwI-Z9-HQd" firstAttribute="leading" secondItem="KME-Tt-6oc" secondAttribute="leading" id="S1o-vI-W4B"/>
                                             <constraint firstItem="Doc-bK-Hd2" firstAttribute="top" secondItem="mql-yG-AGZ" secondAttribute="bottom" constant="5" id="UQA-lT-vDh"/>
@@ -349,8 +357,10 @@
                                             <constraint firstItem="mql-yG-AGZ" firstAttribute="leading" secondItem="KME-Tt-6oc" secondAttribute="leading" constant="30" id="ghM-a9-gGt"/>
                                             <constraint firstAttribute="trailing" secondItem="PaK-GR-SW7" secondAttribute="trailing" constant="30" id="gtS-m9-Hdo"/>
                                             <constraint firstItem="3Uw-G3-nxQ" firstAttribute="leading" secondItem="KME-Tt-6oc" secondAttribute="leading" constant="30" id="jVV-X2-NDl"/>
+                                            <constraint firstItem="hkJ-Bg-WvJ" firstAttribute="leading" secondItem="KME-Tt-6oc" secondAttribute="leading" id="khZ-ih-XEi"/>
                                             <constraint firstAttribute="trailing" secondItem="jwI-Z9-HQd" secondAttribute="trailing" id="sA3-L2-jQw"/>
                                             <constraint firstItem="3Uw-G3-nxQ" firstAttribute="top" secondItem="mFb-oB-pcc" secondAttribute="bottom" constant="20" id="uuS-bM-LBJ"/>
+                                            <constraint firstItem="hkJ-Bg-WvJ" firstAttribute="top" secondItem="KME-Tt-6oc" secondAttribute="top" id="vue-Rt-MIv"/>
                                             <constraint firstAttribute="trailing" secondItem="mql-yG-AGZ" secondAttribute="trailing" constant="30" id="wtZ-qp-Ycf"/>
                                         </constraints>
                                     </view>
@@ -433,6 +443,8 @@
                         <outlet property="dropListMessageLabel" destination="Doc-bK-Hd2" id="TJB-IU-Oy7"/>
                         <outlet property="homeBanner" destination="Djb-ot-aSs" id="1lU-Tz-xb1"/>
                         <outlet property="loader" destination="ab5-PO-81n" id="JN8-bu-9vR"/>
+                        <outlet property="myView" destination="hkJ-Bg-WvJ" id="BdD-He-ULT"/>
+                        <outlet property="myViewsHeight" destination="3WZ-cY-vMj" id="VCS-qR-Yk1"/>
                         <outlet property="scrollView" destination="ril-BW-wvj" id="YyU-mV-yR7"/>
                         <outlet property="scrollViewTopConstraint" destination="Ujk-ud-kF9" id="oli-cC-5rb"/>
                         <outlet property="sliderContainer" destination="jwI-Z9-HQd" id="L7R-yf-5N4"/>
@@ -445,7 +457,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4kv-4Z-KWR" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2791" y="403"/>
+            <point key="canvasLocation" x="-2791.1999999999998" y="402.54872563718146"/>
         </scene>
         <!--Feed Group Page Controller ContainerVC-->
         <scene sceneID="wAy-cj-n7R">
