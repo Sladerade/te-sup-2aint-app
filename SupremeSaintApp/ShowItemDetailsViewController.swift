@@ -52,7 +52,7 @@ class ShowItemDetailsViewController: UIViewController {
         
     }
     @IBAction func btn_buy(_ sender: UIButton) {
-        let urlInString = "http://svcs.ebay.com/services/search/FindingService/v1?OPERATION-NAME=findItemsByKeywords&SERVICE-VERSION=1.0.0&SECURITY-APPNAME=TheSupre-TheSupre-PRD-9134e8f72-e3436f81&RESPONSE-DATA-FORMAT=JSON&REST-PAYLOAD&keywords=arabic-facemask\(titleLabel.text!.replacingOccurrences(of: " ", with: "-")).json"
+        let urlInString = "http://svcs.ebay.com/services/search/FindingService/v1?OPERATION-NAME=findItemsByKeywords&SERVICE-VERSION=1.0.0&SECURITY-APPNAME=TheSupre-TheSupre-PRD-9134e8f72-e3436f81&RESPONSE-DATA-FORMAT=JSON&REST-PAYLOAD&keywords=Supreme-\(titleLabel.text!.replacingOccurrences(of: " ", with: "-"))"
         let url = URL(string: urlInString)
         let request = NSMutableURLRequest(url: url! as URL)
         request.httpMethod = "GET"
@@ -163,8 +163,80 @@ class ShowItemDetailsViewController: UIViewController {
         
     }
     @IBAction func btn_back(_ sender: UIButton) {
-        self.dismiss(animated: true, completion: nil)
+        ModalService.dismiss(self, exitTo: .right, duration: 0.5)
+//        let transition = CATransition()
+//        transition.duration = 0.5
+//        transition.type = kCATransitionPush
+//        transition.subtype = kCATransitionFromLeft
+//        transition.timingFunction = CAMediaTimingFunction(name:kCAMediaTimingFunctionEaseInEaseOut)
+//        view.window!.layer.add(transition, forKey: kCATransition)
+//        let storyBoard = UIStoryboard(name: "Main", bundle: nil)
+//        let vc = storyBoard.instantiateViewController(withIdentifier: "ShopVC") as! ShopVC
+//        present(vc, animated: false, completion: nil)
+//        self.dismiss(animated: true, completion: nil)
     }
-    
+    class ModalService {
+        
+        enum presentationDirection {
+            case left
+            case right
+            case top
+            case bottom
+        }
+        
+        class func present(_ modalViewController: UIViewController,
+                           presenter fromViewController: UIViewController,
+                           enterFrom direction: presentationDirection = .right,
+                           duration: CFTimeInterval = 0.3) {
+            let transition = CATransition()
+            transition.duration = duration
+            transition.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
+            transition.type = kCATransitionMoveIn
+            transition.subtype = ModalService.transitionSubtype(for: direction)
+            let containerView: UIView? = fromViewController.view.window
+            containerView?.layer.add(transition, forKey: nil)
+            fromViewController.present(modalViewController, animated: false)
+        }
+        
+        class func dismiss(_ modalViewController: UIViewController,
+                           exitTo direction: presentationDirection = .right,
+                           duration: CFTimeInterval = 0.3) {
+            let transition = CATransition()
+            transition.duration = duration
+            transition.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
+            transition.type = kCATransitionReveal
+            transition.subtype = ModalService.transitionSubtype(for: direction, forExit: true)
+            if let layer = modalViewController.view?.window?.layer {
+                layer.add(transition, forKey: nil)
+            }
+            modalViewController.dismiss(animated: false)
+        }
+        
+        private class func transitionSubtype(for direction: presentationDirection, forExit: Bool = false) -> String {
+            if (forExit == false) {
+                switch direction {
+                case .left:
+                    return kCATransitionFromLeft
+                case .right:
+                    return kCATransitionFromRight
+                case .top:
+                    return kCATransitionFromBottom
+                case .bottom:
+                    return kCATransitionFromTop
+                }
+            } else {
+                switch direction {
+                case .left:
+                    return kCATransitionFromRight
+                case .right:
+                    return kCATransitionFromLeft
+                case .top:
+                    return kCATransitionFromTop
+                case .bottom:
+                    return kCATransitionFromBottom
+                }
+            }
+        }
+    }
 }
 

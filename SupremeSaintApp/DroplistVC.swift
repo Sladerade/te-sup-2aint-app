@@ -5,7 +5,7 @@ import Firebase
 import Kingfisher
 
 class ShopVC: TabBarViewControllerPage, UITableViewDataSource, UITableViewDelegate  {
-
+    
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var loader: UIActivityIndicatorView!
     @IBOutlet weak var segment: UISegmentedControl!
@@ -23,7 +23,11 @@ class ShopVC: TabBarViewControllerPage, UITableViewDataSource, UITableViewDelega
     var value = 0
     var refresher: UIRefreshControl!
     
+    var rowIndex = 0
+    var valueIndex = 0
+    
     var databaseRef:DatabaseReference!
+    var feedList:[Feed] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,6 +36,13 @@ class ShopVC: TabBarViewControllerPage, UITableViewDataSource, UITableViewDelega
         refresher.tintColor = UIColor.red
         refresher.addTarget(self, action: #selector(ShopVC.populate), for: UIControlEvents.valueChanged)
         tableView.addSubview(refresher)
+        
+        
+        //        UIFont(name: "Courier New", size: 12)
+        let font = UIFont(name: "Courier-Bold", size: 15)
+        let fontStyle = UIFont.Weight.bold
+        segment.setTitleTextAttributes([NSAttributedStringKey.font: font!],
+                                       for: .normal)
         
         loader.isHidden = true
         tableView.dataSource = self
@@ -43,21 +54,23 @@ class ShopVC: TabBarViewControllerPage, UITableViewDataSource, UITableViewDelega
         
         // Do any additional setup after loading the view.
     }
-
+    
     @IBAction func segmentAction(_ sender: UISegmentedControl) {
         if segment.selectedSegmentIndex == 0 {
+            self.valueIndex = 0
             value = 0
             getData(check: "True")
         }
         else{
             value = 1
+            self.valueIndex = 0
             catalog()
         }
     }
     override func viewWillAppear(_ animated: Bool) {
         
     }
-
+    
     override func viewDidAppear(_ animated: Bool) {
         
     }
@@ -75,28 +88,32 @@ class ShopVC: TabBarViewControllerPage, UITableViewDataSource, UITableViewDelega
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return valueIndex + 1
         
-        return names.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell") as! ItemTableCell
-        let imageUrl = URL(string: images[indexPath.row])
-        cell.itemImage.kf.setImage(with: imageUrl!)
-        cell.itemName.text = names[indexPath.row]
-        cell.itemPrice.text = prices[indexPath.row]
+        rowIndex = indexPath.row
+        if rowIndex != valueIndex{
+            let imageUrl = URL(string: feedList[rowIndex].photoUrl)
+            cell.itemImage.kf.setImage(with: imageUrl!)
+            cell.itemName.text = feedList[rowIndex].name
+            cell.itemPrice.text = feedList[rowIndex].priceUS
+        }
+        else{
+            let imageUrl = URL(string: "http://")
+            cell.itemImage.kf.setImage(with: imageUrl!)
+            cell.itemName.text = ""
+            cell.itemPrice.text = ""
+        }
+        
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        imageUrl = images[indexPath.row]
-        itemName = names[indexPath.row]
-        itemId = itemIds[indexPath.row]
-        price = prices[indexPath.row]
-        performSegue(withIdentifier: "showItemDetails", sender: self)
+        self.tabBarViewController.performSegue(withIdentifier: "FeedGroupPageController", sender: FeedGroupPageController.ViewModel(feeds: feedList, selectedFeed: feedList[indexPath.row]))
     }
-    
     
     @objc func populate(){
         if value == 0{
@@ -108,35 +125,36 @@ class ShopVC: TabBarViewControllerPage, UITableViewDataSource, UITableViewDelega
         refresher.endRefreshing()
     }
     
-    
-    
-    
     func getData(check:String){
         loader.isHidden = false
         loader.startAnimating()
-        print(check)
-        images.removeAll()
-        names.removeAll()
-        itemIds.removeAll()
-        prices.removeAll()
-
+        self.feedList.removeAll()
+        rowIndex = 0
+        self.valueIndex = 0
         databaseRef.child("Catalog").observe(.childAdded, with: { (snapshot) in
             let value = snapshot.value as? NSDictionary
             let Droplist = value?["Droplist"] as? String ?? ""
             if Droplist == check{
-                let image = value?["Photos"] as? String ?? ""
+                
+                self.valueIndex = self.valueIndex + 1
+                
+                let image = value?["Photos"] as? String ?? "http://"
                 let name = value?["Name"] as? String ?? ""
                 let priceUS = value?["Price-US"] as? String ?? ""
                 let priceEU = value?["Price-EU"] as? String ?? ""
-                self.itemIds.append(snapshot.key)
-                self.images.append(image)
-                self.names.append(name)
-                self.prices.append("\(priceUS)/\(priceEU)")
+                let description = value?["Description"] as? String ?? ""
+                let season = value?["Season"] as? String ?? ""
+                let throwback = value?["Throwback"] as? Bool ?? false
+                let week = value?["Week"] as? Int ?? 0
+                //                let droplist_b = value?["Droplist"] as? Bool ?? false
+                let model = Feed(id: snapshot.key, description: description, droplist: true, name: name, photoUrl: image, priceEU: priceEU, priceUS: priceUS, season: season, throwBack: throwback, week: week)
+                self.feedList.append(model)
             }
             DispatchQueue.main.async {
                 self.loader.isHidden = true
                 self.loader.stopAnimating()
                 self.tableView.reloadData()
+                
             }
         }) { (Error) in
             print(Error)
@@ -146,24 +164,25 @@ class ShopVC: TabBarViewControllerPage, UITableViewDataSource, UITableViewDelega
     func catalog(){
         loader.isHidden = false
         loader.startAnimating()
-        images.removeAll()
-        names.removeAll()
-        itemIds.removeAll()
-        prices.removeAll()
+        self.feedList.removeAll()
+        rowIndex = 0
+        self.valueIndex = 0
         
         databaseRef.child("Old Catalog").observe(.childAdded, with: { (snapshot) in
             let value = snapshot.value as? NSDictionary
+            self.valueIndex = self.valueIndex + 1
             let photos = value?["photos"] as? NSArray
-            let image = photos![0] as? String ?? ""
-            
+            let image = photos![0] as? String ?? "http://"
             let name = value?["name"] as? String ?? ""
-            let priceUS = value?["price_US"] as? String ?? ""
-            let priceEU = value?["price_EU"] as? String ?? ""
+            let priceUS = value?["price-US"] as? String ?? ""
+            let priceEU = value?["price-EU"] as? String ?? ""
+            let description = value?["description"] as? String ?? ""
+            let season = value?["season"] as? String ?? ""
+            let throwback = value?["throwback"] as? Bool ?? false
+            let week = value?["week"] as? Int ?? 0
             
-            self.itemIds.append(snapshot.key)
-            self.images.append("http:\(image)")
-            self.names.append(name)
-            self.prices.append("\(priceUS)/\(priceEU)")
+            let model = Feed(id: snapshot.key, description: description, droplist: true, name: name, photoUrl: image, priceEU: priceEU, priceUS: priceUS, season: season, throwBack: throwback, week: week)
+            self.feedList.append(model)
             
             DispatchQueue.main.async {
                 self.loader.isHidden = true
@@ -174,20 +193,5 @@ class ShopVC: TabBarViewControllerPage, UITableViewDataSource, UITableViewDelega
             print(Error)
         }
     }
-    
-    
-    
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let des = segue.destination as? ShowItemDetailsViewController{
-            des.titleForItem = itemName
-            des.imageUrl =  imageUrl
-            des.itemId = itemId
-            des.value = value
-            des.price = price
-        }
-    }
-    
-    
-
 }
+

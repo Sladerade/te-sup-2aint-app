@@ -39,6 +39,7 @@
 		B219664D200BCD930096F607 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B219664C200BCD930096F607 /* Main.storyboard */; };
 		F652981A2020A255006FC603 /* ShowItemDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F65298192020A255006FC603 /* ShowItemDetailsViewController.swift */; };
 		F666F56B201274520054D9C9 /* ItemTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F666F56A201274520054D9C9 /* ItemTableCell.swift */; };
+		F6E7A5E020249D3300211E62 /* MyImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6E7A5DF20249D3300211E62 /* MyImageViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -103,6 +104,7 @@
 		E441FF4F28141978A1D0FB18 /* Pods_SupremeSaintApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SupremeSaintApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F65298192020A255006FC603 /* ShowItemDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowItemDetailsViewController.swift; sourceTree = "<group>"; };
 		F666F56A201274520054D9C9 /* ItemTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemTableCell.swift; sourceTree = "<group>"; };
+		F6E7A5DF20249D3300211E62 /* MyImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyImageViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -228,6 +230,7 @@
 				549049382010BB51006910AF /* FeedViewController.swift */,
 				54AB322A2011C2D9007E7218 /* RootNavigationController.swift */,
 				F65298192020A255006FC603 /* ShowItemDetailsViewController.swift */,
+				F6E7A5DF20249D3300211E62 /* MyImageViewController.swift */,
 			);
 			path = SupremeSaintApp;
 			sourceTree = "<group>";
@@ -585,6 +588,7 @@
 				8C35A67F200129C300BCE5B2 /* TwitterViewController.swift in Sources */,
 				5490492F20108FD9006910AF /* FirebaseService.swift in Sources */,
 				8C1A5FC9200126C200BE0BD3 /* DroplistVC.swift in Sources */,
+				F6E7A5E020249D3300211E62 /* MyImageViewController.swift in Sources */,
 				8C1A5FC7200126C200BE0BD3 /* HomeVC.swift in Sources */,
 				549049372010BA1D006910AF /* FeedGroupPageController.swift in Sources */,
 				8C1A5FC8200126C200BE0BD3 /* NewsVC.swift in Sources */,

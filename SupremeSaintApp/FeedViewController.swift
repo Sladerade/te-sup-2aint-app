@@ -84,7 +84,7 @@ class FeedViewController: UIViewController {
         }
     }
     @IBAction func btn_buy(_ sender: UIButton) {
-        let urlInString = "http://svcs.ebay.com/services/search/FindingService/v1?OPERATION-NAME=findItemsByKeywords&SERVICE-VERSION=1.0.0&SECURITY-APPNAME=TheSupre-TheSupre-PRD-9134e8f72-e3436f81&RESPONSE-DATA-FORMAT=JSON&REST-PAYLOAD&keywords=arabic-facemask\(feed!.name.replacingOccurrences(of: " ", with: "-")).json"
+        let urlInString = "http://svcs.ebay.com/services/search/FindingService/v1?OPERATION-NAME=findItemsByKeywords&SERVICE-VERSION=1.0.0&SECURITY-APPNAME=TheSupre-TheSupre-PRD-9134e8f72-e3436f81&RESPONSE-DATA-FORMAT=JSON&REST-PAYLOAD&keywords=Supreme-\(feed!.name.replacingOccurrences(of: " ", with: "-"))"
         let url = URL(string: urlInString)
         let request = NSMutableURLRequest(url: url! as URL)
         request.httpMethod = "GET"
