@@ -40,6 +40,7 @@
 		F652981A2020A255006FC603 /* ShowItemDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F65298192020A255006FC603 /* ShowItemDetailsViewController.swift */; };
 		F666F56B201274520054D9C9 /* ItemTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F666F56A201274520054D9C9 /* ItemTableCell.swift */; };
 		F6E7A5E020249D3300211E62 /* MyImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6E7A5DF20249D3300211E62 /* MyImageViewController.swift */; };
+		F6E7A5E2202500E400211E62 /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6E7A5E1202500E400211E62 /* UIView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -105,6 +106,7 @@
 		F65298192020A255006FC603 /* ShowItemDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowItemDetailsViewController.swift; sourceTree = "<group>"; };
 		F666F56A201274520054D9C9 /* ItemTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemTableCell.swift; sourceTree = "<group>"; };
 		F6E7A5DF20249D3300211E62 /* MyImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyImageViewController.swift; sourceTree = "<group>"; };
+		F6E7A5E1202500E400211E62 /* UIView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -231,6 +233,7 @@
 				54AB322A2011C2D9007E7218 /* RootNavigationController.swift */,
 				F65298192020A255006FC603 /* ShowItemDetailsViewController.swift */,
 				F6E7A5DF20249D3300211E62 /* MyImageViewController.swift */,
+				F6E7A5E1202500E400211E62 /* UIView.swift */,
 			);
 			path = SupremeSaintApp;
 			sourceTree = "<group>";
@@ -595,6 +598,7 @@
 				549049392010BB51006910AF /* FeedViewController.swift in Sources */,
 				54DD1634200E645C007CE915 /* SlidePageViewController.swift in Sources */,
 				549049332010B13C006910AF /* Slide.swift in Sources */,
+				F6E7A5E2202500E400211E62 /* UIView.swift in Sources */,
 				54147CA1200E684E00ED159C /* Extensions.swift in Sources */,
 				54DD1610200E38A6007CE915 /* HomeBanner.swift in Sources */,
 				54DD1632200E63EC007CE915 /* SlideImageController.swift in Sources */,
