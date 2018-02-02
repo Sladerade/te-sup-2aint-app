@@ -94,7 +94,7 @@ class HomeVC: TabBarViewControllerPage, UIScrollViewDelegate {
     }
     
     @objc func populate(){
-        myViewsHeight.constant = 80
+        myViewsHeight.constant = 60
         myView.layoutIfNeeded()
         
         
@@ -164,8 +164,10 @@ class HomeVC: TabBarViewControllerPage, UIScrollViewDelegate {
         
         refereshThrowBackCollectionSize()
         
-        myViewsHeight.constant = 0
-        myView.layoutIfNeeded()
+        Timer.scheduledTimer(withTimeInterval: 0.2, repeats: false){_ in
+            self.myViewsHeight.constant = 0
+            self.myView.layoutIfNeeded()
+        }
         refresher.endRefreshing()
     }
     

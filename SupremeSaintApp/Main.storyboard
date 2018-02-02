@@ -202,6 +202,13 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KME-Tt-6oc">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="818"/>
                                         <subviews>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hkJ-Bg-WvJ">
+                                                <rect key="frame" x="0.0" y="0.0" width="375" height="0.0"/>
+                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" id="3WZ-cY-vMj"/>
+                                                </constraints>
+                                            </view>
                                             <containerView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jwI-Z9-HQd">
                                                 <rect key="frame" x="0.0" y="0.0" width="375" height="149"/>
                                                 <constraints>
@@ -327,13 +334,6 @@
                                                 <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hkJ-Bg-WvJ">
-                                                <rect key="frame" x="0.0" y="0.0" width="375" height="0.0"/>
-                                                <color key="backgroundColor" red="1" green="0.79215686269999996" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" id="3WZ-cY-vMj"/>
-                                                </constraints>
-                                            </view>
                                         </subviews>
                                         <constraints>
                                             <constraint firstItem="jwI-Z9-HQd" firstAttribute="top" secondItem="hkJ-Bg-WvJ" secondAttribute="bottom" id="2Iw-ts-SYh"/>
