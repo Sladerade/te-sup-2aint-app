@@ -40,7 +40,7 @@ class ShopVC: TabBarViewControllerPage, UITableViewDataSource, UITableViewDelega
         
         //        UIFont(name: "Courier New", size: 12)
         let font = UIFont(name: "Courier-Bold", size: 12)
-        let fontStyle = UIFont.Weight.bold
+//        let fontStyle = UIFont.Weight.bold
         segment.setTitleTextAttributes([NSAttributedStringKey.font: font!],
                                        for: .normal)
         
@@ -95,20 +95,31 @@ class ShopVC: TabBarViewControllerPage, UITableViewDataSource, UITableViewDelega
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell") as! ItemTableCell
         rowIndex = indexPath.row
-        if rowIndex != valueIndex{
-            let imageUrl = URL(string: feedList[rowIndex].photoUrl)
-            cell.itemImage.kf.setImage(with: imageUrl!)
-            cell.itemName.text = feedList[rowIndex].name
-            cell.itemPrice.text = feedList[rowIndex].priceUS
-        }
-        else{
+        print("sanan \(rowIndex) and \(valueIndex)")
+        if valueIndex == 0{
             let imageUrl = URL(string: "http://")
             cell.itemImage.kf.setImage(with: imageUrl!)
             cell.itemName.text = ""
             cell.itemPrice.text = ""
             cell.btnNext.isHidden = true
         }
-        
+        else if rowIndex != valueIndex{
+            print("Yes")
+            let imageUrl = URL(string: feedList[rowIndex].photoUrl)
+            cell.itemImage.kf.setImage(with: imageUrl!)
+            cell.itemName.text = feedList[rowIndex].name
+            cell.itemPrice.text = feedList[rowIndex].priceUS
+        }
+        else{
+            print("no")
+            let imageUrl = URL(string: "http://")
+            cell.itemImage.kf.setImage(with: imageUrl!)
+            cell.itemName.text = ""
+            cell.itemPrice.text = ""
+            cell.btnNext.isHidden = true
+            
+        }
+        rowIndex = rowIndex + 1
         return cell
     }
     
@@ -118,9 +129,13 @@ class ShopVC: TabBarViewControllerPage, UITableViewDataSource, UITableViewDelega
     
     @objc func populate(){
         if value == 0{
+            rowIndex = 0
+            valueIndex = 0
             getData(check: "True")
         }
         else{
+            rowIndex = 0
+            valueIndex = 0
             catalog()
         }
         refresher.endRefreshing()

@@ -84,7 +84,8 @@ class FeedViewController: UIViewController {
         }
     }
     @IBAction func btn_buy(_ sender: UIButton) {
-        let urlInString = "http://svcs.ebay.com/services/search/FindingService/v1?OPERATION-NAME=findItemsByKeywords&SERVICE-VERSION=1.0.0&SECURITY-APPNAME=TheSupre-TheSupre-PRD-9134e8f72-e3436f81&RESPONSE-DATA-FORMAT=JSON&REST-PAYLOAD&keywords=Supreme-\(feed!.name.replacingOccurrences(of: " ", with: "-"))"
+        let urlInString = "http://svcs.ebay.com/services/search/FindingService/v1?OPERATION-NAME=findItemsByKeywords&SERVICE-VERSION=1.0.0&SECURITY-APPNAME=TheSupre-TheSupre-PRD-9134e8f72-e3436f81&RESPONSE-DATA-FORMAT=JSON&REST-PAYLOAD&keywords=\(feed!.name.replacingOccurrences(of: " ", with: "-"))"
+        print(urlInString)
         let url = URL(string: urlInString)
         let request = NSMutableURLRequest(url: url! as URL)
         request.httpMethod = "GET"
@@ -98,18 +99,25 @@ class FeedViewController: UIViewController {
                 if responseString != nil{
                     let json = JSON(data!)
                     let findItemsByKeywordsResponse = json["findItemsByKeywordsResponse"]
-                    
                     for item in findItemsByKeywordsResponse{
                         let itemSearchURL = item.1["itemSearchURL"][0].string ?? "http://"
                         
-                        let appURL = NSURL(string: "ebay://\(itemSearchURL)")!
-                        let webURL = NSURL(string: itemSearchURL)!
-                        let application = UIApplication.shared
+                        let searchResult = item.1["searchResult"][0]
                         
+                        let getItems = searchResult["item"][0]
+                        
+                        let itemId = getItems["itemId"][0].string ?? ""
+                        
+
+                        let appURL = NSURL(string: "ebay://launch?itm=\(itemId)")!
+                        let webURL = NSURL(string: itemSearchURL)!
+
+                        let application = UIApplication.shared
+
                         if application.canOpenURL(appURL as URL) {
                             application.open(appURL as URL)
                         } else {
-                            // if Instagram app is not installed, open URL inside Safari
+                            // if eBay app is not installed, open URL inside Safari
                             application.open(webURL as URL)
                         }
                         
