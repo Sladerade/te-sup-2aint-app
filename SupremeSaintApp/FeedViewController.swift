@@ -102,7 +102,7 @@ class FeedViewController: UIViewController {
                     for item in findItemsByKeywordsResponse{
                         let itemSearchURL = item.1["itemSearchURL"][0].string ?? "http://"
                         
-                        let appURL = NSURL(string: itemSearchURL)!
+                        let appURL = NSURL(string: "ebay://\(itemSearchURL)")!
                         let webURL = NSURL(string: itemSearchURL)!
                         let application = UIApplication.shared
                         
