@@ -39,7 +39,7 @@ class ShopVC: TabBarViewControllerPage, UITableViewDataSource, UITableViewDelega
         
         
         //        UIFont(name: "Courier New", size: 12)
-        let font = UIFont(name: "Courier-Bold", size: 15)
+        let font = UIFont(name: "Courier-Bold", size: 12)
         let fontStyle = UIFont.Weight.bold
         segment.setTitleTextAttributes([NSAttributedStringKey.font: font!],
                                        for: .normal)
