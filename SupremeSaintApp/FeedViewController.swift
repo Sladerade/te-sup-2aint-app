@@ -100,16 +100,29 @@ class FeedViewController: UIViewController {
                     let findItemsByKeywordsResponse = json["findItemsByKeywordsResponse"]
                     
                     for item in findItemsByKeywordsResponse{
-                        let itemSearchURL = item.1["itemSearchURL"][0].string
-                        if let url = URL(string: itemSearchURL!) {
-                            if #available(iOS 10, *) {
-                                UIApplication.shared.open(url, options: [:],completionHandler: { (success) in
-                                })
-                            } else {
-                                let success = UIApplication.shared.openURL(url)
-                            }
+                        let itemSearchURL = item.1["itemSearchURL"][0].string ?? "http://"
+                        
+                        let appURL = NSURL(string: itemSearchURL)!
+                        let webURL = NSURL(string: itemSearchURL)!
+                        let application = UIApplication.shared
+                        
+                        if application.canOpenURL(appURL as URL) {
+                            application.open(appURL as URL)
+                        } else {
+                            // if Instagram app is not installed, open URL inside Safari
+                            application.open(webURL as URL)
                         }
-                        print(itemSearchURL!)
+                        
+                        
+//                        if let url = URL(string: itemSearchURL!) {
+//                            if #available(iOS 10, *) {
+//                                UIApplication.shared.open(url, options: [:],completionHandler: { (success) in
+//                                })
+//                            } else {
+//                                let success = UIApplication.shared.openURL(url)
+//                            }
+//                        }
+//                        print(itemSearchURL!)
                     }
                     DispatchQueue.main.async {
                     }

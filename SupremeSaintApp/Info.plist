@@ -40,6 +40,7 @@
 	<string>1</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
+		<string>ebay</string>
 		<string>twitter</string>
 		<string>twitterauth</string>
 	</array>
