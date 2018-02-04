@@ -83,9 +83,21 @@ class FeedViewController: UIViewController {
             imageView.downloadImage(from: feed.photoUrl)
         }
     }
+    
+//    func removeSpecialCharsFromString(str: String) -> String {
+//        let chars = Set("abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLKMNOPQRSTUVWXYZ1234567890+-*=(),.:!_®/".characters)
+//        return String(str.characters.filter { chars.contains($0) })
+//    }
+
+    
     @IBAction func btn_buy(_ sender: UIButton) {
-        let urlInString = "http://svcs.ebay.com/services/search/FindingService/v1?OPERATION-NAME=findItemsByKeywords&SERVICE-VERSION=1.0.0&SECURITY-APPNAME=TheSupre-TheSupre-PRD-9134e8f72-e3436f81&RESPONSE-DATA-FORMAT=JSON&REST-PAYLOAD&keywords=\(feed!.name.replacingOccurrences(of: " ", with: "-"))"
-        print(urlInString)
+        let nameRemoveAt = feed!.name.replacingOccurrences(of: "®", with: " ")
+        let nameRemoveSlash = nameRemoveAt.replacingOccurrences(of: "/", with: " ")
+        let nameRemoveDoubleSpace = nameRemoveSlash.replacingOccurrences(of: "  ", with: " ")
+        let name = nameRemoveDoubleSpace.replacingOccurrences(of: " ", with: "-")
+        
+        let urlInString = "http://svcs.ebay.com/services/search/FindingService/v1?OPERATION-NAME=findItemsByKeywords&SERVICE-VERSION=1.0.0&SECURITY-APPNAME=TheSupre-TheSupre-PRD-9134e8f72-e3436f81&RESPONSE-DATA-FORMAT=JSON&REST-PAYLOAD&keywords=\(name)"
+        
         let url = URL(string: urlInString)
         let request = NSMutableURLRequest(url: url! as URL)
         request.httpMethod = "GET"
