@@ -95,7 +95,6 @@ class ShopVC: TabBarViewControllerPage, UITableViewDataSource, UITableViewDelega
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell") as! ItemTableCell
         rowIndex = indexPath.row
-        print("sanan \(rowIndex) and \(valueIndex)")
         if valueIndex == 0{
             let imageUrl = URL(string: "http://")
             cell.itemImage.kf.setImage(with: imageUrl!)
@@ -104,14 +103,12 @@ class ShopVC: TabBarViewControllerPage, UITableViewDataSource, UITableViewDelega
             cell.btnNext.isHidden = true
         }
         else if rowIndex != valueIndex{
-            print("Yes")
             let imageUrl = URL(string: feedList[rowIndex].photoUrl)
             cell.itemImage.kf.setImage(with: imageUrl!)
             cell.itemName.text = feedList[rowIndex].name
             cell.itemPrice.text = feedList[rowIndex].priceUS
         }
         else{
-            print("no")
             let imageUrl = URL(string: "http://")
             cell.itemImage.kf.setImage(with: imageUrl!)
             cell.itemName.text = ""
@@ -154,8 +151,9 @@ class ShopVC: TabBarViewControllerPage, UITableViewDataSource, UITableViewDelega
                 
                 self.valueIndex = self.valueIndex + 1
                 
-                let image = value?["Photos"] as? String ?? "http://"
-                let name = value?["Name"] as? String ?? ""
+                let photos = value?["Photos"] as? NSArray
+                let image = photos![1] as? String ?? "http://"
+                let name = value?["ProductName"] as? String ?? ""
                 let priceUS = value?["Price-US"] as? String ?? ""
                 let priceEU = value?["Price-EU"] as? String ?? ""
                 let description = value?["Description"] as? String ?? ""
@@ -198,6 +196,7 @@ class ShopVC: TabBarViewControllerPage, UITableViewDataSource, UITableViewDelega
             let week = value?["week"] as? Int ?? 0
             
             let model = Feed(id: snapshot.key, description: description, droplist: true, name: name, photoUrl: "http:\(image)", priceEU: priceEU, priceUS: priceUS, season: season, throwBack: throwback, week: week)
+            
             self.feedList.append(model)
             
             DispatchQueue.main.async {

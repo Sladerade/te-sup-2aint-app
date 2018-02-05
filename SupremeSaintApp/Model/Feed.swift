@@ -22,10 +22,10 @@ struct Feed {
     var week:Int
     
     
-    static func fromDict(id:String,dict:Dictionary<String,Any?>)->Feed?
+    static func fromDict(id:String,dict:NSDictionary)->Feed?
     {
-       
-        if let description = dict["Description"] as? String ,let name = dict["Name"] as? String ,let dropList = dict["Droplist"] as? String,let photoUrl = dict["Photos"] as? String,let priceEU = dict["Price-EU"] as? String,let priceUS = dict["Price-US"] as? String,let season = dict["Season"] as? String,let throwBack = dict["Throwback"] as? String ,let week = dict["Week"] as? Int
+        let photos = dict["Photos"] as? NSArray
+        if let description = dict["Description"] as? String ,let name = dict["ProductName"] as? String ,let dropList = dict["Droplist"] as? String,let photoUrl = photos![1] as? String,let priceEU = dict["Price-EU"] as? String,let priceUS = dict["Price-US"] as? String,let season = dict["Season"] as? String,let throwBack = dict["Throwback"] as? String ,let week = dict["Week"] as? Int
         {
             return Feed(id: id, description: description, droplist: dropList == "True", name: name, photoUrl: photoUrl, priceEU: priceEU, priceUS: priceUS, season: season, throwBack: throwBack == "True", week: week)
         }

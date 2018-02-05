@@ -62,8 +62,8 @@ class HomeVC: TabBarViewControllerPage, UIScrollViewDelegate {
         
         
         FirebaseService.instance.loadFeeds(callback: {(feeds) in
-            print(feeds)
-            self.throwBackDataSource.feedList = feeds.filter({ $0.throwBack })
+            print("hello hell \(feeds)")
+            self.throwBackDataSource.feedList = feeds.filter({ $0.throwBack})
             self.dropListDataSource.feedList = feeds.filter({$0.droplist})
             self.throwBacksCollectionView.reloadData()
             self.dropListCollectionView.reloadData()
@@ -286,6 +286,7 @@ extension HomeVC
         public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
             
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "FeedCollectionVCell", for: indexPath) as! FeedCollectionVCell
+            
             cell.feed = feedList[indexPath.row]
             return cell
         }

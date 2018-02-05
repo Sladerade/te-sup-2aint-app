@@ -20,6 +20,7 @@ class FeedViewController: UIViewController {
     @IBOutlet weak var likes: UILabel!
     @IBOutlet weak var disLikes: UILabel!
     @IBOutlet weak var superView: UIView!
+    @IBOutlet weak var descriptionLabel: UILabel!
     var totalVote:Double = 0
     var totalYesVote:Double = 0
     var totalNoVote:Double = 0
@@ -47,7 +48,7 @@ class FeedViewController: UIViewController {
     
     func getAllVotes(){
         if let feed = feed{
-            Database.database().reference().child("Catalog").child(feed.id).child("votes").observe(.childAdded, with: { (snapshot) in
+            Database.database().reference().child("Catalog").child(feed.id).child("Votes").observe(.childAdded, with: { (snapshot) in
                 if snapshot.exists(){
                     self.totalVote = 1 + self.totalVote
                     let value = snapshot.value as? Bool
@@ -78,6 +79,7 @@ class FeedViewController: UIViewController {
     func updateUIs() {
         if let feed = feed
         {
+            descriptionLabel.text = feed.description
             titleLabel.text = feed.name
             priceLabel.text = "\(feed.priceUS) / \(feed.priceEU)"
             imageView.downloadImage(from: feed.photoUrl)
@@ -92,12 +94,13 @@ class FeedViewController: UIViewController {
     
     @IBAction func btn_buy(_ sender: UIButton) {
         let nameRemoveAt = feed!.name.replacingOccurrences(of: "®", with: " ")
-        let nameRemoveSlash = nameRemoveAt.replacingOccurrences(of: "/", with: " ")
+        let nameRemoveC = nameRemoveAt.replacingOccurrences(of: "©", with: " ")
+        let nameRemoveSlash = nameRemoveC.replacingOccurrences(of: "/", with: " ")
         let nameRemoveDoubleSpace = nameRemoveSlash.replacingOccurrences(of: "  ", with: " ")
         let name = nameRemoveDoubleSpace.replacingOccurrences(of: " ", with: "-")
         
         let urlInString = "http://svcs.ebay.com/services/search/FindingService/v1?OPERATION-NAME=findItemsByKeywords&SERVICE-VERSION=1.0.0&SECURITY-APPNAME=TheSupre-TheSupre-PRD-9134e8f72-e3436f81&RESPONSE-DATA-FORMAT=JSON&REST-PAYLOAD&keywords=\(name)"
-        
+        print(urlInString)
         let url = URL(string: urlInString)
         let request = NSMutableURLRequest(url: url! as URL)
         request.httpMethod = "GET"
@@ -119,8 +122,6 @@ class FeedViewController: UIViewController {
                         let getItems = searchResult["item"][0]
                         
                         let itemId = getItems["itemId"][0].string ?? ""
-                        
-
                         let appURL = NSURL(string: "ebay://launch?itm=\(itemId)")!
                         let webURL = NSURL(string: itemSearchURL)!
 
@@ -148,7 +149,7 @@ class FeedViewController: UIViewController {
                     }
                 }
                 else{
-                    //                    Toast.init(text: "There are some issue").show()
+                    Toast.init(text: "There are some issue").show()
                 }
             }
         }
@@ -157,13 +158,13 @@ class FeedViewController: UIViewController {
     
     @IBAction func btn_yes(_ sender: UIButton) {
         if let feed = feed{
-            Database.database().reference().child("Catalog").child(feed.id).child("votes").updateChildValues([id! : true])
+            Database.database().reference().child("Catalog").child(feed.id).child("Votes").updateChildValues([id! : true])
         }
         
     }
     @IBAction func btn_no(_ sender: UIButton) {
         if let feed = feed{
-            Database.database().reference().child("Catalog").child(feed.id).child("votes").updateChildValues([id! : false])
+            Database.database().reference().child("Catalog").child(feed.id).child("Votes").updateChildValues([id! : false])
         }
         
     }

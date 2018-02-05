@@ -14,18 +14,55 @@ class FirebaseService{
     
     func loadFeeds(callback:(([Feed])->())?){
         var feeds = [Feed]()
-        Database.database().reference().child("Catalog").observeSingleEvent(of: .value) { (datashot) in
-            for child in datashot.children
-            {
-                if let child = child as? DataSnapshot ,let feed = Feed.fromDict(id: child.key,dict: child.value as! Dictionary<String,Any?>)
-                {
-                    
-                    feeds.append(feed)
-                }
+        var throwback:Bool!
+        var droplist:Bool!
+        Database.database().reference().child("Catalog").observe(.childAdded, with: { (datashot) in
+            if datashot.exists(){
                 
+                let value = datashot.value as? NSDictionary
+                if value?["Droplist"] as? String ?? "" == "True"{
+                    droplist = true
+                }
+                else{
+                    droplist = false
+                }
+                let photos = value?["Photos"] as? NSArray
+                let image = photos![1] as? String ?? "http://"
+                let name = value?["ProductName"] as? String ?? ""
+                let priceUS = value?["Price-US"] as? String ?? ""
+                let priceEU = value?["Price-EU"] as? String ?? ""
+                let description = value?["Description"] as? String ?? ""
+                let season = value?["Season"] as? String ?? ""
+                
+                if value?["Throwback"] as? String ?? "" == "True"{
+                    throwback = true
+                }
+                else{
+                    throwback = false
+                }
+                let week = value?["Week"] as? Int ?? 0
+                
+                let model = Feed(id: datashot.key, description: description, droplist: droplist, name: name, photoUrl: image, priceEU: priceEU, priceUS: priceUS, season: season, throwBack: throwback, week: week)
+                
+                feeds.append(model)
+                
+                callback?(feeds)
             }
-            callback?(feeds)
+        }) { (error) in
+            
         }
+//        Database.database().reference().child("Catalog").observeSingleEvent(of: .value) { (datashot) in
+//            for child in datashot.children
+//            {
+//
+//                if let child = child as? DataSnapshot ,let feed = Feed.fromDict(id: child.key,dict: child.value as! Dictionary<String,Any?>){
+//                    print("hello there \(datashot.children)")
+//                    feeds.append(feed)
+//                }
+//
+//            }
+//            callback?(feeds)
+//        }
     }
     
     func loadHomeMessage(callback:((HomeMessages?)->())?) {
