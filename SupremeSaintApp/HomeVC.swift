@@ -33,11 +33,13 @@ class HomeVC: TabBarViewControllerPage, UIScrollViewDelegate {
     }
     var refresher: UIRefreshControl!
     
+    
     @IBOutlet weak var myView: UIView!
     
     @IBOutlet weak var myViewsHeight: NSLayoutConstraint!
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         self.myView.frame.size.height = 0
         refresher = UIRefreshControl()
         refresher.tintColor = UIColor.red
@@ -275,7 +277,7 @@ extension HomeVC
     {
         
         var feedList:[Feed] = []
-        
+        var storedData = UserDefaults.standard
         let parentVC:HomeVC
         
         init(parentVC:HomeVC)
@@ -300,6 +302,7 @@ extension HomeVC
         }
         
         public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+            storedData.set(0, forKey: "ForVote")
             parentVC.tabBarViewController.performSegue(withIdentifier: "FeedGroupPageController", sender: FeedGroupPageController.ViewModel(feeds: feedList, selectedFeed: feedList[indexPath.row]))
         }
         
@@ -311,7 +314,7 @@ extension HomeVC
     public class DropListCollectionController:NSObject,UICollectionViewDataSource,UICollectionViewDelegate
     {
         var feedList:[Feed] = []
-        
+        var storedData = UserDefaults.standard
         let parentVC:HomeVC
         
         init(parentVC:HomeVC)
@@ -333,6 +336,7 @@ extension HomeVC
         }
         
         public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+            storedData.set(0, forKey: "ForVote")
             parentVC.tabBarViewController.performSegue(withIdentifier: "FeedGroupPageController", sender: FeedGroupPageController.ViewModel(feeds: feedList, selectedFeed: feedList[indexPath.row]))
         }
     }

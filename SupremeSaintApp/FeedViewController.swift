@@ -24,6 +24,8 @@ class FeedViewController: UIViewController {
     var totalVote:Double = 0
     var totalYesVote:Double = 0
     var totalNoVote:Double = 0
+    var storedData = UserDefaults.standard
+    
     
     var id:String!
     
@@ -48,30 +50,59 @@ class FeedViewController: UIViewController {
     
     func getAllVotes(){
         if let feed = feed{
-            Database.database().reference().child("Catalog").child(feed.id).child("Votes").observe(.childAdded, with: { (snapshot) in
-                if snapshot.exists(){
-                    self.totalVote = 1 + self.totalVote
-                    let value = snapshot.value as? Bool
-                    if value! == true{
-                        self.totalYesVote = 1 + self.totalYesVote
-                        self.likes.text = "\(Int(self.totalYesVote) )"
+            if self.storedData.integer(forKey: "ForVote") == 0{
+                Database.database().reference().child("Catalog").child(feed.id).child("Votes").observe(.childAdded, with: { (snapshot) in
+                    if snapshot.exists(){
+                        self.totalVote = 1 + self.totalVote
+                        let value = snapshot.value as? Bool
+                        if value! == true{
+                            self.totalYesVote = 1 + self.totalYesVote
+                            self.likes.text = "\(Int(self.totalYesVote) )"
+                        }
+                        else{
+                            self.totalNoVote = 1 + self.totalNoVote
+                            self.disLikes.text = "\(Int(self.totalNoVote))"
+                        }
+                        DispatchQueue.main.async {
+                            let a = self.totalYesVote/self.totalVote
+                            let screenSize: CGRect = self.superView.bounds
+                            let myView = UIView(frame: CGRect(x: 0, y: 0, width: screenSize.width * CGFloat(a), height: screenSize.height))
+                            myView.backgroundColor = UIColor.green
+                            self.superView.addSubview(myView)
+                            
+                        }
                     }
-                    else{
-                        self.totalNoVote = 1 + self.totalNoVote
-                        self.disLikes.text = "\(Int(self.totalNoVote))"
-                    }
-                    DispatchQueue.main.async {
-                        let a = self.totalYesVote/self.totalVote
-                        let screenSize: CGRect = self.superView.bounds
-                        let myView = UIView(frame: CGRect(x: 0, y: 0, width: screenSize.width * CGFloat(a), height: screenSize.height))
-                        myView.backgroundColor = UIColor.green
-                        self.superView.addSubview(myView)
-                        
-                    }
+                }) { (error) in
+                    Toast.init(text: "\(error.localizedDescription)").show()
                 }
-            }) { (error) in
-                Toast.init(text: "\(error.localizedDescription)").show()
             }
+            else{
+                Database.database().reference().child("Old Catalog").child(feed.id).child("Votes").observe(.childAdded, with: { (snapshot) in
+                    if snapshot.exists(){
+                        self.totalVote = 1 + self.totalVote
+                        let value = snapshot.value as? Bool
+                        if value! == true{
+                            self.totalYesVote = 1 + self.totalYesVote
+                            self.likes.text = "\(Int(self.totalYesVote) )"
+                        }
+                        else{
+                            self.totalNoVote = 1 + self.totalNoVote
+                            self.disLikes.text = "\(Int(self.totalNoVote))"
+                        }
+                        DispatchQueue.main.async {
+                            let a = self.totalYesVote/self.totalVote
+                            let screenSize: CGRect = self.superView.bounds
+                            let myView = UIView(frame: CGRect(x: 0, y: 0, width: screenSize.width * CGFloat(a), height: screenSize.height))
+                            myView.backgroundColor = UIColor.green
+                            self.superView.addSubview(myView)
+                            
+                        }
+                    }
+                }) { (error) in
+                    Toast.init(text: "\(error.localizedDescription)").show()
+                }
+            }
+            
         }
     }
     
@@ -158,13 +189,24 @@ class FeedViewController: UIViewController {
     
     @IBAction func btn_yes(_ sender: UIButton) {
         if let feed = feed{
-            Database.database().reference().child("Catalog").child(feed.id).child("Votes").updateChildValues([id! : true])
+            if self.storedData.integer(forKey: "ForVote") == 0{
+                Database.database().reference().child("Catalog").child(feed.id).child("Votes").updateChildValues([id! : true])
+            }
+            else{
+                Database.database().reference().child("Old Catalog").child(feed.id).child("Votes").updateChildValues([id! : true])
+            }
+            
         }
         
     }
     @IBAction func btn_no(_ sender: UIButton) {
         if let feed = feed{
-            Database.database().reference().child("Catalog").child(feed.id).child("Votes").updateChildValues([id! : false])
+            if self.storedData.integer(forKey: "ForVote") == 0{
+                Database.database().reference().child("Catalog").child(feed.id).child("Votes").updateChildValues([id! : false])
+            }
+            else{
+                Database.database().reference().child("Old Catalog").child(feed.id).child("Votes").updateChildValues([id! : false])
+            }
         }
         
     }

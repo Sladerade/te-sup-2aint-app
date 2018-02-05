@@ -20,14 +20,16 @@ class ShopVC: TabBarViewControllerPage, UITableViewDataSource, UITableViewDelega
     var itemName:String!
     var price:String!
     
-    var value = 0
+    
     var refresher: UIRefreshControl!
     
     var rowIndex = 0
     var valueIndex = 0
-    
+    var value = 0
     var databaseRef:DatabaseReference!
     var feedList:[Feed] = []
+    
+    var storedData = UserDefaults.standard
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -122,6 +124,8 @@ class ShopVC: TabBarViewControllerPage, UITableViewDataSource, UITableViewDelega
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.tabBarViewController.performSegue(withIdentifier: "FeedGroupPageController", sender: FeedGroupPageController.ViewModel(feeds: feedList, selectedFeed: feedList[indexPath.row]))
+        
+        
     }
     
     @objc func populate(){
@@ -139,6 +143,7 @@ class ShopVC: TabBarViewControllerPage, UITableViewDataSource, UITableViewDelega
     }
     
     func getData(check:String){
+        self.storedData.set(0, forKey: "ForVote")
         loader.isHidden = false
         loader.startAnimating()
         self.feedList.removeAll()
@@ -176,6 +181,7 @@ class ShopVC: TabBarViewControllerPage, UITableViewDataSource, UITableViewDelega
     }
     
     func catalog(){
+        self.storedData.set(1, forKey: "ForVote")
         loader.isHidden = false
         loader.startAnimating()
         self.feedList.removeAll()
@@ -208,5 +214,6 @@ class ShopVC: TabBarViewControllerPage, UITableViewDataSource, UITableViewDelega
             print(Error)
         }
     }
+    
 }
 
