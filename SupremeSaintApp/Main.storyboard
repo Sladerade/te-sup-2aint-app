@@ -698,6 +698,7 @@
                                             <constraint firstItem="vyB-eb-mPn" firstAttribute="trailing" secondItem="K5p-4B-dac" secondAttribute="trailing" constant="-20" id="mhm-0h-9At"/>
                                             <constraint firstItem="dfs-uL-bb7" firstAttribute="top" secondItem="hd6-Du-jh5" secondAttribute="bottom" constant="4" id="rJt-v5-ADh"/>
                                             <constraint firstItem="FJa-eK-jpZ" firstAttribute="top" secondItem="s2R-gq-bIS" secondAttribute="top" constant="20" id="sok-rI-mXB"/>
+                                            <constraint firstAttribute="height" constant="647" id="tK1-iF-SB1"/>
                                             <constraint firstItem="tPD-fN-86e" firstAttribute="top" secondItem="dfs-uL-bb7" secondAttribute="bottom" constant="4" id="u8D-ST-nB7"/>
                                             <constraint firstItem="hd6-Du-jh5" firstAttribute="top" secondItem="amI-Cq-4xM" secondAttribute="bottom" constant="20" id="vju-FG-2L9"/>
                                             <constraint firstItem="FJa-eK-jpZ" firstAttribute="leading" secondItem="s2R-gq-bIS" secondAttribute="leading" constant="68" id="wIU-zf-xD0"/>
@@ -712,7 +713,6 @@
                                     <constraint firstAttribute="trailing" secondItem="s2R-gq-bIS" secondAttribute="trailing" id="QoC-KR-LLe"/>
                                     <constraint firstItem="s2R-gq-bIS" firstAttribute="top" secondItem="5bI-rL-237" secondAttribute="top" id="cFK-KC-c8n"/>
                                     <constraint firstItem="s2R-gq-bIS" firstAttribute="centerX" secondItem="5bI-rL-237" secondAttribute="centerX" id="cJY-ez-Lx8"/>
-                                    <constraint firstItem="s2R-gq-bIS" firstAttribute="centerY" secondItem="5bI-rL-237" secondAttribute="centerY" id="dM9-Wu-Aq9"/>
                                 </constraints>
                             </scrollView>
                         </subviews>
