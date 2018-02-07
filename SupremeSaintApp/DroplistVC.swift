@@ -3,6 +3,7 @@
 import UIKit
 import Firebase
 import Kingfisher
+import UILoadControl
 
 class ShopVC: TabBarViewControllerPage, UITableViewDataSource, UITableViewDelegate  {
     
@@ -26,6 +27,7 @@ class ShopVC: TabBarViewControllerPage, UITableViewDataSource, UITableViewDelega
     var rowIndex = 0
     var valueIndex = 0
     var value = 0
+    var loadingStart = 20
     var databaseRef:DatabaseReference!
     var feedList:[Feed] = []
     
@@ -51,6 +53,7 @@ class ShopVC: TabBarViewControllerPage, UITableViewDataSource, UITableViewDelega
         tableView.delegate = self
         tableView.rowHeight = 100
         tableView.separatorColor = UIColor.clear
+        
         databaseRef = Database.database().reference()
         getData(check: "True")
         
@@ -90,42 +93,112 @@ class ShopVC: TabBarViewControllerPage, UITableViewDataSource, UITableViewDelega
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return valueIndex + 1
+        return feedList.count
         
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell") as! ItemTableCell
-        rowIndex = indexPath.row
-        if valueIndex == 0{
-            let imageUrl = URL(string: "http://")
-            cell.itemImage.kf.setImage(with: imageUrl!)
-            cell.itemName.text = ""
-            cell.itemPrice.text = ""
-            cell.btnNext.isHidden = true
-        }
-        else if rowIndex != valueIndex{
-            let imageUrl = URL(string: feedList[rowIndex].photoUrl)
-            cell.itemImage.kf.setImage(with: imageUrl!)
-            cell.itemName.text = feedList[rowIndex].name
-            cell.itemPrice.text = feedList[rowIndex].priceUS
-        }
-        else{
-            let imageUrl = URL(string: "http://")
-            cell.itemImage.kf.setImage(with: imageUrl!)
-            cell.itemName.text = ""
-            cell.itemPrice.text = ""
-            cell.btnNext.isHidden = true
-            
-        }
-        rowIndex = rowIndex + 1
+        let imageUrl = URL(string: feedList[indexPath.row].photoUrl)
+        cell.itemImage.kf.setImage(with: imageUrl!)
+        cell.itemName.text = feedList[indexPath.row].name
+        cell.itemPrice.text = feedList[indexPath.row].priceUS
+//        rowIndex = indexPath.row
+//        if valueIndex == 0{
+//            let imageUrl = URL(string: "http://")
+//            cell.itemImage.kf.setImage(with: imageUrl!)
+//            cell.itemName.text = ""
+//            cell.itemPrice.text = ""
+//            cell.btnNext.isHidden = true
+//        }
+//        else if rowIndex != valueIndex{
+//            //All data gets sets here
+//            let imageUrl = URL(string: feedList[rowIndex].photoUrl)
+//            cell.itemImage.kf.setImage(with: imageUrl!)
+//            cell.itemName.text = feedList[rowIndex].name
+//            cell.itemPrice.text = feedList[rowIndex].priceUS
+//        }
+//        else{
+//            let imageUrl = URL(string: "http://")
+//            cell.itemImage.kf.setImage(with: imageUrl!)
+//            cell.itemName.text = ""
+//            cell.itemPrice.text = ""
+//            cell.btnNext.isHidden = true
+//        }
+//        rowIndex = rowIndex + 1
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.tabBarViewController.performSegue(withIdentifier: "FeedGroupPageController", sender: FeedGroupPageController.ViewModel(feeds: feedList, selectedFeed: feedList[indexPath.row]))
-        
-        
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        let lastItem = feedList.count - 1
+        if indexPath.row == lastItem && lastItem > 18{
+            loadMore(start: self.loadingStart, end: self.loadingStart + 20)
+        }
+    }
+    
+    func loadMore(start: Int, end: Int){
+        self.loadingStart = self.loadingStart + end
+        self.storedData.set(1, forKey: "ForVote")
+        rowIndex = start
+        self.valueIndex = end
+        if segment.selectedSegmentIndex == 1{
+            databaseRef.child("Old Catalog").queryOrdered(byChild: "child_id").queryStarting(atValue: start).queryEnding(atValue: end).observe(.childAdded, with: { (snapshot) in
+                let value = snapshot.value as? NSDictionary
+                self.valueIndex = self.valueIndex + 1
+                let photos = value?["photos"] as? NSArray
+                let image = photos![0] as? String ?? "http://"
+                let name = value?["name"] as? String ?? ""
+                let priceUS = value?["price-US"] as? String ?? ""
+                let priceEU = value?["price-EU"] as? String ?? ""
+                let description = value?["description"] as? String ?? ""
+                let season = value?["season"] as? String ?? ""
+                let throwback = value?["throwback"] as? Bool ?? false
+                let week = value?["week"] as? Int ?? 0
+                
+                let model = Feed(id: snapshot.key, description: description, droplist: true, name: name, photoUrl: "http:\(image)", priceEU: priceEU, priceUS: priceUS, season: season, throwBack: throwback, week: week)
+                self.feedList.append(model)
+                DispatchQueue.main.async {
+                    self.loader.isHidden = true
+                    self.loader.stopAnimating()
+                    self.tableView.reloadData()
+                }
+            }) { (Error) in
+                print(Error)
+            }
+        }
+        else{
+            databaseRef.child("Catalog").observe(.childAdded, with: { (snapshot) in
+                let value = snapshot.value as? NSDictionary
+                let Droplist = value?["Droplist"] as? String ?? ""
+                if Droplist == "True"{
+                    self.valueIndex = self.valueIndex + 1
+                    let photos = value?["Photos"] as? NSArray
+                    let image = photos![1] as? String ?? "http://"
+                    let name = value?["ProductName"] as? String ?? ""
+                    let priceUS = value?["Price-US"] as? String ?? ""
+                    let priceEU = value?["Price-EU"] as? String ?? ""
+                    let description = value?["Description"] as? String ?? ""
+                    let season = value?["Season"] as? String ?? ""
+                    let throwback = value?["Throwback"] as? Bool ?? false
+                    let week = value?["Week"] as? Int ?? 0
+//                    let droplist_b = value?["Droplist"] as? Bool ?? false
+                    let model = Feed(id: snapshot.key, description: description, droplist: true, name: name, photoUrl: image, priceEU: priceEU, priceUS: priceUS, season: season, throwBack: throwback, week: week)
+                    self.feedList.append(model)
+                }
+                DispatchQueue.main.async {
+                    self.loader.isHidden = true
+                    self.loader.stopAnimating()
+                    self.tableView.reloadData()
+                    
+                }
+            }) { (Error) in
+                print(Error)
+            }
+        }
     }
     
     @objc func populate(){
@@ -153,9 +226,7 @@ class ShopVC: TabBarViewControllerPage, UITableViewDataSource, UITableViewDelega
             let value = snapshot.value as? NSDictionary
             let Droplist = value?["Droplist"] as? String ?? ""
             if Droplist == check{
-                
                 self.valueIndex = self.valueIndex + 1
-                
                 let photos = value?["Photos"] as? NSArray
                 let image = photos![1] as? String ?? "http://"
                 let name = value?["ProductName"] as? String ?? ""
@@ -181,14 +252,14 @@ class ShopVC: TabBarViewControllerPage, UITableViewDataSource, UITableViewDelega
     }
     
     func catalog(){
+        
         self.storedData.set(1, forKey: "ForVote")
         loader.isHidden = false
         loader.startAnimating()
         self.feedList.removeAll()
         rowIndex = 0
         self.valueIndex = 0
-        
-        databaseRef.child("Old Catalog").observe(.childAdded, with: { (snapshot) in
+        databaseRef.child("Old Catalog").queryOrdered(byChild: "child_id").queryStarting(atValue: 0).queryEnding(atValue: 19).observe(.childAdded, with: { (snapshot) in
             let value = snapshot.value as? NSDictionary
             self.valueIndex = self.valueIndex + 1
             let photos = value?["photos"] as? NSArray
@@ -202,9 +273,7 @@ class ShopVC: TabBarViewControllerPage, UITableViewDataSource, UITableViewDelega
             let week = value?["week"] as? Int ?? 0
             
             let model = Feed(id: snapshot.key, description: description, droplist: true, name: name, photoUrl: "http:\(image)", priceEU: priceEU, priceUS: priceUS, season: season, throwBack: throwback, week: week)
-            
             self.feedList.append(model)
-            
             DispatchQueue.main.async {
                 self.loader.isHidden = true
                 self.loader.stopAnimating()

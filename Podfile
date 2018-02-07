@@ -13,6 +13,7 @@ target 'SupremeSaintApp' do
     pod ‘Kingfisher’
     pod ‘SwiftyJSON’
     pod ‘Toaster’
+    pod 'UILoadControl'
 
 
   target 'SupremeSaintAppTests' do

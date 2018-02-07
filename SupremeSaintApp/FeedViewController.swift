@@ -21,13 +21,16 @@ class FeedViewController: UIViewController {
     @IBOutlet weak var disLikes: UILabel!
     @IBOutlet weak var superView: UIView!
     @IBOutlet weak var descriptionLabel: UILabel!
-    var totalVote:Double = 0
     var totalYesVote:Double = 0
     var totalNoVote:Double = 0
     var storedData = UserDefaults.standard
     
     
     var id:String!
+    
+    var countYesVotes = 0
+    var countNoVotes = 0
+    var totalVote:Double = 0
     
     var feed:Feed?
     {
@@ -43,8 +46,59 @@ class FeedViewController: UIViewController {
         super.viewDidLoad()
         id = Database.database().reference().childByAutoId().key
         updateUIs()
-        getAllVotes()
-        
+        //getAllVotes()
+        getVotes()
+    }
+    
+    func getVotes(){
+        if let feed = feed {
+            if self.storedData.integer(forKey:"ForVote") == 0{
+                //Entry in catalog
+                Database.database().reference().child("Catalog").child(feed.id).observe(.value, with: { (snapshot) in
+                    for view in self.superView.subviews{
+                        view.removeFromSuperview()
+                    }
+                    let value =  snapshot.value as? NSDictionary
+                    self.countYesVotes = value?["YesVotes"] as? Int ?? 0
+                    self.countNoVotes = value?["NoVotes"] as? Int ?? 0
+                    self.likes.text = "\(self.countYesVotes)"
+                    self.disLikes.text = "\(self.countNoVotes)"
+                    
+                    self.totalVote = Double(value?["YesVotes"] as? Int ?? 0) + Double(value?["NoVotes"] as? Int ?? 0)
+                    let a = Double (self.countYesVotes)/self.totalVote
+                    print("sanan \(a)")
+                    if !a.isNaN{
+                        let screenSize: CGRect = self.superView.bounds
+                        let myView = UIView(frame: CGRect(x: 0, y: 0, width: screenSize.width * CGFloat(a), height: screenSize.height))
+                        myView.backgroundColor = UIColor.green
+                        self.superView.addSubview(myView)
+                    }
+                })
+            }
+            else{
+                //Entry in catalog
+                Database.database().reference().child("Old Catalog").child(feed.id).observe(.value, with: { (snapshot) in
+                    for view in self.superView.subviews{
+                        view.removeFromSuperview()
+                    }
+                    let value =  snapshot.value as? NSDictionary
+                    self.countYesVotes = value?["YesVotes"] as? Int ?? 0
+                    self.countNoVotes = value?["NoVotes"] as? Int ?? 0
+                    self.likes.text = "\(self.countYesVotes)"
+                    self.disLikes.text = "\(self.countNoVotes)"
+                    
+                    self.totalVote = Double(value?["YesVotes"] as? Int ?? 0) + Double(value?["NoVotes"] as? Int ?? 0)
+                    let a = Double (self.countYesVotes)/self.totalVote
+                    print("sanan \(a)")
+                    if !a.isNaN{
+                        let screenSize: CGRect = self.superView.bounds
+                        let myView = UIView(frame: CGRect(x: 0, y: 0, width: screenSize.width * CGFloat(a), height: screenSize.height))
+                        myView.backgroundColor = UIColor.green
+                        self.superView.addSubview(myView)
+                    }
+                })
+            }
+        }
     }
     
     
@@ -190,10 +244,12 @@ class FeedViewController: UIViewController {
     @IBAction func btn_yes(_ sender: UIButton) {
         if let feed = feed{
             if self.storedData.integer(forKey: "ForVote") == 0{
-                Database.database().reference().child("Catalog").child(feed.id).child("Votes").updateChildValues([id! : true])
+                Database.database().reference().child("Catalog").child(feed.id).updateChildValues(["YesVotes":self.countYesVotes + 1])
+                sender.isEnabled = false
             }
             else{
-                Database.database().reference().child("Old Catalog").child(feed.id).child("Votes").updateChildValues([id! : true])
+                Database.database().reference().child("Old Catalog").child(feed.id).updateChildValues(["YesVotes":self.countYesVotes + 1])
+                sender.isEnabled = false
             }
             
         }
@@ -202,10 +258,12 @@ class FeedViewController: UIViewController {
     @IBAction func btn_no(_ sender: UIButton) {
         if let feed = feed{
             if self.storedData.integer(forKey: "ForVote") == 0{
-                Database.database().reference().child("Catalog").child(feed.id).child("Votes").updateChildValues([id! : false])
+                Database.database().reference().child("Catalog").child(feed.id).updateChildValues(["NoVotes":self.countNoVotes + 1])
+                sender.isEnabled = false
             }
             else{
-                Database.database().reference().child("Old Catalog").child(feed.id).child("Votes").updateChildValues([id! : false])
+                Database.database().reference().child("Old Catalog").child(feed.id).updateChildValues(["NoVotes":self.countNoVotes + 1])
+                sender.isEnabled = false
             }
         }
         
