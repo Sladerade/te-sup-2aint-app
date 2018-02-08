@@ -5,7 +5,7 @@ import Firebase
 import Kingfisher
 import UILoadControl
 
-class ShopVC: TabBarViewControllerPage, UITableViewDataSource, UITableViewDelegate  {
+class ShopVC: TabBarViewControllerPage, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate  {
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var loader: UIActivityIndicatorView!
@@ -30,6 +30,9 @@ class ShopVC: TabBarViewControllerPage, UITableViewDataSource, UITableViewDelega
     var loadingStart = 20
     var databaseRef:DatabaseReference!
     var feedList:[Feed] = []
+    var listFiltered:[Feed] = []
+    
+    var searchController = UISearchController()
     
     var storedData = UserDefaults.standard
     
@@ -54,10 +57,40 @@ class ShopVC: TabBarViewControllerPage, UITableViewDataSource, UITableViewDelega
         tableView.rowHeight = 100
         tableView.separatorColor = UIColor.clear
         
+        //Adding search view
+        searchController = UISearchController(searchResultsController: nil)
+        searchController.dimsBackgroundDuringPresentation = false
+        searchController.searchBar.delegate = self
+        searchController.searchBar.placeholder = "Search"
+        searchController.searchBar.sizeToFit()
+        searchController.hidesNavigationBarDuringPresentation = false
+        
+        //Add search view to table view
+        tableView.tableHeaderView = searchController.searchBar
+        
         databaseRef = Database.database().reference()
         getData(check: "True")
         
         // Do any additional setup after loading the view.
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        self.searchController.searchBar.text = ""
+        self.tableView.reloadData()
+    }
+    
+    //Search delegate method
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        let stringOfUser = (self.searchController.searchBar.text!)
+//        let list1 = englishBooks.filter { (name) -> Bool in
+//            name.contains("English")
+//        }
+         //listFiltered = feedList.filter {$0.name == stringOfUser}
+        listFiltered = feedList.filter({ (item) -> Bool in
+            let value:NSString = item.name as NSString
+            return (value.range(of: stringOfUser, options: .caseInsensitive).location != NSNotFound)
+        })
+        tableView.reloadData()
     }
     
     @IBAction func segmentAction(_ sender: UISegmentedControl) {
@@ -93,44 +126,66 @@ class ShopVC: TabBarViewControllerPage, UITableViewDataSource, UITableViewDelega
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if searchController.isActive == true && searchController.searchBar.text != "" {
+            //If search is found
+            return listFiltered.count
+        }
         return feedList.count
-        
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell") as! ItemTableCell
-        let imageUrl = URL(string: feedList[indexPath.row].photoUrl)
-        cell.itemImage.kf.setImage(with: imageUrl!)
-        cell.itemName.text = feedList[indexPath.row].name
-        cell.itemPrice.text = feedList[indexPath.row].priceUS
-//        rowIndex = indexPath.row
-//        if valueIndex == 0{
-//            let imageUrl = URL(string: "http://")
-//            cell.itemImage.kf.setImage(with: imageUrl!)
-//            cell.itemName.text = ""
-//            cell.itemPrice.text = ""
-//            cell.btnNext.isHidden = true
-//        }
-//        else if rowIndex != valueIndex{
-//            //All data gets sets here
-//            let imageUrl = URL(string: feedList[rowIndex].photoUrl)
-//            cell.itemImage.kf.setImage(with: imageUrl!)
-//            cell.itemName.text = feedList[rowIndex].name
-//            cell.itemPrice.text = feedList[rowIndex].priceUS
-//        }
-//        else{
-//            let imageUrl = URL(string: "http://")
-//            cell.itemImage.kf.setImage(with: imageUrl!)
-//            cell.itemName.text = ""
-//            cell.itemPrice.text = ""
-//            cell.btnNext.isHidden = true
-//        }
-//        rowIndex = rowIndex + 1
-        return cell
+        if searchController.isActive == true && searchController.searchBar.text != "" {
+            //If search is found
+            let cell = tableView.dequeueReusableCell(withIdentifier: "cell") as! ItemTableCell
+            let imageUrl = URL(string: listFiltered[indexPath.row].photoUrl)
+            cell.itemImage.kf.setImage(with: imageUrl!)
+            cell.itemName.text = listFiltered[indexPath.row].name
+            cell.itemPrice.text = listFiltered[indexPath.row].priceUS
+            return cell
+        }
+        else{
+            let cell = tableView.dequeueReusableCell(withIdentifier: "cell") as! ItemTableCell
+            let imageUrl = URL(string: feedList[indexPath.row].photoUrl)
+            cell.itemImage.kf.setImage(with: imageUrl!)
+            cell.itemName.text = feedList[indexPath.row].name
+            cell.itemPrice.text = feedList[indexPath.row].priceUS
+            //        rowIndex = indexPath.row
+            //        if valueIndex == 0{
+            //            let imageUrl = URL(string: "http://")
+            //            cell.itemImage.kf.setImage(with: imageUrl!)
+            //            cell.itemName.text = ""
+            //            cell.itemPrice.text = ""
+            //            cell.btnNext.isHidden = true
+            //        }
+            //        else if rowIndex != valueIndex{
+            //            //All data gets sets here
+            //            let imageUrl = URL(string: feedList[rowIndex].photoUrl)
+            //            cell.itemImage.kf.setImage(with: imageUrl!)
+            //            cell.itemName.text = feedList[rowIndex].name
+            //            cell.itemPrice.text = feedList[rowIndex].priceUS
+            //        }
+            //        else{
+            //            let imageUrl = URL(string: "http://")
+            //            cell.itemImage.kf.setImage(with: imageUrl!)
+            //            cell.itemName.text = ""
+            //            cell.itemPrice.text = ""
+            //            cell.btnNext.isHidden = true
+            //        }
+            //        rowIndex = rowIndex + 1
+            return cell
+        }
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        self.tabBarViewController.performSegue(withIdentifier: "FeedGroupPageController", sender: FeedGroupPageController.ViewModel(feeds: feedList, selectedFeed: feedList[indexPath.row]))
+        if searchController.isActive == true && searchController.searchBar.text != "" {
+            //HANDLE ROW SELECTION FROM FILTERED DATA
+            self.searchController.dismiss(animated: true, completion: {
+                self.tabBarViewController.performSegue(withIdentifier: "FeedGroupPageController", sender: FeedGroupPageController.ViewModel(feeds: self.feedList, selectedFeed: self.listFiltered[indexPath.row]))
+            })
+        }
+        else{
+            self.tabBarViewController.performSegue(withIdentifier: "FeedGroupPageController", sender: FeedGroupPageController.ViewModel(feeds: feedList, selectedFeed: feedList[indexPath.row]))
+        }
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
