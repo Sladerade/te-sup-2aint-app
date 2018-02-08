@@ -5,8 +5,9 @@ import Firebase
 import Kingfisher
 import UILoadControl
 
-class ShopVC: TabBarViewControllerPage, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate  {
+class ShopVC: TabBarViewControllerPage, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UISearchControllerDelegate  {
     
+    @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var loader: UIActivityIndicatorView!
     @IBOutlet weak var segment: UISegmentedControl!
@@ -32,17 +33,33 @@ class ShopVC: TabBarViewControllerPage, UITableViewDataSource, UITableViewDelega
     var feedList:[Feed] = []
     var listFiltered:[Feed] = []
     
-    var searchController = UISearchController()
+    //let searchController = UISearchController(searchResultsController: nil)
     
     var storedData = UserDefaults.standard
+    var isSearching = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        print("amad")
         
         refresher = UIRefreshControl()
         refresher.tintColor = UIColor.red
         refresher.addTarget(self, action: #selector(ShopVC.populate), for: UIControlEvents.valueChanged)
         tableView.addSubview(refresher)
+        searchBar.delegate = self
+        let textFieldInsideSearchBar = searchBar.value(forKey: "searchField") as? UITextField
+        textFieldInsideSearchBar?.textColor = UIColor.red
+//        searchController.dimsBackgroundDuringPresentation = false
+//        definesPresentationContext = true
+//        tableView.tableHeaderView = searchController.searchBar
+//        searchController.delegate = self
+//        searchController.searchBar.delegate = self
+//        searchController.searchBar.placeholder = "Search"
+//        searchController.searchBar.sizeToFit()
+//        searchController.hidesNavigationBarDuringPresentation = false
+//        searchController.definesPresentationContext = true
+        //Add search view to table view
         
         
         //        UIFont(name: "Courier New", size: 12)
@@ -57,17 +74,6 @@ class ShopVC: TabBarViewControllerPage, UITableViewDataSource, UITableViewDelega
         tableView.rowHeight = 100
         tableView.separatorColor = UIColor.clear
         
-        //Adding search view
-        searchController = UISearchController(searchResultsController: nil)
-        searchController.dimsBackgroundDuringPresentation = false
-        searchController.searchBar.delegate = self
-        searchController.searchBar.placeholder = "Search"
-        searchController.searchBar.sizeToFit()
-        searchController.hidesNavigationBarDuringPresentation = false
-        
-        //Add search view to table view
-        tableView.tableHeaderView = searchController.searchBar
-        
         databaseRef = Database.database().reference()
         getData(check: "True")
         
@@ -75,17 +81,14 @@ class ShopVC: TabBarViewControllerPage, UITableViewDataSource, UITableViewDelega
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        self.searchController.searchBar.text = ""
+        searchBar.text = ""
+        searchBar.endEditing(true)
         self.tableView.reloadData()
     }
     
     //Search delegate method
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        let stringOfUser = (self.searchController.searchBar.text!)
-//        let list1 = englishBooks.filter { (name) -> Bool in
-//            name.contains("English")
-//        }
-         //listFiltered = feedList.filter {$0.name == stringOfUser}
+        let stringOfUser = (searchBar.text!)
         listFiltered = feedList.filter({ (item) -> Bool in
             let value:NSString = item.name as NSString
             return (value.range(of: stringOfUser, options: .caseInsensitive).location != NSNotFound)
@@ -126,7 +129,7 @@ class ShopVC: TabBarViewControllerPage, UITableViewDataSource, UITableViewDelega
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if searchController.isActive == true && searchController.searchBar.text != "" {
+        if searchBar.text != "" {
             //If search is found
             return listFiltered.count
         }
@@ -134,8 +137,9 @@ class ShopVC: TabBarViewControllerPage, UITableViewDataSource, UITableViewDelega
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if searchController.isActive == true && searchController.searchBar.text != "" {
+        if searchBar.text != "" {
             //If search is found
+            
             let cell = tableView.dequeueReusableCell(withIdentifier: "cell") as! ItemTableCell
             let imageUrl = URL(string: listFiltered[indexPath.row].photoUrl)
             cell.itemImage.kf.setImage(with: imageUrl!)
@@ -177,11 +181,9 @@ class ShopVC: TabBarViewControllerPage, UITableViewDataSource, UITableViewDelega
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if searchController.isActive == true && searchController.searchBar.text != "" {
+        if searchBar.text != "" {
             //HANDLE ROW SELECTION FROM FILTERED DATA
-            self.searchController.dismiss(animated: true, completion: {
-                self.tabBarViewController.performSegue(withIdentifier: "FeedGroupPageController", sender: FeedGroupPageController.ViewModel(feeds: self.feedList, selectedFeed: self.listFiltered[indexPath.row]))
-            })
+            self.tabBarViewController.performSegue(withIdentifier: "FeedGroupPageController", sender: FeedGroupPageController.ViewModel(feeds: self.feedList, selectedFeed: self.listFiltered[indexPath.row]))
         }
         else{
             self.tabBarViewController.performSegue(withIdentifier: "FeedGroupPageController", sender: FeedGroupPageController.ViewModel(feeds: feedList, selectedFeed: feedList[indexPath.row]))

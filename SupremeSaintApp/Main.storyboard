@@ -793,9 +793,15 @@
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="woX-MJ-RaO">
                                 <rect key="frame" x="0.0" y="64" width="367" height="603"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <searchBar key="tableHeaderView" contentMode="redraw" searchBarStyle="minimal" placeholder="Search" showsCancelButton="YES" id="r6U-rA-F0f">
+                                    <rect key="frame" x="0.0" y="0.0" width="367" height="56"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                    <color key="tintColor" red="0.92941176469999998" green="0.10980392160000001" blue="0.14117647059999999" alpha="1" colorSpace="calibratedRGB"/>
+                                    <textInputTraits key="textInputTraits"/>
+                                </searchBar>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="cell" rowHeight="85" id="zaR-cu-cn6" customClass="ItemTableCell" customModule="SupremeSaintApp" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="367" height="85"/>
+                                        <rect key="frame" x="0.0" y="84" width="367" height="85"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="zaR-cu-cn6" id="D1I-lD-ggR">
                                             <rect key="frame" x="0.0" y="0.0" width="367" height="84.5"/>
@@ -898,16 +904,17 @@
                             <constraint firstItem="bFV-lh-rIl" firstAttribute="trailing" secondItem="OSy-h3-hNK" secondAttribute="trailing" constant="16" id="H2A-xs-fcN"/>
                             <constraint firstItem="SVT-r6-3cO" firstAttribute="centerY" secondItem="D7u-xY-NGU" secondAttribute="centerY" id="H4V-hD-EhC"/>
                             <constraint firstItem="2oB-Ee-MDd" firstAttribute="centerX" secondItem="D7u-xY-NGU" secondAttribute="centerX" id="MOS-TB-8G1"/>
-                            <constraint firstItem="woX-MJ-RaO" firstAttribute="top" secondItem="OSy-h3-hNK" secondAttribute="bottom" constant="8" id="RUB-jm-RrO"/>
                             <constraint firstItem="bFV-lh-rIl" firstAttribute="bottom" secondItem="woX-MJ-RaO" secondAttribute="bottom" id="ZUU-CE-CbC"/>
                             <constraint firstItem="SVT-r6-3cO" firstAttribute="centerX" secondItem="D7u-xY-NGU" secondAttribute="centerX" id="csm-p6-8ov"/>
                             <constraint firstItem="OSy-h3-hNK" firstAttribute="leading" secondItem="bFV-lh-rIl" secondAttribute="leading" constant="16" id="huF-6j-5KK"/>
                             <constraint firstItem="woX-MJ-RaO" firstAttribute="leading" secondItem="bFV-lh-rIl" secondAttribute="leading" id="qdz-JQ-Z6q"/>
+                            <constraint firstItem="woX-MJ-RaO" firstAttribute="top" secondItem="OSy-h3-hNK" secondAttribute="bottom" constant="8" id="vz3-Ne-4Sf"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="bFV-lh-rIl"/>
                     </view>
                     <connections>
                         <outlet property="loader" destination="SVT-r6-3cO" id="guo-UQ-Y1B"/>
+                        <outlet property="searchBar" destination="r6U-rA-F0f" id="one-Z3-KnF"/>
                         <outlet property="segment" destination="OSy-h3-hNK" id="bkL-Rp-fCw"/>
                         <outlet property="tableView" destination="woX-MJ-RaO" id="3hm-Bs-tVq"/>
                         <segue destination="fC2-m4-dEM" kind="show" identifier="showItemDetails" id="WF0-tI-q4v"/>
