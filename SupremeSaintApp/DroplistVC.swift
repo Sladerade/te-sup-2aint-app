@@ -300,6 +300,8 @@ class ShopVC: TabBarViewControllerPage, UITableViewDataSource, UITableViewDelega
             DispatchQueue.main.async {
                 self.loader.isHidden = true
                 self.loader.stopAnimating()
+                let HEIGHT_VIEW = 0
+                self.tableView.tableHeaderView?.frame.size = CGSize(width:self.tableView.frame.width, height: CGFloat(HEIGHT_VIEW))
                 self.tableView.reloadData()
                 
             }
@@ -334,6 +336,8 @@ class ShopVC: TabBarViewControllerPage, UITableViewDataSource, UITableViewDelega
             DispatchQueue.main.async {
                 self.loader.isHidden = true
                 self.loader.stopAnimating()
+                let HEIGHT_VIEW = 60
+                self.tableView.tableHeaderView?.frame.size = CGSize(width:self.tableView.frame.width, height: CGFloat(HEIGHT_VIEW))
                 self.tableView.reloadData()
             }
         }) { (Error) in
