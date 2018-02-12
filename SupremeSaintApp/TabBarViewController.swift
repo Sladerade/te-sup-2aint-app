@@ -13,7 +13,7 @@ class TabBarViewController: ViewControllerWithLogo {
     
     @IBOutlet weak var newsIcon: UIImageView!
     @IBOutlet weak var newsBg: UIImageView!
-    
+    @IBOutlet weak var menuButton: UIBarButtonItem!
     @IBOutlet weak var containerView: UIView!
     
     @IBOutlet weak var titleLabel: UILabel!
@@ -60,7 +60,17 @@ class TabBarViewController: ViewControllerWithLogo {
 //        self.navigationItem.titleView = UIImageView(image: image)
 //        imageView.contentMode = .scaleAspectFill
         
-      
+        if revealViewController() != nil {
+            menuButton.target = revealViewController()
+            menuButton.action = #selector(SWRevealViewController.revealToggle(_:))
+            
+            view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
+            
+//            self.view.addSubview(revealingSplashView)
+//            revealingSplashView.animationType = .heartBeat
+//            revealingSplashView.startAnimation()
+//            revealingSplashView.heartAttack = true
+        }
         
         // Tab Bar Image Connections
         homeIcon.image = homeIcon.image!

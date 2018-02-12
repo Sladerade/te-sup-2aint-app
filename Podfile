@@ -14,6 +14,9 @@ target 'SupremeSaintApp' do
     pod ‘SwiftyJSON’
     pod ‘Toaster’
     pod 'UILoadControl'
+    pod 'Firebase/Auth'
+    pod 'IQKeyboardManager'
+    pod 'ProgressHUD'
 
 
   target 'SupremeSaintAppTests' do

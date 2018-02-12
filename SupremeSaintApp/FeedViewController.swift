@@ -10,9 +10,10 @@ import UIKit
 import SwiftyJSON
 import Toaster
 import Firebase
+import Kingfisher
 
 class FeedViewController: UIViewController {
-
+    
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var priceLabel: UILabel!
@@ -27,10 +28,11 @@ class FeedViewController: UIViewController {
     
     
     var id:String!
-    
+    var imageNumber = 0
     var countYesVotes = 0
     var countNoVotes = 0
     var totalVote:Double = 0
+    var imagesArray = [String]()
     
     var feed:Feed?
     {
@@ -49,6 +51,9 @@ class FeedViewController: UIViewController {
         //getAllVotes()
         getVotes()
     }
+    
+    
+    
     
     func getVotes(){
         if let feed = feed {
@@ -167,15 +172,61 @@ class FeedViewController: UIViewController {
             descriptionLabel.text = feed.description
             titleLabel.text = feed.name
             priceLabel.text = "\(feed.priceUS) / \(feed.priceEU)"
-            imageView.downloadImage(from: feed.photoUrl)
+            //imageView.downloadImage(from: feed.photoUrl)
+            queryImage()
         }
     }
     
-//    func removeSpecialCharsFromString(str: String) -> String {
-//        let chars = Set("abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLKMNOPQRSTUVWXYZ1234567890+-*=(),.:!_®/".characters)
-//        return String(str.characters.filter { chars.contains($0) })
-//    }
-
+    
+    func queryImage()
+    {
+        if let feed = feed{
+            if self.storedData.integer(forKey: "ForVote") == 0{
+                Database.database().reference().child("Catalog").child(feed.id).child("Photos").observeSingleEvent(of: .value, with: { (snapshot) in
+                    
+                    if let photos = snapshot.value as? NSArray
+                    {
+                        for i in 1..<photos.count
+                        {
+                            self.imagesArray.append(photos[i] as! String)
+                        }
+                        self.showImages()
+                    }
+                })
+                
+            }
+            else{
+                Database.database().reference().child("Old Catalog").child(feed.id).child("photos").observeSingleEvent(of: .value, with: { (snapshot) in
+                    if let photos = snapshot.value as? NSArray
+                    {
+                        for photo in photos
+                        {
+                            self.imagesArray.append("http:\(photo)")
+                        }
+                        self.showImages()
+                    }
+                })
+                
+            }
+            
+        }
+    }
+    
+    func showImages()
+    {
+        if imagesArray.count != 0
+        {
+            imageView.kf.setImage(with: URL(string: imagesArray[imageNumber]))
+        }
+    }
+    
+    
+    
+    //    func removeSpecialCharsFromString(str: String) -> String {
+    //        let chars = Set("abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLKMNOPQRSTUVWXYZ1234567890+-*=(),.:!_®/".characters)
+    //        return String(str.characters.filter { chars.contains($0) })
+    //    }
+    
     
     @IBAction func btn_buy(_ sender: UIButton) {
         let nameRemoveAt = feed!.name.replacingOccurrences(of: "®", with: " ")
@@ -209,9 +260,9 @@ class FeedViewController: UIViewController {
                         let itemId = getItems["itemId"][0].string ?? ""
                         let appURL = NSURL(string: "ebay://launch?itm=\(itemId)")!
                         let webURL = NSURL(string: itemSearchURL)!
-
+                        
                         let application = UIApplication.shared
-
+                        
                         if application.canOpenURL(appURL as URL) {
                             application.open(appURL as URL)
                         } else {
@@ -220,15 +271,15 @@ class FeedViewController: UIViewController {
                         }
                         
                         
-//                        if let url = URL(string: itemSearchURL!) {
-//                            if #available(iOS 10, *) {
-//                                UIApplication.shared.open(url, options: [:],completionHandler: { (success) in
-//                                })
-//                            } else {
-//                                let success = UIApplication.shared.openURL(url)
-//                            }
-//                        }
-//                        print(itemSearchURL!)
+                        //                        if let url = URL(string: itemSearchURL!) {
+                        //                            if #available(iOS 10, *) {
+                        //                                UIApplication.shared.open(url, options: [:],completionHandler: { (success) in
+                        //                                })
+                        //                            } else {
+                        //                                let success = UIApplication.shared.openURL(url)
+                        //                            }
+                        //                        }
+                        //                        print(itemSearchURL!)
                     }
                     DispatchQueue.main.async {
                     }
@@ -268,5 +319,54 @@ class FeedViewController: UIViewController {
         }
         
     }
-
+    
+    
+    @IBAction func swipePrev(_ sender: UISwipeGestureRecognizer) {
+//        if imagesArray.count != 0 {
+//            imageNumber -= 1
+//
+//            if imageNumber < 0 {
+//                imageNumber = 0
+//            } else {
+//
+//                UIView.animate(withDuration: 0.1, delay: 0.0, options: .curveLinear, animations: {
+//                    self.imageView.frame.origin.x = self.view.frame.size.width
+//                }, completion: { (finished: Bool) in
+//                    self.imageView.frame.origin.x = -self.view.frame.size.width
+//                    self.showImages()
+//
+//                    UIView.animate(withDuration: 0.1, delay: 0.0, options: .curveLinear, animations: {
+//                        self.imageView.frame.origin.x = 0
+//                    }, completion: { (finished: Bool) in })
+//                })
+//            }
+//
+//        }
+    }
+    
+    @IBAction func swipeNext(_ sender: UISwipeGestureRecognizer) {
+//        if imagesArray.count != 0 {
+//            imageNumber += 1
+//
+//            if imageNumber > imagesArray.count - 1 {
+//                imageNumber = imagesArray.count - 1
+//            } else {
+//                UIView.animate(withDuration: 0.1, delay: 0.0, options: .curveLinear, animations: {
+//                    self.imageView.frame.origin.x = -self.view.frame.size.width
+//                }, completion: { (finished: Bool) in
+//                    self.imageView.frame.origin.x = self.view.frame.size.width
+//                    self.showImages()
+//
+//                    UIView.animate(withDuration: 0.1, delay: 0.0, options: .curveLinear, animations: {
+//                        self.imageView.frame.origin.x = 0
+//                    }, completion: { (finished: Bool) in })
+//                })
+//            }
+//        }
+    }
+    
+    
+    
 }
+
+

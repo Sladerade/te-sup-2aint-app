@@ -1,6 +1,8 @@
 import UIKit
 import TwitterKit
 import Firebase
+import IQKeyboardManager
+import FirebaseAuth
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -12,8 +14,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         TWTRTwitter.sharedInstance().start(withConsumerKey:"lwMfhTGdIpZ8fOMtKJYntC1re", consumerSecret:"XDqcLSV0ZyUcqDKh0TAjdbNnImMy5HQhGr7hH3ZpgYOmcWsYbQ")
         
+        IQKeyboardManager.shared().isEnabled = true
         FirebaseApp.configure()
-        // Override point for customization after application launch.
+        
+        if Auth.auth().currentUser != nil
+        {
+            let board = UIStoryboard(name: "Main", bundle: nil)
+            let tabBar = board.instantiateViewController(withIdentifier: "tabBarcontroller")
+            window?.rootViewController = tabBar
+        }
+        
         return true
     }
     

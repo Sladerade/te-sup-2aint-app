@@ -37,6 +37,14 @@
 		8C35A67F200129C300BCE5B2 /* TwitterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C35A67E200129C300BCE5B2 /* TwitterViewController.swift */; };
 		AB6C7F8892AA28A9C29C099C /* Pods_SupremeSaintApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E441FF4F28141978A1D0FB18 /* Pods_SupremeSaintApp.framework */; };
 		B219664D200BCD930096F607 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B219664C200BCD930096F607 /* Main.storyboard */; };
+		B308F3D22031489700244325 /* LeftMenuVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B308F3D12031489700244325 /* LeftMenuVC.swift */; };
+		B329BEEC20301B5E009CBFAA /* DesignableButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B329BEEB20301B5E009CBFAA /* DesignableButton.swift */; };
+		B386F43B20302DD70063D78F /* DesignableField.swift in Sources */ = {isa = PBXBuildFile; fileRef = B386F43A20302DD70063D78F /* DesignableField.swift */; };
+		B386F43D20302ED00063D78F /* AuthVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B386F43C20302ED00063D78F /* AuthVC.swift */; };
+		B386F43F20302EDE0063D78F /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B386F43E20302EDE0063D78F /* LoginVC.swift */; };
+		B386F44120302EEB0063D78F /* SignUpVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B386F44020302EEB0063D78F /* SignUpVC.swift */; };
+		B3FC3D552030A01F00EB8B20 /* Alertable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3FC3D542030A01E00EB8B20 /* Alertable.swift */; };
+		B3FC3D592030A6D800EB8B20 /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B3FC3D582030A6D700EB8B20 /* SWRevealViewController.m */; };
 		F652981A2020A255006FC603 /* ShowItemDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F65298192020A255006FC603 /* ShowItemDetailsViewController.swift */; };
 		F666F56B201274520054D9C9 /* ItemTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F666F56A201274520054D9C9 /* ItemTableCell.swift */; };
 		F6E7A5E020249D3300211E62 /* MyImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6E7A5DF20249D3300211E62 /* MyImageViewController.swift */; };
@@ -102,6 +110,16 @@
 		AAAF999E6D8B876F960F4C3F /* Pods_SupremeSaintAppTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SupremeSaintAppTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AEA01F5B6EB5E1F661E27297 /* Pods_SupremeSaintAppUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SupremeSaintAppUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B219664C200BCD930096F607 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		B308F3D12031489700244325 /* LeftMenuVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeftMenuVC.swift; sourceTree = "<group>"; };
+		B329BEEB20301B5E009CBFAA /* DesignableButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesignableButton.swift; sourceTree = "<group>"; };
+		B386F43A20302DD70063D78F /* DesignableField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesignableField.swift; sourceTree = "<group>"; };
+		B386F43C20302ED00063D78F /* AuthVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthVC.swift; sourceTree = "<group>"; };
+		B386F43E20302EDE0063D78F /* LoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
+		B386F44020302EEB0063D78F /* SignUpVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpVC.swift; sourceTree = "<group>"; };
+		B3FC3D542030A01E00EB8B20 /* Alertable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Alertable.swift; sourceTree = "<group>"; };
+		B3FC3D562030A6D200EB8B20 /* SupremeSaintApp-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SupremeSaintApp-Bridging-Header.h"; sourceTree = "<group>"; };
+		B3FC3D572030A6D600EB8B20 /* SWRevealViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWRevealViewController.h; sourceTree = "<group>"; };
+		B3FC3D582030A6D700EB8B20 /* SWRevealViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWRevealViewController.m; sourceTree = "<group>"; };
 		E441FF4F28141978A1D0FB18 /* Pods_SupremeSaintApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SupremeSaintApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F65298192020A255006FC603 /* ShowItemDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowItemDetailsViewController.swift; sourceTree = "<group>"; };
 		F666F56A201274520054D9C9 /* ItemTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemTableCell.swift; sourceTree = "<group>"; };
@@ -159,9 +177,14 @@
 		54DD160D200E3874007CE915 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				B3FC3D572030A6D600EB8B20 /* SWRevealViewController.h */,
+				B3FC3D582030A6D700EB8B20 /* SWRevealViewController.m */,
 				54DD160E200E3884007CE915 /* Compound */,
 				54ADE9BE200F69B1005547FE /* FeedCollectionVCell.swift */,
 				54ADE9BF200F69B1005547FE /* FeedCollectionVCell.xib */,
+				B329BEEB20301B5E009CBFAA /* DesignableButton.swift */,
+				B386F43A20302DD70063D78F /* DesignableField.swift */,
+				B3FC3D562030A6D200EB8B20 /* SupremeSaintApp-Bridging-Header.h */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -210,6 +233,7 @@
 			isa = PBXGroup;
 			children = (
 				5490493020109B3F006910AF /* GoogleService-Info.plist */,
+				B3FC3D532030A01E00EB8B20 /* Protocols */,
 				5490492B201087BD006910AF /* Model */,
 				54904928201080C9006910AF /* Service */,
 				54DD160D200E3874007CE915 /* View */,
@@ -234,6 +258,10 @@
 				F65298192020A255006FC603 /* ShowItemDetailsViewController.swift */,
 				F6E7A5DF20249D3300211E62 /* MyImageViewController.swift */,
 				F6E7A5E1202500E400211E62 /* UIView.swift */,
+				B386F43C20302ED00063D78F /* AuthVC.swift */,
+				B386F43E20302EDE0063D78F /* LoginVC.swift */,
+				B386F44020302EEB0063D78F /* SignUpVC.swift */,
+				B308F3D12031489700244325 /* LeftMenuVC.swift */,
 			);
 			path = SupremeSaintApp;
 			sourceTree = "<group>";
@@ -254,6 +282,14 @@
 				8C1A5FB62001262400BE0BD3 /* Info.plist */,
 			);
 			path = SupremeSaintAppUITests;
+			sourceTree = "<group>";
+		};
+		B3FC3D532030A01E00EB8B20 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				B3FC3D542030A01E00EB8B20 /* Alertable.swift */,
+			);
+			path = Protocols;
 			sourceTree = "<group>";
 		};
 		F66028547BDA1091B43B8E90 /* Pods */ = {
@@ -346,6 +382,7 @@
 				TargetAttributes = {
 					8C1A5F902001262400BE0BD3 = {
 						CreatedOnToolsVersion = 9.2;
+						LastSwiftMigration = 0920;
 						ProvisioningStyle = Automatic;
 					};
 					8C1A5FA42001262400BE0BD3 = {
@@ -484,8 +521,11 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-SupremeSaintApp/Pods-SupremeSaintApp-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
+				"${BUILT_PRODUCTS_DIR}/IQKeyboardManager/IQKeyboardManager.framework",
 				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
+				"${BUILT_PRODUCTS_DIR}/ProgressHUD/ProgressHUD.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
 				"${BUILT_PRODUCTS_DIR}/Toaster/Toaster.framework",
 				"${PODS_ROOT}/TwitterCore/iOS/TwitterCore.framework",
@@ -496,8 +536,11 @@
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IQKeyboardManager.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ProgressHUD.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Toaster.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TwitterCore.framework",
@@ -586,6 +629,9 @@
 			files = (
 				54ADE9C0200F69B1005547FE /* FeedCollectionVCell.swift in Sources */,
 				549049352010B88E006910AF /* FeedGroupPageControllerContainerVC.swift in Sources */,
+				B386F43F20302EDE0063D78F /* LoginVC.swift in Sources */,
+				B386F43B20302DD70063D78F /* DesignableField.swift in Sources */,
+				B308F3D22031489700244325 /* LeftMenuVC.swift in Sources */,
 				54AB322D2011D2CF007E7218 /* HomeMessages.swift in Sources */,
 				5490492D201087CA006910AF /* Feed.swift in Sources */,
 				5490492A201080ED006910AF /* RemoveFileService.swift in Sources */,
@@ -597,12 +643,17 @@
 				8C1A5FC7200126C200BE0BD3 /* HomeVC.swift in Sources */,
 				549049372010BA1D006910AF /* FeedGroupPageController.swift in Sources */,
 				8C1A5FC8200126C200BE0BD3 /* NewsVC.swift in Sources */,
+				B329BEEC20301B5E009CBFAA /* DesignableButton.swift in Sources */,
 				549049392010BB51006910AF /* FeedViewController.swift in Sources */,
 				54DD1634200E645C007CE915 /* SlidePageViewController.swift in Sources */,
 				549049332010B13C006910AF /* Slide.swift in Sources */,
+				B386F43D20302ED00063D78F /* AuthVC.swift in Sources */,
 				F6E7A5E2202500E400211E62 /* UIView.swift in Sources */,
+				B386F44120302EEB0063D78F /* SignUpVC.swift in Sources */,
 				54147CA1200E684E00ED159C /* Extensions.swift in Sources */,
 				54DD1610200E38A6007CE915 /* HomeBanner.swift in Sources */,
+				B3FC3D592030A6D800EB8B20 /* SWRevealViewController.m in Sources */,
+				B3FC3D552030A01F00EB8B20 /* Alertable.swift in Sources */,
 				54DD1632200E63EC007CE915 /* SlideImageController.swift in Sources */,
 				8C1A5F972001262400BE0BD3 /* TabBarViewController.swift in Sources */,
 				54AB322B2011C2DA007E7218 /* RootNavigationController.swift in Sources */,
@@ -768,15 +819,18 @@
 			baseConfigurationReference = 202ADF962E20A2FDCE7B2BB7 /* Pods-SupremeSaintApp.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = G57B93B2EN;
 				INFOPLIST_FILE = SupremeSaintApp/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.sladerade.supsaintapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "SupremeSaintApp/View/SupremeSaintApp-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -787,15 +841,17 @@
 			baseConfigurationReference = A36DD52A4CCB9170970254A0 /* Pods-SupremeSaintApp.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = G57B93B2EN;
 				INFOPLIST_FILE = SupremeSaintApp/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.sladerade.supsaintapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "SupremeSaintApp/View/SupremeSaintApp-Bridging-Header.h";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
