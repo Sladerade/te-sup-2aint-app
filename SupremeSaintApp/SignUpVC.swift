@@ -40,6 +40,42 @@ class SignUpVC: UIViewController,Alertable {
             
         }
         
+        Database.database().reference().child("users").queryOrdered(byChild: "username").queryEqual(toValue: username).observeSingleEvent(of: .value) { (snapshot) in
+            
+            if snapshot.exists()
+            {
+                self.showAlert(_message: "Sorry username already has been taken. Choose a diffrent one")
+                return 
+            }
+            else
+            {
+                Auth.auth().createUser(withEmail: email, password: password) { (user, error) in
+                    
+                    if error == nil
+                    {
+                        ProgressHUD.dismiss()
+                        
+                        let userData = ["userEmail":email, "username": username, "provider": user!.providerID ] as [String:Any]
+                        FirebaseService.instance.createFirebaseUser(uid: user!.uid, userData: userData)
+                        
+                        
+                        let mainStoryboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+                        let viewController = mainStoryboard.instantiateViewController(withIdentifier: "tabBarcontroller")
+                        UIApplication.shared.keyWindow?.rootViewController = viewController
+                        
+                    }
+                    else
+                    {
+                        ProgressHUD.dismiss()
+                        self.showAlert(_message: error!.localizedDescription)
+                        print(error.debugDescription)
+                    }
+                    
+                }
+            }
+            
+        }
+        
         if password != confirmPwd
         {
             self.showAlert(_message: "Password does'nt matched. Try Again.")
@@ -47,29 +83,7 @@ class SignUpVC: UIViewController,Alertable {
             return
         }
         
-        Auth.auth().createUser(withEmail: email, password: password) { (user, error) in
-            
-            if error == nil
-            {
-                ProgressHUD.dismiss()
-                
-                let userData = ["userEmail":email, "username": username, "provider": user!.providerID ] as [String:Any]
-                FirebaseService.instance.createFirebaseUser(uid: user!.uid, userData: userData)
-                
-                
-                let mainStoryboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-                let viewController = mainStoryboard.instantiateViewController(withIdentifier: "tabBarcontroller") 
-                UIApplication.shared.keyWindow?.rootViewController = viewController
-                
-            }
-            else
-            {
-                ProgressHUD.dismiss()
-                self.showAlert(_message: error!.localizedDescription)
-                print(error.debugDescription)
-            }
-            
-        }
+        
         
     }
     

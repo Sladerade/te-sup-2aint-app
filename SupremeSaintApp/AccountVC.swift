@@ -4,6 +4,7 @@
 //  SupremeSaintApp
 //
 //  Created by Faizan on 12/02/2018.
+
 //  Copyright © 2018 Sladerade. All rights reserved.
 //
 
@@ -15,6 +16,16 @@ import ProgressHUD
 class AccountVC: UIViewController,Alertable {
 
     @IBOutlet weak var usernameField: UITextField!
+    @IBOutlet weak var pwdField: DesignableField!
+   // @IBOutlet weak var emailField: DesignableField!
+    @IBOutlet weak var confirmPwdField: DesignableField!
+    
+    
+    let user = Auth.auth().currentUser
+    var credential: AuthCredential!
+    
+    var useremail = ""
+    
     @IBOutlet weak var continueBtn: UIButton!
     @IBOutlet weak var menuButton: UIBarButtonItem!
     
@@ -40,6 +51,9 @@ class AccountVC: UIViewController,Alertable {
                 if let user = snapshot.value as? Dictionary<String,Any>
                 {
                     let username = user["username"] as! String
+                    let email = user["userEmail"] as! String
+                    
+                    self.useremail = email
                     self.usernameField.text = username
                 }
                 
@@ -51,32 +65,79 @@ class AccountVC: UIViewController,Alertable {
     
     @IBAction func continueTapped(_ sender: Any)
     {
-        ProgressHUD.show()
-        guard let username = usernameField.text, username != ""  else {
+        
+        ProgressHUD.show("Please Wait ..")
+        
+        guard let username = usernameField.text , username != ""  else {
             
-            self.showAlert(_message: "Please Type Something")
+            self.showAlert(_message: "Please fill field to change username")
+            ProgressHUD.dismiss()
+            return
+            
+        }
+        
+        Database.database().reference().child("users").queryOrdered(byChild: "username").queryEqual(toValue: username).observeSingleEvent(of: .value) { (snapshot) in
+            
+            if snapshot.exists()
+            {
+                ProgressHUD.dismiss()
+                self.showAlert(_message: "Sorry username already has been taken. Choose a diffrent one")
+                return
+            }
+            else
+            {
+                ProgressHUD.dismiss()
+                self.Message()
+                let userData = ["username": username] as [String:Any]
+            Database.database().reference().child("users").child(self.user!.uid).updateChildValues(userData)
+                
+            }
+            
+        }
+        
+    
+    }
+    
+    @IBAction func continuePasswordTapped(_ sender: Any)
+    {
+        ProgressHUD.show("Please Wait ..")
+        
+        guard let password = pwdField.text, let confirmPwd = confirmPwdField.text  , password != "", confirmPwd != "" else {
+            
+            self.showAlert(_message: "Please fill all fields to change password")
+            ProgressHUD.dismiss()
+            return
+            
+        }
+        
+        if password != confirmPwd
+        {
+            self.showAlert(_message: "Password does'nt matched. Try Again.")
             ProgressHUD.dismiss()
             return
         }
-        continueBtn.isEnabled = false
         
-        Database.database().reference().child("users").child(Auth.auth().currentUser!.uid).updateChildValues(["username": username]) { (error, refrence) in
-            
-            self.continueBtn.isEnabled = true
+        Auth.auth().currentUser?.updatePassword(to: password, completion: { (error) in
+            if let error = error {
+                ProgressHUD.dismiss()
+                self.showAlert(_message: error.localizedDescription)
+                return
+            }
             ProgressHUD.dismiss()
             self.Message()
-            self.showAlert(_message: error!.localizedDescription)
-            
-        }
         
+        })
     }
-    
     
     func Message()
     {
         let alert = UIAlertController(title: "Account Updated", message: "Your Account has been updated", preferredStyle: UIAlertControllerStyle.alert)
         alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
         self.present(alert, animated: true, completion: nil)
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        view.endEditing(true)
     }
     
 

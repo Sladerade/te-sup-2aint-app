@@ -18,10 +18,15 @@ class FeedViewController: UIViewController {
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var priceLabel: UILabel!
     
+    @IBOutlet weak var copDropStackView: UIStackView!
     @IBOutlet weak var likes: UILabel!
     @IBOutlet weak var disLikes: UILabel!
+    @IBOutlet weak var copLbl: UILabel!
+    @IBOutlet weak var dropLbl: UILabel!
     @IBOutlet weak var superView: UIView!
     @IBOutlet weak var descriptionLabel: UILabel!
+    @IBOutlet weak var pageControl : UIPageControl!
+    
     var totalYesVote:Double = 0
     var totalNoVote:Double = 0
     var storedData = UserDefaults.standard
@@ -50,8 +55,28 @@ class FeedViewController: UIViewController {
         updateUIs()
         //getAllVotes()
         getVotes()
+        votesDisapper()
     }
     
+    
+    
+    func votesDisapper()
+    {
+        copLbl.alpha = 0
+        dropLbl.alpha  = 0
+        superView.alpha = 0
+        likes.alpha = 0
+        disLikes.alpha = 0
+    }
+    
+    func votesAppear()
+    {
+        copLbl.alpha = 1
+        dropLbl.alpha  = 1
+        superView.alpha = 1
+        likes.alpha = 1
+        disLikes.alpha = 1
+    }
     
     
     
@@ -190,6 +215,7 @@ class FeedViewController: UIViewController {
                         {
                             self.imagesArray.append(photos[i] as! String)
                         }
+                        self.pageControl.numberOfPages = self.imagesArray.count
                         self.showImages()
                     }
                 })
@@ -203,6 +229,7 @@ class FeedViewController: UIViewController {
                         {
                             self.imagesArray.append("http:\(photo)")
                         }
+                        self.pageControl.numberOfPages = self.imagesArray.count
                         self.showImages()
                     }
                 })
@@ -216,6 +243,7 @@ class FeedViewController: UIViewController {
     {
         if imagesArray.count != 0
         {
+            pageControl.currentPage = imageNumber
             imageView.kf.setImage(with: URL(string: imagesArray[imageNumber]))
         }
     }
@@ -296,24 +324,40 @@ class FeedViewController: UIViewController {
         if let feed = feed{
             if self.storedData.integer(forKey: "ForVote") == 0{
                 Database.database().reference().child("Catalog").child(feed.id).updateChildValues(["YesVotes":self.countYesVotes + 1])
+                animateStackView()
                 sender.isEnabled = false
             }
             else{
                 Database.database().reference().child("Old Catalog").child(feed.id).updateChildValues(["YesVotes":self.countYesVotes + 1])
+                animateStackView()
                 sender.isEnabled = false
             }
             
         }
         
     }
+    
+    
+    func animateStackView()
+    {
+        UIView.animate(withDuration: 0.3) {
+            self.copDropStackView.alpha = 0
+            UIView.animate(withDuration: 0.3, animations: {
+                self.votesAppear()
+            })
+        }
+    }
+    
     @IBAction func btn_no(_ sender: UIButton) {
         if let feed = feed{
             if self.storedData.integer(forKey: "ForVote") == 0{
                 Database.database().reference().child("Catalog").child(feed.id).updateChildValues(["NoVotes":self.countNoVotes + 1])
+                animateStackView()
                 sender.isEnabled = false
             }
             else{
                 Database.database().reference().child("Old Catalog").child(feed.id).updateChildValues(["NoVotes":self.countNoVotes + 1])
+                animateStackView()
                 sender.isEnabled = false
             }
         }

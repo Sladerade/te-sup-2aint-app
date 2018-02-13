@@ -17,6 +17,7 @@ target 'SupremeSaintApp' do
     pod 'Firebase/Auth'
     pod 'IQKeyboardManager'
     pod 'ProgressHUD'
+    pod 'RevealingSplashView'
 
 
   target 'SupremeSaintAppTests' do

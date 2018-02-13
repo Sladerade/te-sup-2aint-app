@@ -27,6 +27,8 @@ class LeftMenuVC: UIViewController {
         tap.numberOfTapsRequired = 1
         logoImg.addGestureRecognizer(tap)
         
+        self.revealViewController().rearViewRevealWidth = 200
+        
     }
     
     @objc func logoImg(tap : UITapGestureRecognizer)

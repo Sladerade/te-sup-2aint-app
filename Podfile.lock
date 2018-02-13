@@ -45,6 +45,7 @@ PODS:
   - nanopb/decode (0.3.8)
   - nanopb/encode (0.3.8)
   - ProgressHUD (2.51)
+  - RevealingSplashView (0.4.0)
   - SwiftyJSON (4.0.0)
   - Toaster (2.1.1)
   - TwitterCore (3.1.0)
@@ -59,6 +60,7 @@ DEPENDENCIES:
   - IQKeyboardManager
   - Kingfisher
   - ProgressHUD
+  - RevealingSplashView
   - SwiftyJSON
   - Toaster
   - TwitterKit
@@ -78,12 +80,13 @@ SPEC CHECKSUMS:
   leveldb-library: 08cba283675b7ed2d99629a4bc5fd052cd2bb6a5
   nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
   ProgressHUD: 54b4c2fa202bf3da7dddc1c698ae4e6376333bd9
+  RevealingSplashView: 72be158ad5e1bc72713e8f78383dc3e1803ce4d1
   SwiftyJSON: 070dabdcb1beb81b247c65ffa3a79dbbfb3b48aa
   Toaster: a6c9532de1ded8105e77376f7dffeb2e12b46dbb
   TwitterCore: 644d59e75abccb26cf0a9050d2c4dea0e5412241
   TwitterKit: a2e60ddcedbf54091eac6f27685ca7a87681e1d7
   UILoadControl: e742ddbe4c67ba1f13b00b7d462d4141307d021f
 
-PODFILE CHECKSUM: 9050ed6dec4e52eb3475ae74e32000dcfff621d3
+PODFILE CHECKSUM: ebfd087a959d3288a105b2a2cd648a191d610cfd
 
 COCOAPODS: 1.3.1

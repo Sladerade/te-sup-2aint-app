@@ -1,4 +1,5 @@
 import UIKit
+import RevealingSplashView
 
 class HomeVC: TabBarViewControllerPage, UIScrollViewDelegate {
     
@@ -33,12 +34,23 @@ class HomeVC: TabBarViewControllerPage, UIScrollViewDelegate {
     }
     var refresher: UIRefreshControl!
     
+    let revealingSplashView = RevealingSplashView(iconImage: UIImage(named: "SaintNavBar")!, iconInitialSize: CGSize(width: 240.0, height: 240.0), backgroundColor: #colorLiteral(red: 0.9994935393, green: 0.01752460562, blue: 0.00630321214, alpha: 1))
+    
     
     @IBOutlet weak var myView: UIView!
     
     @IBOutlet weak var myViewsHeight: NSLayoutConstraint!
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
+        
+        revealingSplashView.animationType = .popAndZoomOut
+        revealingSplashView.startAnimation()
+        revealingSplashView.heartAttack = true
+        
+        let window = UIApplication.shared.keyWindow
+        window?.addSubview(revealingSplashView)
         
         self.myView.frame.size.height = 0
         refresher = UIRefreshControl()
