@@ -10,13 +10,123 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SupremeSaintApp/ShowItemDetailsViewController.swift"
-            timestampString = "540039288.978864"
+            timestampString = "540139340.731131"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "93"
             endingLineNumber = "93"
             landmarkName = "getAllVotes(value:)"
             landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "SupremeSaintApp/ShowItemDetailsViewController.swift"
+            timestampString = "540139340.7321579"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "45"
+            endingLineNumber = "45"
+            landmarkName = "updateUIs()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "SupremeSaintApp/ShowItemDetailsViewController.swift"
+            timestampString = "540139340.732504"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "39"
+            endingLineNumber = "39"
+            landmarkName = "viewDidLoad()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "SupremeSaintApp/ShowItemDetailsViewController.swift"
+            timestampString = "540139340.732838"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "178"
+            endingLineNumber = "178"
+            landmarkName = "ModalService"
+            landmarkType = "3">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "SupremeSaintApp.ShowItemDetailsViewController.ModalService.deinit"
+                  moduleName = "SupremeSaintApp"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/faizan/Desktop/te-sup-2aint-app/SupremeSaintApp/ShowItemDetailsViewController.swift"
+                  timestampString = "540150886.558833"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "0"
+                  endingLineNumber = "0"
+                  offsetFromSymbolStart = "4">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "SupremeSaintApp.ShowItemDetailsViewController.ModalService.__deallocating_deinit"
+                  moduleName = "SupremeSaintApp"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/faizan/Desktop/te-sup-2aint-app/SupremeSaintApp/ShowItemDetailsViewController.swift"
+                  timestampString = "540150886.568186"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "0"
+                  endingLineNumber = "0"
+                  offsetFromSymbolStart = "4">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "SupremeSaintApp.ShowItemDetailsViewController.ModalService.__allocating_init() -&gt; SupremeSaintApp.ShowItemDetailsViewController.ModalService"
+                  moduleName = "SupremeSaintApp"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/faizan/Desktop/te-sup-2aint-app/SupremeSaintApp/ShowItemDetailsViewController.swift"
+                  timestampString = "540150886.5767061"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "0"
+                  endingLineNumber = "0"
+                  offsetFromSymbolStart = "4">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "SupremeSaintApp.ShowItemDetailsViewController.ModalService.init() -&gt; SupremeSaintApp.ShowItemDetailsViewController.ModalService"
+                  moduleName = "SupremeSaintApp"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/faizan/Desktop/te-sup-2aint-app/SupremeSaintApp/ShowItemDetailsViewController.swift"
+                  timestampString = "540150886.585119"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "178"
+                  endingLineNumber = "178"
+                  offsetFromSymbolStart = "4">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

@@ -43,6 +43,8 @@
 		B386F43D20302ED00063D78F /* AuthVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B386F43C20302ED00063D78F /* AuthVC.swift */; };
 		B386F43F20302EDE0063D78F /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B386F43E20302EDE0063D78F /* LoginVC.swift */; };
 		B386F44120302EEB0063D78F /* SignUpVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B386F44020302EEB0063D78F /* SignUpVC.swift */; };
+		B3E9DC372031E53A00D394B8 /* WebVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3E9DC362031E53A00D394B8 /* WebVc.swift */; };
+		B3E9DC392031F27200D394B8 /* AccountVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3E9DC382031F27200D394B8 /* AccountVC.swift */; };
 		B3FC3D552030A01F00EB8B20 /* Alertable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3FC3D542030A01E00EB8B20 /* Alertable.swift */; };
 		B3FC3D592030A6D800EB8B20 /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B3FC3D582030A6D700EB8B20 /* SWRevealViewController.m */; };
 		F652981A2020A255006FC603 /* ShowItemDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F65298192020A255006FC603 /* ShowItemDetailsViewController.swift */; };
@@ -116,6 +118,8 @@
 		B386F43C20302ED00063D78F /* AuthVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthVC.swift; sourceTree = "<group>"; };
 		B386F43E20302EDE0063D78F /* LoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
 		B386F44020302EEB0063D78F /* SignUpVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpVC.swift; sourceTree = "<group>"; };
+		B3E9DC362031E53A00D394B8 /* WebVc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebVc.swift; sourceTree = "<group>"; };
+		B3E9DC382031F27200D394B8 /* AccountVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountVC.swift; sourceTree = "<group>"; };
 		B3FC3D542030A01E00EB8B20 /* Alertable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Alertable.swift; sourceTree = "<group>"; };
 		B3FC3D562030A6D200EB8B20 /* SupremeSaintApp-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SupremeSaintApp-Bridging-Header.h"; sourceTree = "<group>"; };
 		B3FC3D572030A6D600EB8B20 /* SWRevealViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWRevealViewController.h; sourceTree = "<group>"; };
@@ -262,6 +266,8 @@
 				B386F43E20302EDE0063D78F /* LoginVC.swift */,
 				B386F44020302EEB0063D78F /* SignUpVC.swift */,
 				B308F3D12031489700244325 /* LeftMenuVC.swift */,
+				B3E9DC382031F27200D394B8 /* AccountVC.swift */,
+				B3E9DC362031E53A00D394B8 /* WebVc.swift */,
 			);
 			path = SupremeSaintApp;
 			sourceTree = "<group>";
@@ -653,11 +659,13 @@
 				54147CA1200E684E00ED159C /* Extensions.swift in Sources */,
 				54DD1610200E38A6007CE915 /* HomeBanner.swift in Sources */,
 				B3FC3D592030A6D800EB8B20 /* SWRevealViewController.m in Sources */,
+				B3E9DC372031E53A00D394B8 /* WebVc.swift in Sources */,
 				B3FC3D552030A01F00EB8B20 /* Alertable.swift in Sources */,
 				54DD1632200E63EC007CE915 /* SlideImageController.swift in Sources */,
 				8C1A5F972001262400BE0BD3 /* TabBarViewController.swift in Sources */,
 				54AB322B2011C2DA007E7218 /* RootNavigationController.swift in Sources */,
 				F666F56B201274520054D9C9 /* ItemTableCell.swift in Sources */,
+				B3E9DC392031F27200D394B8 /* AccountVC.swift in Sources */,
 				8C1A5F952001262400BE0BD3 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

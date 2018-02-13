@@ -322,47 +322,49 @@ class FeedViewController: UIViewController {
     
     
     @IBAction func swipePrev(_ sender: UISwipeGestureRecognizer) {
-//        if imagesArray.count != 0 {
-//            imageNumber -= 1
-//
-//            if imageNumber < 0 {
-//                imageNumber = 0
-//            } else {
-//
-//                UIView.animate(withDuration: 0.1, delay: 0.0, options: .curveLinear, animations: {
-//                    self.imageView.frame.origin.x = self.view.frame.size.width
-//                }, completion: { (finished: Bool) in
-//                    self.imageView.frame.origin.x = -self.view.frame.size.width
-//                    self.showImages()
-//
-//                    UIView.animate(withDuration: 0.1, delay: 0.0, options: .curveLinear, animations: {
-//                        self.imageView.frame.origin.x = 0
-//                    }, completion: { (finished: Bool) in })
-//                })
-//            }
-//
-//        }
+        if imagesArray.count != 0 {
+            imageNumber -= 1
+
+            if imageNumber < 0 {
+                imageNumber = 0
+            } else {
+
+                UIView.animate(withDuration: 0.1, delay: 0.0, options: .curveLinear, animations: {
+                    self.imageView.frame.origin.x = self.view.frame.size.width
+                }, completion: { (finished: Bool) in
+                    self.imageView.frame.origin.x = -self.view.frame.size.width
+                    self.showImages()
+
+                    UIView.animate(withDuration: 0.1, delay: 0.0, options: .curveLinear, animations: {
+                        self.imageView.frame.origin.x = 0 + 50
+                    }, completion: { (finished: Bool) in })
+                })
+            }
+
+        }
+        
     }
     
     @IBAction func swipeNext(_ sender: UISwipeGestureRecognizer) {
-//        if imagesArray.count != 0 {
-//            imageNumber += 1
-//
-//            if imageNumber > imagesArray.count - 1 {
-//                imageNumber = imagesArray.count - 1
-//            } else {
-//                UIView.animate(withDuration: 0.1, delay: 0.0, options: .curveLinear, animations: {
-//                    self.imageView.frame.origin.x = -self.view.frame.size.width
-//                }, completion: { (finished: Bool) in
-//                    self.imageView.frame.origin.x = self.view.frame.size.width
-//                    self.showImages()
-//
-//                    UIView.animate(withDuration: 0.1, delay: 0.0, options: .curveLinear, animations: {
-//                        self.imageView.frame.origin.x = 0
-//                    }, completion: { (finished: Bool) in })
-//                })
-//            }
-//        }
+        if imagesArray.count != 0 {
+            imageNumber += 1
+
+            if imageNumber > imagesArray.count - 1 {
+                imageNumber = imagesArray.count - 1
+            } else {
+                UIView.animate(withDuration: 0.1, delay: 0.0, options: .curveLinear, animations: {
+                    self.imageView.frame.origin.x = -self.view.frame.size.width
+                }, completion: { (finished: Bool) in
+                    self.imageView.frame.origin.x = self.view.frame.size.width
+                    self.showImages()
+
+                    UIView.animate(withDuration: 0.1, delay: 0.0, options: .curveLinear, animations: {
+                        self.imageView.frame.origin.x = 0 + 50
+                    }, completion: { (finished: Bool) in })
+                })
+            }
+        }
+        
     }
     
     
