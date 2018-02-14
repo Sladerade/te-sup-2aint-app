@@ -47,7 +47,7 @@ class FeedGroupPageController: UIPageViewController {
 //            if index < feedViewControllers!.count - 1
 //            {
 //                return feedViewControllers![index+1]
-//        }
+//             }
 //        }
         return nil
     }

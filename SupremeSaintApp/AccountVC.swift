@@ -123,6 +123,9 @@ class AccountVC: UIViewController,Alertable {
                 self.showAlert(_message: error.localizedDescription)
                 return
             }
+            
+            self.pwdField.text = ""
+            self.confirmPwdField.text = ""
             ProgressHUD.dismiss()
             self.Message()
         

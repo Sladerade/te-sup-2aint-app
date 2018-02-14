@@ -7,9 +7,6 @@
 //
 
 import UIKit
-import Firebase
-import FirebaseAuth
-import ProgressHUD
 
 class AuthVC: UIViewController,Alertable {
 
@@ -22,24 +19,29 @@ class AuthVC: UIViewController,Alertable {
 
     @IBAction func anonymousTapped(_ sender: Any) {
         
-        ProgressHUD.show("Please Wait ..")
         
-        Auth.auth().signInAnonymously { (user, error) in
-            
-            if error == nil
-            {
-                ProgressHUD.dismiss()
-                let mainStoryboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-                let viewController = mainStoryboard.instantiateViewController(withIdentifier: "tabBarcontroller")
-                UIApplication.shared.keyWindow?.rootViewController = viewController
-            }
-            else
-            {
-                ProgressHUD.dismiss()
-                self.showAlert(_message: error!.localizedDescription)
-                print(error.debugDescription)
-            }
-        }
+        let mainStoryboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let viewController = mainStoryboard.instantiateViewController(withIdentifier: "tabBarcontroller")
+        UIApplication.shared.keyWindow?.rootViewController = viewController
+        
+//        ProgressHUD.show("Please Wait ..")
+//
+//        Auth.auth().signInAnonymously { (user, error) in
+//
+//            if error == nil
+//            {
+//                ProgressHUD.dismiss()
+//                let mainStoryboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+//                let viewController = mainStoryboard.instantiateViewController(withIdentifier: "tabBarcontroller")
+//                UIApplication.shared.keyWindow?.rootViewController = viewController
+//            }
+//            else
+//            {
+//                ProgressHUD.dismiss()
+//                self.showAlert(_message: error!.localizedDescription)
+//                print(error.debugDescription)
+//            }
+//        }
         
     }
 

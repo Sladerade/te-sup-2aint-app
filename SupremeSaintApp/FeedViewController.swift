@@ -10,15 +10,21 @@ import UIKit
 import SwiftyJSON
 import Toaster
 import Firebase
+import FirebaseAuth
 import Kingfisher
 
-class FeedViewController: UIViewController {
+
+
+
+
+class FeedViewController: UIViewController, Alertable {
     
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var priceLabel: UILabel!
     
-    @IBOutlet weak var copDropStackView: UIStackView!
+    @IBOutlet weak var copBtn: UIButton!
+    @IBOutlet weak var dropBtn: UIButton!
     @IBOutlet weak var likes: UILabel!
     @IBOutlet weak var disLikes: UILabel!
     @IBOutlet weak var copLbl: UILabel!
@@ -30,6 +36,8 @@ class FeedViewController: UIViewController {
     var totalYesVote:Double = 0
     var totalNoVote:Double = 0
     var storedData = UserDefaults.standard
+    
+    
     
     
     var id:String!
@@ -107,26 +115,30 @@ class FeedViewController: UIViewController {
             }
             else{
                 //Entry in catalog
-                Database.database().reference().child("Old Catalog").child(feed.id).observe(.value, with: { (snapshot) in
-                    for view in self.superView.subviews{
-                        view.removeFromSuperview()
-                    }
-                    let value =  snapshot.value as? NSDictionary
-                    self.countYesVotes = value?["YesVotes"] as? Int ?? 0
-                    self.countNoVotes = value?["NoVotes"] as? Int ?? 0
-                    self.likes.text = "\(self.countYesVotes)"
-                    self.disLikes.text = "\(self.countNoVotes)"
-                    
-                    self.totalVote = Double(value?["YesVotes"] as? Int ?? 0) + Double(value?["NoVotes"] as? Int ?? 0)
-                    let a = Double (self.countYesVotes)/self.totalVote
-                    print("sanan \(a)")
-                    if !a.isNaN{
-                        let screenSize: CGRect = self.superView.bounds
-                        let myView = UIView(frame: CGRect(x: 0, y: 0, width: screenSize.width * CGFloat(a), height: screenSize.height))
-                        myView.backgroundColor = UIColor.green
-                        self.superView.addSubview(myView)
-                    }
-                })
+//                Database.database().reference().child("Catalog").child(feed.id).observe(.value, with: { (snapshot) in
+//                    for view in self.superView.subviews{
+//                        view.removeFromSuperview()
+//                    }
+//                    let value =  snapshot.value as? NSDictionary
+//                    self.countYesVotes = value?["YesVotes"] as? Int ?? 0
+//                    self.countNoVotes = value?["NoVotes"] as? Int ?? 0
+//                    self.likes.text = "\(self.countYesVotes)"
+//                    self.disLikes.text = "\(self.countNoVotes)"
+//
+//                    self.totalVote = Double(value?["YesVotes"] as? Int ?? 0) + Double(value?["NoVotes"] as? Int ?? 0)
+//                    let a = Double (self.countYesVotes)/self.totalVote
+//                    print("sanan \(a)")
+//                    if !a.isNaN{
+//                        let screenSize: CGRect = self.superView.bounds
+//                        let myView = UIView(frame: CGRect(x: 0, y: 0, width: screenSize.width * CGFloat(a), height: screenSize.height))
+//                        myView.backgroundColor = UIColor.green
+//                        self.superView.addSubview(myView)
+//                    }
+//                })
+                superView.isHidden = true
+                votesDisapper()
+                copBtn.isHidden = true
+                dropBtn.isHidden = true
             }
         }
     }
@@ -161,7 +173,7 @@ class FeedViewController: UIViewController {
                 }
             }
             else{
-                Database.database().reference().child("Old Catalog").child(feed.id).child("Votes").observe(.childAdded, with: { (snapshot) in
+                Database.database().reference().child("Catalog").child(feed.id).child("Votes").observe(.childAdded, with: { (snapshot) in
                     if snapshot.exists(){
                         self.totalVote = 1 + self.totalVote
                         let value = snapshot.value as? Bool
@@ -197,54 +209,21 @@ class FeedViewController: UIViewController {
             descriptionLabel.text = feed.description
             titleLabel.text = feed.name
             priceLabel.text = "\(feed.priceUS) / \(feed.priceEU)"
-            //imageView.downloadImage(from: feed.photoUrl)
-            queryImage()
-        }
-    }
-    
-    
-    func queryImage()
-    {
-        if let feed = feed{
-            if self.storedData.integer(forKey: "ForVote") == 0{
-                Database.database().reference().child("Catalog").child(feed.id).child("Photos").observeSingleEvent(of: .value, with: { (snapshot) in
-                    
-                    if let photos = snapshot.value as? NSArray
-                    {
-                        for i in 1..<photos.count
-                        {
-                            self.imagesArray.append(photos[i] as! String)
-                        }
-                        self.pageControl.numberOfPages = self.imagesArray.count
-                        self.showImages()
-                    }
-                })
-                
-            }
-            else{
-                Database.database().reference().child("Old Catalog").child(feed.id).child("photos").observeSingleEvent(of: .value, with: { (snapshot) in
-                    if let photos = snapshot.value as? NSArray
-                    {
-                        for photo in photos
-                        {
-                            self.imagesArray.append("http:\(photo)")
-                        }
-                        self.pageControl.numberOfPages = self.imagesArray.count
-                        self.showImages()
-                    }
-                })
-                
-            }
             
         }
     }
     
-    func showImages()
-    {
-        if imagesArray.count != 0
-        {
-            pageControl.currentPage = imageNumber
-            imageView.kf.setImage(with: URL(string: imagesArray[imageNumber]))
+    
+    
+    
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if (segue.identifier == "EmbedSegue") {
+            if let feed = feed
+            {
+                let embed = segue.destination as! WalkthroughImageController
+                embed.feed = feed
+            }
         }
     }
     
@@ -321,43 +300,65 @@ class FeedViewController: UIViewController {
     }
     
     @IBAction func btn_yes(_ sender: UIButton) {
-        if let feed = feed{
-            if self.storedData.integer(forKey: "ForVote") == 0{
-                Database.database().reference().child("Catalog").child(feed.id).updateChildValues(["YesVotes":self.countYesVotes + 1])
-                animateStackView()
-                sender.isEnabled = false
+        
+        if Auth.auth().currentUser != nil
+        {
+            if let feed = feed{
+                if self.storedData.integer(forKey: "ForVote") == 0{
+                    Database.database().reference().child("Catalog").child(feed.id).updateChildValues(["YesVotes":self.countYesVotes + 1])
+                    animateDropBtn()
+                    sender.isEnabled = false
+                }
+                else{
+                    Database.database().reference().child("Catalog").child(feed.id).updateChildValues(["YesVotes":self.countYesVotes + 1])
+                    animateDropBtn()
+                    sender.isEnabled = false
+                }
+                
             }
-            else{
-                Database.database().reference().child("Old Catalog").child(feed.id).updateChildValues(["YesVotes":self.countYesVotes + 1])
-                animateStackView()
-                sender.isEnabled = false
-            }
-            
+        }
+        else
+        {
+            self.showAlert(_message: "You can't cop or drop the item without authentication. Kindly login first")
         }
         
     }
     
     
-    func animateStackView()
+    func animateCopBtn()
     {
-        UIView.animate(withDuration: 0.3) {
-            self.copDropStackView.alpha = 0
-            UIView.animate(withDuration: 0.3, animations: {
+        UIView.animate(withDuration: 0.2) {
+            self.copBtn.alpha = 0
+            UIView.animate(withDuration: 0.4, animations: {
                 self.votesAppear()
+                self.copBtn.isHidden = true
             })
         }
     }
+    
+    func animateDropBtn()
+    {
+        UIView.animate(withDuration: 0.2) {
+            self.dropBtn.alpha = 0
+            UIView.animate(withDuration: 0.4, animations: {
+                self.votesAppear()
+                self.dropBtn.isHidden = true
+            })
+        }
+    }
+    
+    
     
     @IBAction func btn_no(_ sender: UIButton) {
         if let feed = feed{
             if self.storedData.integer(forKey: "ForVote") == 0{
                 Database.database().reference().child("Catalog").child(feed.id).updateChildValues(["NoVotes":self.countNoVotes + 1])
-                animateStackView()
+                animateCopBtn()
                 sender.isEnabled = false
             }
             else{
-                Database.database().reference().child("Old Catalog").child(feed.id).updateChildValues(["NoVotes":self.countNoVotes + 1])
-                animateStackView()
+                Database.database().reference().child("Catalog").child(feed.id).updateChildValues(["NoVotes":self.countNoVotes + 1])
+                animateCopBtn()
                 sender.isEnabled = false
             }
         }
@@ -365,53 +366,7 @@ class FeedViewController: UIViewController {
     }
     
     
-    @IBAction func swipePrev(_ sender: UISwipeGestureRecognizer) {
-        if imagesArray.count != 0 {
-            imageNumber -= 1
 
-            if imageNumber < 0 {
-                imageNumber = 0
-            } else {
-
-                UIView.animate(withDuration: 0.1, delay: 0.0, options: .curveLinear, animations: {
-                    self.imageView.frame.origin.x = self.view.frame.size.width
-                }, completion: { (finished: Bool) in
-                    self.imageView.frame.origin.x = -self.view.frame.size.width
-                    self.showImages()
-
-                    UIView.animate(withDuration: 0.1, delay: 0.0, options: .curveLinear, animations: {
-                        self.imageView.frame.origin.x = 0 + 50
-                    }, completion: { (finished: Bool) in })
-                })
-            }
-
-        }
-        
-    }
-    
-    @IBAction func swipeNext(_ sender: UISwipeGestureRecognizer) {
-        if imagesArray.count != 0 {
-            imageNumber += 1
-
-            if imageNumber > imagesArray.count - 1 {
-                imageNumber = imagesArray.count - 1
-            } else {
-                UIView.animate(withDuration: 0.1, delay: 0.0, options: .curveLinear, animations: {
-                    self.imageView.frame.origin.x = -self.view.frame.size.width
-                }, completion: { (finished: Bool) in
-                    self.imageView.frame.origin.x = self.view.frame.size.width
-                    self.showImages()
-
-                    UIView.animate(withDuration: 0.1, delay: 0.0, options: .curveLinear, animations: {
-                        self.imageView.frame.origin.x = 0 + 50
-                    }, completion: { (finished: Bool) in })
-                })
-            }
-        }
-        
-    }
-    
-    
     
 }
 

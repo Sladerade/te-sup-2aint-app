@@ -21,9 +21,9 @@ class WalkthroughImageContentViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        print("faizan ka \(index)")
+        pageControl.currentPage = index
         pageControl.numberOfPages = numberPages
-        print(imageFile)
+        outletImg.kf.setImage(with: URL(string: imageFile))
     }
 
    

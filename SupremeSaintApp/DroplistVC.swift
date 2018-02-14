@@ -203,20 +203,20 @@ class ShopVC: TabBarViewControllerPage, UITableViewDataSource, UITableViewDelega
         rowIndex = start
         self.valueIndex = end
         if segment.selectedSegmentIndex == 1{
-            databaseRef.child("Old Catalog").queryOrdered(byChild: "child_id").queryStarting(atValue: start).queryEnding(atValue: end).observe(.childAdded, with: { (snapshot) in
+            databaseRef.child("Catalog").queryOrdered(byChild: "child_count").queryStarting(atValue: start).queryEnding(atValue: end).observe(.childAdded, with: { (snapshot) in
                 let value = snapshot.value as? NSDictionary
                 self.valueIndex = self.valueIndex + 1
-                let photos = value?["photos"] as? NSArray
-                let image = photos![0] as? String ?? "http://"
-                let name = value?["name"] as? String ?? ""
-                let priceUS = value?["price-US"] as? String ?? ""
-                let priceEU = value?["price-EU"] as? String ?? ""
-                let description = value?["description"] as? String ?? ""
-                let season = value?["season"] as? String ?? ""
-                let throwback = value?["throwback"] as? Bool ?? false
-                let week = value?["week"] as? Int ?? 0
+                let photos = value?["Photos"] as? NSArray
+                let image = photos![1] as? String ?? "http://"
+                let name = value?["ProductName"] as? String ?? ""
+                let priceUS = value?["Price-US"] as? String ?? ""
+                let priceEU = value?["Price-EU"] as? String ?? ""
+                let description = value?["Description"] as? String ?? ""
+                let season = value?["Season"] as? String ?? ""
+                let throwback = value?["Throwback"] as? Bool ?? false
+                let week = value?["Week"] as? Int ?? 0
                 
-                let model = Feed(id: snapshot.key, description: description, droplist: true, name: name, photoUrl: "http:\(image)", priceEU: priceEU, priceUS: priceUS, season: season, throwBack: throwback, week: week)
+                let model = Feed(id: snapshot.key, description: description, droplist: true, name: name, photoUrl: image, priceEU: priceEU, priceUS: priceUS, season: season, throwBack: throwback, week: week)
                 self.feedList.append(model)
                 DispatchQueue.main.async {
                     self.loader.isHidden = true
@@ -318,20 +318,20 @@ class ShopVC: TabBarViewControllerPage, UITableViewDataSource, UITableViewDelega
         self.feedList.removeAll()
         rowIndex = 0
         self.valueIndex = 0
-        databaseRef.child("Old Catalog").queryOrdered(byChild: "child_id").queryStarting(atValue: 0).queryEnding(atValue: 19).observe(.childAdded, with: { (snapshot) in
+        databaseRef.child("Catalog").queryOrdered(byChild: "child_count").queryStarting(atValue: 0).queryEnding(atValue: 19).observe(.childAdded, with: { (snapshot) in
             let value = snapshot.value as? NSDictionary
             self.valueIndex = self.valueIndex + 1
-            let photos = value?["photos"] as? NSArray
-            let image = photos![0] as? String ?? "http://"
-            let name = value?["name"] as? String ?? ""
-            let priceUS = value?["price-US"] as? String ?? ""
-            let priceEU = value?["price-EU"] as? String ?? ""
-            let description = value?["description"] as? String ?? ""
-            let season = value?["season"] as? String ?? ""
-            let throwback = value?["throwback"] as? Bool ?? false
-            let week = value?["week"] as? Int ?? 0
+            let photos = value?["Photos"] as? NSArray
+            let image = photos![1] as? String ?? "http://"
+            let name = value?["ProductName"] as? String ?? ""
+            let priceUS = value?["Price-US"] as? String ?? ""
+            let priceEU = value?["Price-EU"] as? String ?? ""
+            let description = value?["Description"] as? String ?? ""
+            let season = value?["Season"] as? String ?? ""
+            let throwback = value?["Throwback"] as? Bool ?? false
+            let week = value?["Week"] as? Int ?? 0
             
-            let model = Feed(id: snapshot.key, description: description, droplist: true, name: name, photoUrl: "http:\(image)", priceEU: priceEU, priceUS: priceUS, season: season, throwBack: throwback, week: week)
+            let model = Feed(id: snapshot.key, description: description, droplist: true, name: name, photoUrl: image, priceEU: priceEU, priceUS: priceUS, season: season, throwBack: throwback, week: week)
             self.feedList.append(model)
             DispatchQueue.main.async {
                 self.loader.isHidden = true

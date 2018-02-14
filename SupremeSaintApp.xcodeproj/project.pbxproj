@@ -38,6 +38,7 @@
 		AB6C7F8892AA28A9C29C099C /* Pods_SupremeSaintApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E441FF4F28141978A1D0FB18 /* Pods_SupremeSaintApp.framework */; };
 		B219664D200BCD930096F607 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B219664C200BCD930096F607 /* Main.storyboard */; };
 		B308F3D22031489700244325 /* LeftMenuVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B308F3D12031489700244325 /* LeftMenuVC.swift */; };
+		B31A364220345CAA002D2506 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B31A364120345CAA002D2506 /* ViewController.swift */; };
 		B329BEEC20301B5E009CBFAA /* DesignableButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B329BEEB20301B5E009CBFAA /* DesignableButton.swift */; };
 		B386F43B20302DD70063D78F /* DesignableField.swift in Sources */ = {isa = PBXBuildFile; fileRef = B386F43A20302DD70063D78F /* DesignableField.swift */; };
 		B386F43D20302ED00063D78F /* AuthVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B386F43C20302ED00063D78F /* AuthVC.swift */; };
@@ -115,6 +116,7 @@
 		AEA01F5B6EB5E1F661E27297 /* Pods_SupremeSaintAppUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SupremeSaintAppUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B219664C200BCD930096F607 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		B308F3D12031489700244325 /* LeftMenuVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeftMenuVC.swift; sourceTree = "<group>"; };
+		B31A364120345CAA002D2506 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		B329BEEB20301B5E009CBFAA /* DesignableButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesignableButton.swift; sourceTree = "<group>"; };
 		B386F43A20302DD70063D78F /* DesignableField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesignableField.swift; sourceTree = "<group>"; };
 		B386F43C20302ED00063D78F /* AuthVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthVC.swift; sourceTree = "<group>"; };
@@ -274,6 +276,7 @@
 				B3E9DC362031E53A00D394B8 /* WebVc.swift */,
 				B3F7BDA220333A4700C7C462 /* WalkthroughImageController.swift */,
 				B3F7BDA420333A5C00C7C462 /* WalkthroughImageContentViewController.swift */,
+				B31A364120345CAA002D2506 /* ViewController.swift */,
 			);
 			path = SupremeSaintApp;
 			sourceTree = "<group>";
@@ -659,6 +662,7 @@
 				8C1A5FC7200126C200BE0BD3 /* HomeVC.swift in Sources */,
 				549049372010BA1D006910AF /* FeedGroupPageController.swift in Sources */,
 				8C1A5FC8200126C200BE0BD3 /* NewsVC.swift in Sources */,
+				B31A364220345CAA002D2506 /* ViewController.swift in Sources */,
 				B329BEEC20301B5E009CBFAA /* DesignableButton.swift in Sources */,
 				549049392010BB51006910AF /* FeedViewController.swift in Sources */,
 				54DD1634200E645C007CE915 /* SlidePageViewController.swift in Sources */,

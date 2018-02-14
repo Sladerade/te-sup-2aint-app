@@ -46,11 +46,44 @@ class HomeVC: TabBarViewControllerPage, UIScrollViewDelegate {
         
         
         revealingSplashView.animationType = .popAndZoomOut
-        revealingSplashView.startAnimation()
         revealingSplashView.heartAttack = true
         
         let window = UIApplication.shared.keyWindow
         window?.addSubview(revealingSplashView)
+        
+        revealingSplashView.startAnimation {
+            //After playing splashview animtion Firebase starts loading
+            FirebaseService.instance.loadFeeds(callback: {(feeds) in
+                print("hello hell \(feeds)")
+                self.throwBackDataSource.feedList = feeds.filter({ $0.throwBack})
+                self.dropListDataSource.feedList = feeds.filter({$0.droplist})
+                self.throwBacksCollectionView.reloadData()
+                self.dropListCollectionView.reloadData()
+                self.refereshThrowBackCollectionSize()
+            })
+            
+            FirebaseService.instance.loadSlides(callback: {
+                (slides) in
+                self.slidePageViewController?.slides = slides
+            })
+            
+            FirebaseService.instance.loadHomeMessage { (messages) in
+                if let messages = messages
+                {
+                    self.showBanner(message: messages.bannerMessage)
+                    self.dropListMessageLabel.text = messages.droplistMessage
+                    self.throwbacksMessageLabel.text = messages.throwBackMessage
+                }
+                
+            }
+            
+            FirebaseService.instance.loadVersion { (version) in
+                if let version = version{
+                    self.versionLabel.text = version
+                }
+            }
+        }
+        
         
         self.myView.frame.size.height = 0
         refresher = UIRefreshControl()
@@ -75,35 +108,7 @@ class HomeVC: TabBarViewControllerPage, UIScrollViewDelegate {
         print("thriw Backs Collectuon View Width:\(throwBacksCollectionView.frame.width)")
         
         
-        FirebaseService.instance.loadFeeds(callback: {(feeds) in
-            print("hello hell \(feeds)")
-            self.throwBackDataSource.feedList = feeds.filter({ $0.throwBack})
-            self.dropListDataSource.feedList = feeds.filter({$0.droplist})
-            self.throwBacksCollectionView.reloadData()
-            self.dropListCollectionView.reloadData()
-            self.refereshThrowBackCollectionSize()
-        })
         
-        FirebaseService.instance.loadSlides(callback: {
-            (slides) in
-            self.slidePageViewController?.slides = slides
-        })
-        
-        FirebaseService.instance.loadHomeMessage { (messages) in
-            if let messages = messages
-            {
-                self.showBanner(message: messages.bannerMessage)
-                self.dropListMessageLabel.text = messages.droplistMessage
-                self.throwbacksMessageLabel.text = messages.throwBackMessage
-            }
-            
-        }
-        
-        FirebaseService.instance.loadVersion { (version) in
-            if let version = version{
-                self.versionLabel.text = version
-            }
-        }
         
     }
     

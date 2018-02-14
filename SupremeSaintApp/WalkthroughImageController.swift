@@ -11,19 +11,22 @@ import Firebase
 
 class WalkthroughImageController: UIPageViewController, UIPageViewControllerDataSource {
 
-    var feed:Feed?
+
     var storedData = UserDefaults.standard
     var imagesArray = [String]()
+    
+    var feed:Feed?
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         dataSource = self
-        
         queryImage()
         
         
     }
+    
     
     
     func queryImage()
@@ -36,7 +39,11 @@ class WalkthroughImageController: UIPageViewController, UIPageViewControllerData
                     {
                         for i in 1..<photos.count
                         {
-                            self.imagesArray.append(photos[i] as! String)
+                            if let _ = URL(string: photos[i] as! String)
+                            {
+                                self.imagesArray.append(photos[i] as! String)
+                            }
+                            
                         }
                         self.openPermission()
                     }
@@ -44,12 +51,15 @@ class WalkthroughImageController: UIPageViewController, UIPageViewControllerData
                 
             }
             else{
-                Database.database().reference().child("Old Catalog").child(feed.id).child("photos").observeSingleEvent(of: .value, with: { (snapshot) in
+                Database.database().reference().child("Catalog").child(feed.id).child("Photos").observeSingleEvent(of: .value, with: { (snapshot) in
                     if let photos = snapshot.value as? NSArray
                     {
-                        for photo in photos
+                        for i in 1..<photos.count
                         {
-                            self.imagesArray.append("http:\(photo)")
+                            if let _ = URL(string: photos[i] as! String)
+                            {
+                                self.imagesArray.append(photos[i] as! String)
+                            }
                         }
                         self.openPermission()
                     }

@@ -17,6 +17,7 @@ class LeftMenuVC: UIViewController {
     @IBOutlet weak var usernameLbl: UILabel!
     @IBOutlet weak var accountSettings: UIButton!
     @IBOutlet weak var logoImg: UIImageView!
+    @IBOutlet weak var loginBtn: UIButton!
     
     var webUrl = ""
     
@@ -41,23 +42,24 @@ class LeftMenuVC: UIViewController {
         
         if Auth.auth().currentUser != nil
         {
-            if Auth.auth().currentUser!.isAnonymous
+            
+            loginBtn.setTitle("log out", for: .normal)
+            accountSettings.isHidden = false
+        Database.database().reference().child("users").child(Auth.auth().currentUser!.uid).observeSingleEvent(of: .value, with: { (snapshot) in
+            
+            if let user = snapshot.value as? Dictionary<String,Any>
             {
-                usernameLbl.text = "Anonymous"
-                accountSettings.isHidden = true
+                let username = user["username"] as! String
+                self.usernameLbl.text = username
             }
-            else
-            {
-                Database.database().reference().child("users").child(Auth.auth().currentUser!.uid).observeSingleEvent(of: .value, with: { (snapshot) in
-                    
-                    if let user = snapshot.value as? Dictionary<String,Any>
-                    {
-                        let username = user["username"] as! String
-                        self.usernameLbl.text = username
-                    }
-                    
-                })
-            }
+            
+        })
+            
+        }
+        else
+        {
+            loginBtn.setTitle("login", for: .normal)
+            accountSettings.isHidden = true
         }
         
         ProgressHUD.dismiss()
@@ -91,7 +93,7 @@ class LeftMenuVC: UIViewController {
     }
 
     @IBAction func fandfeedTapped(_ sender: Any) {
-        webUrl = "http://www.instagram.com/TheSupremeSaint"
+        webUrl = "https://www.instagram.com/explore/tags/thesupremesaint/?hl=en"
         performSegue(withIdentifier: "WebSegue", sender: nil)
     }
     
@@ -116,13 +118,25 @@ class LeftMenuVC: UIViewController {
     }
     
     @IBAction func signOutTapped(_ sender: Any) {
-        do {
-            try Auth.auth().signOut()
-            performSegue(withIdentifier: "AuthVC", sender: nil)
-        }catch(let error)
+        
+        if Auth.auth().currentUser != nil
         {
-            print(error)
+            do {
+                try Auth.auth().signOut()
+                performSegue(withIdentifier: "AuthVC", sender: nil)
+            }catch(let error)
+            {
+                print(error)
+            }
         }
+        else
+        {
+            let mainStoryboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+            let viewController = mainStoryboard.instantiateViewController(withIdentifier: "AuthVC")
+            UIApplication.shared.keyWindow?.rootViewController = viewController
+        }
+        
+        
     }
     
     @IBAction func accountSettingsTapped(_ sender: Any) {
