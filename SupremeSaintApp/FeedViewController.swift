@@ -20,18 +20,21 @@ import Kingfisher
 class FeedViewController: UIViewController, Alertable {
     
     @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var imageView: UIImageView!
+  
     @IBOutlet weak var priceLabel: UILabel!
     
     @IBOutlet weak var copBtn: UIButton!
     @IBOutlet weak var dropBtn: UIButton!
     @IBOutlet weak var likes: UILabel!
     @IBOutlet weak var disLikes: UILabel!
-    @IBOutlet weak var copLbl: UILabel!
-    @IBOutlet weak var dropLbl: UILabel!
+    
     @IBOutlet weak var superView: UIView!
     @IBOutlet weak var descriptionLabel: UILabel!
-    @IBOutlet weak var pageControl : UIPageControl!
+    @IBOutlet weak var copdopBtnStckView: UIStackView!
+    @IBOutlet weak var copdopLblStckView: UIStackView!
+    
+    
+    
     
     var totalYesVote:Double = 0
     var totalNoVote:Double = 0
@@ -63,34 +66,19 @@ class FeedViewController: UIViewController, Alertable {
         updateUIs()
         //getAllVotes()
         getVotes()
-        votesDisapper()
+        
+    
     }
-    
-    
-    
-    func votesDisapper()
-    {
-        copLbl.alpha = 0
-        dropLbl.alpha  = 0
-        superView.alpha = 0
-        likes.alpha = 0
-        disLikes.alpha = 0
-    }
-    
-    func votesAppear()
-    {
-        copLbl.alpha = 1
-        dropLbl.alpha  = 1
-        superView.alpha = 1
-        likes.alpha = 1
-        disLikes.alpha = 1
-    }
-    
+   
     
     
     func getVotes(){
         if let feed = feed {
             if self.storedData.integer(forKey:"ForVote") == 0{
+                
+                copdopLblStckView.alpha = 0
+                copdopLblStckView.isHidden = true
+                
                 //Entry in catalog
                 Database.database().reference().child("Catalog").child(feed.id).observe(.value, with: { (snapshot) in
                     for view in self.superView.subviews{
@@ -114,6 +102,8 @@ class FeedViewController: UIViewController, Alertable {
                 })
             }
             else{
+                copdopBtnStckView.isHidden = true
+                copdopLblStckView.isHidden = true
                 //Entry in catalog
 //                Database.database().reference().child("Catalog").child(feed.id).observe(.value, with: { (snapshot) in
 //                    for view in self.superView.subviews{
@@ -135,10 +125,7 @@ class FeedViewController: UIViewController, Alertable {
 //                        self.superView.addSubview(myView)
 //                    }
 //                })
-                superView.isHidden = true
-                votesDisapper()
-                copBtn.isHidden = true
-                dropBtn.isHidden = true
+                
             }
         }
     }
@@ -327,10 +314,11 @@ class FeedViewController: UIViewController, Alertable {
     
     func animateCopBtn()
     {
+        self.copdopLblStckView.isHidden = false
         UIView.animate(withDuration: 0.2) {
             self.copBtn.alpha = 0
             UIView.animate(withDuration: 0.4, animations: {
-                self.votesAppear()
+                self.copdopLblStckView.alpha = 1.0
                 self.copBtn.isHidden = true
             })
         }
@@ -338,10 +326,11 @@ class FeedViewController: UIViewController, Alertable {
     
     func animateDropBtn()
     {
+        self.copdopLblStckView.isHidden = false
         UIView.animate(withDuration: 0.2) {
             self.dropBtn.alpha = 0
             UIView.animate(withDuration: 0.4, animations: {
-                self.votesAppear()
+                self.copdopLblStckView.alpha = 1.0
                 self.dropBtn.isHidden = true
             })
         }

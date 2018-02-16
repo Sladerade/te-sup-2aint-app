@@ -23,6 +23,8 @@ class ShopVC: TabBarViewControllerPage, UITableViewDataSource, UITableViewDelega
     var price:String!
     
     
+    var fullCatalogarray  = [Feed]()
+    
     var refresher: UIRefreshControl!
     
     var rowIndex = 0
@@ -42,6 +44,7 @@ class ShopVC: TabBarViewControllerPage, UITableViewDataSource, UITableViewDelega
         super.viewDidLoad()
         
         print("amad")
+        fullcatalog()
         
         refresher = UIRefreshControl()
         refresher.tintColor = UIColor.red
@@ -89,7 +92,7 @@ class ShopVC: TabBarViewControllerPage, UITableViewDataSource, UITableViewDelega
     //Search delegate method
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         let stringOfUser = (searchBar.text!)
-        listFiltered = feedList.filter({ (item) -> Bool in
+        listFiltered = fullCatalogarray.filter({ (item) -> Bool in
             let value:NSString = item.name as NSString
             return (value.range(of: stringOfUser, options: .caseInsensitive).location != NSNotFound)
         })
@@ -183,7 +186,7 @@ class ShopVC: TabBarViewControllerPage, UITableViewDataSource, UITableViewDelega
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if searchBar.text != "" {
             //HANDLE ROW SELECTION FROM FILTERED DATA
-            self.tabBarViewController.performSegue(withIdentifier: "FeedGroupPageController", sender: FeedGroupPageController.ViewModel(feeds: self.feedList, selectedFeed: self.listFiltered[indexPath.row]))
+            self.tabBarViewController.performSegue(withIdentifier: "FeedGroupPageController", sender: FeedGroupPageController.ViewModel(feeds: self.fullCatalogarray, selectedFeed: self.listFiltered[indexPath.row]))
         }
         else{
             self.tabBarViewController.performSegue(withIdentifier: "FeedGroupPageController", sender: FeedGroupPageController.ViewModel(feeds: feedList, selectedFeed: feedList[indexPath.row]))
@@ -344,6 +347,42 @@ class ShopVC: TabBarViewControllerPage, UITableViewDataSource, UITableViewDelega
             print(Error)
         }
     }
+    
+    
+    func fullcatalog()
+    {
+        // full catalog array searching
+    
+        Database.database().reference().child("Catalog").observeSingleEvent(of: .value) { (snapshot) in
+            
+            if let itemSnapshot = snapshot.children.allObjects as? [DataSnapshot]
+            {
+                for items in itemSnapshot
+                {
+                    if let value = items.value as? NSDictionary
+                    {
+                        let photos = value["Photos"] as? NSArray
+                        let image = photos![1] as? String ?? "http://"
+                        let name = value["ProductName"] as? String ?? ""
+                        let priceUS = value["Price-US"] as? String ?? ""
+                        let priceEU = value["Price-EU"] as? String ?? ""
+                        let description = value["Description"] as? String ?? ""
+                        let season = value["Season"] as? String ?? ""
+                        let throwback = value["Throwback"] as? Bool ?? false
+                        let week = value["Week"] as? Int ?? 0
+                        
+                        let model = Feed(id: items.key, description: description, droplist: true, name: name, photoUrl: image, priceEU: priceEU, priceUS: priceUS, season: season, throwBack: throwback, week: week)
+                        self.fullCatalogarray.append(model)
+                    }
+                }
+            }
+            
+        
+            
+        }
+        
+    }
+    
     
 }
 

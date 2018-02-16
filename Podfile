@@ -18,6 +18,7 @@ target 'SupremeSaintApp' do
     pod 'IQKeyboardManager'
     pod 'ProgressHUD'
     pod 'RevealingSplashView'
+    pod 'Firebase/Messaging'
 
 
   target 'SupremeSaintAppTests' do

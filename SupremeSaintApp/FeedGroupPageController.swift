@@ -73,6 +73,7 @@ class FeedGroupPageController: UIPageViewController {
             {
                 let vc = storyboard.instantiateViewController(withIdentifier: "FeedViewController") as! FeedViewController
                 vc.feed = feed
+                print(feed)
                 feedViewControllers!.append(vc)
             }
         

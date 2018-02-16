@@ -24,7 +24,27 @@ class WalkthroughImageContentViewController: UIViewController {
         pageControl.currentPage = index
         pageControl.numberOfPages = numberPages
         outletImg.kf.setImage(with: URL(string: imageFile))
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(WalkthroughImageContentViewController.itemImg(tap:)))
+        tap.numberOfTapsRequired = 1
+        outletImg.addGestureRecognizer(tap)
     }
+    
+    
+    @objc func itemImg(tap : UITapGestureRecognizer)
+    {
+        performSegue(withIdentifier: "ItemImageView", sender: nil)
+    }
+    
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "ItemImageView"
+        {
+            let vc = segue.destination as! MyImageViewController
+            vc.img = outletImg.image
+        }
+    }
+    
 
    
 }
