@@ -7,9 +7,9 @@
 	<key>AD_UNIT_ID_FOR_INTERSTITIAL_TEST</key>
 	<string>ca-app-pub-3940256099942544/4411468910</string>
 	<key>CLIENT_ID</key>
-	<string>48116860696-9qpjvj7gtjcmr0hmq0ekh6kj7p5hgpmq.apps.googleusercontent.com</string>
+	<string>48116860696-em9a4ouba0gtdno6cc7omimk79tict0d.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.48116860696-9qpjvj7gtjcmr0hmq0ekh6kj7p5hgpmq</string>
+	<string>com.googleusercontent.apps.48116860696-em9a4ouba0gtdno6cc7omimk79tict0d</string>
 	<key>API_KEY</key>
 	<string>AIzaSyCTvgSxSpZMIA5iQxoFve7SIz7XS-pnQ0I</string>
 	<key>GCM_SENDER_ID</key>
@@ -17,7 +17,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.baserythm.SupremeSaint</string>
+	<string>com.sladerade.supsaintapp</string>
 	<key>PROJECT_ID</key>
 	<string>supreme-saint-app</string>
 	<key>STORAGE_BUCKET</key>
@@ -33,7 +33,7 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:48116860696:ios:d92d02c693e2248b</string>
+	<string>1:48116860696:ios:a3fa2911c7ac9df4</string>
 	<key>DATABASE_URL</key>
 	<string>https://supreme-saint-app.firebaseio.com</string>
 </dict>

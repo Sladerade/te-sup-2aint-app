@@ -12,7 +12,6 @@
 		5490492A201080ED006910AF /* RemoveFileService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54904929201080ED006910AF /* RemoveFileService.swift */; };
 		5490492D201087CA006910AF /* Feed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5490492C201087CA006910AF /* Feed.swift */; };
 		5490492F20108FD9006910AF /* FirebaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5490492E20108FD9006910AF /* FirebaseService.swift */; };
-		5490493120109B3F006910AF /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5490493020109B3F006910AF /* GoogleService-Info.plist */; };
 		549049332010B13C006910AF /* Slide.swift in Sources */ = {isa = PBXBuildFile; fileRef = 549049322010B13C006910AF /* Slide.swift */; };
 		549049352010B88E006910AF /* FeedGroupPageControllerContainerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 549049342010B88E006910AF /* FeedGroupPageControllerContainerVC.swift */; };
 		549049372010BA1D006910AF /* FeedGroupPageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 549049362010BA1D006910AF /* FeedGroupPageController.swift */; };
@@ -46,6 +45,7 @@
 		B386F44120302EEB0063D78F /* SignUpVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B386F44020302EEB0063D78F /* SignUpVC.swift */; };
 		B3E9DC372031E53A00D394B8 /* WebVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3E9DC362031E53A00D394B8 /* WebVc.swift */; };
 		B3E9DC392031F27200D394B8 /* AccountVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3E9DC382031F27200D394B8 /* AccountVC.swift */; };
+		B3F4BA0120374C4900946834 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B3F4BA0020374C4900946834 /* GoogleService-Info.plist */; };
 		B3F7BDA320333A4700C7C462 /* WalkthroughImageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3F7BDA220333A4700C7C462 /* WalkthroughImageController.swift */; };
 		B3F7BDA520333A5C00C7C462 /* WalkthroughImageContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3F7BDA420333A5C00C7C462 /* WalkthroughImageContentViewController.swift */; };
 		B3FC3D552030A01F00EB8B20 /* Alertable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3FC3D542030A01E00EB8B20 /* Alertable.swift */; };
@@ -79,7 +79,6 @@
 		54904929201080ED006910AF /* RemoveFileService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoveFileService.swift; sourceTree = "<group>"; };
 		5490492C201087CA006910AF /* Feed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Feed.swift; sourceTree = "<group>"; };
 		5490492E20108FD9006910AF /* FirebaseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseService.swift; sourceTree = "<group>"; };
-		5490493020109B3F006910AF /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		549049322010B13C006910AF /* Slide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Slide.swift; sourceTree = "<group>"; };
 		549049342010B88E006910AF /* FeedGroupPageControllerContainerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedGroupPageControllerContainerVC.swift; sourceTree = "<group>"; };
 		549049362010BA1D006910AF /* FeedGroupPageController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedGroupPageController.swift; sourceTree = "<group>"; };
@@ -125,6 +124,7 @@
 		B386F44020302EEB0063D78F /* SignUpVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpVC.swift; sourceTree = "<group>"; };
 		B3E9DC362031E53A00D394B8 /* WebVc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebVc.swift; sourceTree = "<group>"; };
 		B3E9DC382031F27200D394B8 /* AccountVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountVC.swift; sourceTree = "<group>"; };
+		B3F4BA0020374C4900946834 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		B3F7BDA220333A4700C7C462 /* WalkthroughImageController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalkthroughImageController.swift; sourceTree = "<group>"; };
 		B3F7BDA420333A5C00C7C462 /* WalkthroughImageContentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalkthroughImageContentViewController.swift; sourceTree = "<group>"; };
 		B3FC3D542030A01E00EB8B20 /* Alertable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Alertable.swift; sourceTree = "<group>"; };
@@ -244,7 +244,7 @@
 			isa = PBXGroup;
 			children = (
 				B30061772036E51C00BD8EF8 /* SupremeSaintApp.entitlements */,
-				5490493020109B3F006910AF /* GoogleService-Info.plist */,
+				B3F4BA0020374C4900946834 /* GoogleService-Info.plist */,
 				B3FC3D532030A01E00EB8B20 /* Protocols */,
 				5490492B201087BD006910AF /* Model */,
 				54904928201080C9006910AF /* Service */,
@@ -452,7 +452,7 @@
 			files = (
 				B219664D200BCD930096F607 /* Main.storyboard in Resources */,
 				8C1A5F9F2001262400BE0BD3 /* LaunchScreen.storyboard in Resources */,
-				5490493120109B3F006910AF /* GoogleService-Info.plist in Resources */,
+				B3F4BA0120374C4900946834 /* GoogleService-Info.plist in Resources */,
 				54ADE9C1200F69B1005547FE /* FeedCollectionVCell.xib in Resources */,
 				8C1A5F9C2001262400BE0BD3 /* Assets.xcassets in Resources */,
 			);
