@@ -23,7 +23,6 @@ class HomeVC: TabBarViewControllerPage, UIScrollViewDelegate {
     
     @IBOutlet weak var throwbacksMessageLabel: UILabel!
     @IBOutlet weak var dropListMessageLabel: UILabel!
-    @IBOutlet weak var versionLabel: UILabel!
     
     lazy var throwBackDataSource = ThrowBackTableController(parentVC: self)
     lazy var dropListDataSource = DropListCollectionController(parentVC: self)
@@ -53,14 +52,14 @@ class HomeVC: TabBarViewControllerPage, UIScrollViewDelegate {
         
         revealingSplashView.startAnimation {
             //After playing splashview animtion Firebase starts loading
-            FirebaseService.instance.loadFeeds(callback: {(feeds) in
-                print("hello hell \(feeds)")
-                self.throwBackDataSource.feedList = feeds.filter({ $0.throwBack})
-                self.dropListDataSource.feedList = feeds.filter({$0.droplist})
-                self.throwBacksCollectionView.reloadData()
-                self.dropListCollectionView.reloadData()
-                self.refereshThrowBackCollectionSize()
-            })
+//            FirebaseService.instance.loadFeeds(callback: {(feeds) in
+//                print("hello hell \(feeds)")
+//                self.throwBackDataSource.feedList = feeds.filter({ $0.throwBack})
+//                self.dropListDataSource.feedList = feeds.filter({$0.droplist})
+//                self.throwBacksCollectionView.reloadData()
+//                self.dropListCollectionView.reloadData()
+//                self.refereshThrowBackCollectionSize()
+//            })
             
             FirebaseService.instance.loadSlides(callback: {
                 (slides) in
@@ -76,12 +75,7 @@ class HomeVC: TabBarViewControllerPage, UIScrollViewDelegate {
                 }
                 
             }
-            
-            FirebaseService.instance.loadVersion { (version) in
-                if let version = version{
-                    self.versionLabel.text = version
-                }
-            }
+           
         }
         
         
@@ -153,11 +147,7 @@ class HomeVC: TabBarViewControllerPage, UIScrollViewDelegate {
             
         }
         
-        FirebaseService.instance.loadVersion { (version) in
-            if let version = version{
-                self.versionLabel.text = version
-            }
-        }
+        
         
         
         let cell = Bundle.main.loadNibNamed("FeedCollectionVCell", owner: nil, options: nil)!.first as! UICollectionViewCell

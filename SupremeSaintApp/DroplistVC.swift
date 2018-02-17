@@ -83,6 +83,13 @@ class ShopVC: TabBarViewControllerPage, UITableViewDataSource, UITableViewDelega
         // Do any additional setup after loading the view.
     }
     
+    
+    
+    
+    
+    
+    
+    
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         searchBar.text = ""
         searchBar.endEditing(true)
@@ -187,6 +194,7 @@ class ShopVC: TabBarViewControllerPage, UITableViewDataSource, UITableViewDelega
         if searchBar.text != "" {
             //HANDLE ROW SELECTION FROM FILTERED DATA
             self.tabBarViewController.performSegue(withIdentifier: "FeedGroupPageController", sender: FeedGroupPageController.ViewModel(feeds: self.fullCatalogarray, selectedFeed: self.listFiltered[indexPath.row]))
+            view.endEditing(true)
         }
         else{
             self.tabBarViewController.performSegue(withIdentifier: "FeedGroupPageController", sender: FeedGroupPageController.ViewModel(feeds: feedList, selectedFeed: feedList[indexPath.row]))

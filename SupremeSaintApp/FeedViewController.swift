@@ -21,6 +21,7 @@ class FeedViewController: UIViewController, Alertable {
     
     @IBOutlet weak var titleLabel: UILabel!
   
+    @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var priceLabel: UILabel!
     
     @IBOutlet weak var copBtn: UIButton!
@@ -67,9 +68,11 @@ class FeedViewController: UIViewController, Alertable {
         //getAllVotes()
         getVotes()
         
+        
     
     }
    
+  
     
     
     func getVotes(){
@@ -293,12 +296,12 @@ class FeedViewController: UIViewController, Alertable {
             if let feed = feed{
                 if self.storedData.integer(forKey: "ForVote") == 0{
                     Database.database().reference().child("Catalog").child(feed.id).updateChildValues(["YesVotes":self.countYesVotes + 1])
-                    animateDropBtn()
+                    animateCopBtn()
                     sender.isEnabled = false
                 }
                 else{
                     Database.database().reference().child("Catalog").child(feed.id).updateChildValues(["YesVotes":self.countYesVotes + 1])
-                    animateDropBtn()
+                    animateCopBtn()
                     sender.isEnabled = false
                 }
                 
@@ -342,12 +345,12 @@ class FeedViewController: UIViewController, Alertable {
         if let feed = feed{
             if self.storedData.integer(forKey: "ForVote") == 0{
                 Database.database().reference().child("Catalog").child(feed.id).updateChildValues(["NoVotes":self.countNoVotes + 1])
-                animateCopBtn()
+                animateDropBtn()
                 sender.isEnabled = false
             }
             else{
                 Database.database().reference().child("Catalog").child(feed.id).updateChildValues(["NoVotes":self.countNoVotes + 1])
-                animateCopBtn()
+                animateDropBtn()
                 sender.isEnabled = false
             }
         }
@@ -355,8 +358,7 @@ class FeedViewController: UIViewController, Alertable {
     }
     
     
-
-    
 }
+
 
 

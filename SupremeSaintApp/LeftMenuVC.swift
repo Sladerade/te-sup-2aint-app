@@ -17,6 +17,7 @@ class LeftMenuVC: UIViewController {
     @IBOutlet weak var usernameLbl: UILabel!
     @IBOutlet weak var accountSettings: UIButton!
     @IBOutlet weak var logoImg: UIImageView!
+    @IBOutlet weak var versionLbl: UILabel!
     @IBOutlet weak var loginBtn: UIButton!
     
     var webUrl = ""
@@ -29,6 +30,12 @@ class LeftMenuVC: UIViewController {
         logoImg.addGestureRecognizer(tap)
         
         self.revealViewController().rearViewRevealWidth = 200
+        
+        FirebaseService.instance.loadVersion { (version) in
+            if let version = version{
+                self.versionLbl.text = version
+            }
+        }
         
     }
     
@@ -166,6 +173,11 @@ class LeftMenuVC: UIViewController {
     
     
     
+    @IBAction func swipeToClose(_ sender: UISwipeGestureRecognizer)
+    {
+        self.view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
+        print("Swiping Left")
+    }
     
 
 
