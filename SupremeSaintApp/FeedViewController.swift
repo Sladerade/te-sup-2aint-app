@@ -79,8 +79,6 @@ class FeedViewController: UIViewController, Alertable {
         if let feed = feed {
             if self.storedData.integer(forKey:"ForVote") == 0{
                 
-                copdopLblStckView.alpha = 0
-                copdopLblStckView.isHidden = true
                 
                 //Entry in catalog
                 Database.database().reference().child("Catalog").child(feed.id).observe(.value, with: { (snapshot) in
@@ -268,15 +266,7 @@ class FeedViewController: UIViewController, Alertable {
                         }
                         
                         
-                        //                        if let url = URL(string: itemSearchURL!) {
-                        //                            if #available(iOS 10, *) {
-                        //                                UIApplication.shared.open(url, options: [:],completionHandler: { (success) in
-                        //                                })
-                        //                            } else {
-                        //                                let success = UIApplication.shared.openURL(url)
-                        //                            }
-                        //                        }
-                        //                        print(itemSearchURL!)
+                        
                     }
                     DispatchQueue.main.async {
                     }
@@ -296,12 +286,12 @@ class FeedViewController: UIViewController, Alertable {
             if let feed = feed{
                 if self.storedData.integer(forKey: "ForVote") == 0{
                     Database.database().reference().child("Catalog").child(feed.id).updateChildValues(["YesVotes":self.countYesVotes + 1])
-                    animateCopBtn()
+                    animatecopDropBtn()
                     sender.isEnabled = false
                 }
                 else{
                     Database.database().reference().child("Catalog").child(feed.id).updateChildValues(["YesVotes":self.countYesVotes + 1])
-                    animateCopBtn()
+                    animatecopDropBtn()
                     sender.isEnabled = false
                 }
                 
@@ -315,27 +305,18 @@ class FeedViewController: UIViewController, Alertable {
     }
     
     
-    func animateCopBtn()
+    func animatecopDropBtn()
     {
-        self.copdopLblStckView.isHidden = false
-        UIView.animate(withDuration: 0.2) {
-            self.copBtn.alpha = 0
-            UIView.animate(withDuration: 0.4, animations: {
-                self.copdopLblStckView.alpha = 1.0
-                self.copBtn.isHidden = true
-            })
-        }
-    }
-    
-    func animateDropBtn()
-    {
-        self.copdopLblStckView.isHidden = false
-        UIView.animate(withDuration: 0.2) {
-            self.dropBtn.alpha = 0
-            UIView.animate(withDuration: 0.4, animations: {
-                self.copdopLblStckView.alpha = 1.0
-                self.dropBtn.isHidden = true
-            })
+        UIView.animate(withDuration: 0.3, animations: {
+            
+            self.copdopBtnStckView.alpha = 0
+            
+        }) { (finished) in
+            
+            if finished
+            {
+                self.copdopBtnStckView.isHidden = true
+            }
         }
     }
     
@@ -345,12 +326,12 @@ class FeedViewController: UIViewController, Alertable {
         if let feed = feed{
             if self.storedData.integer(forKey: "ForVote") == 0{
                 Database.database().reference().child("Catalog").child(feed.id).updateChildValues(["NoVotes":self.countNoVotes + 1])
-                animateDropBtn()
+                animatecopDropBtn()
                 sender.isEnabled = false
             }
             else{
                 Database.database().reference().child("Catalog").child(feed.id).updateChildValues(["NoVotes":self.countNoVotes + 1])
-                animateDropBtn()
+                animatecopDropBtn()
                 sender.isEnabled = false
             }
         }

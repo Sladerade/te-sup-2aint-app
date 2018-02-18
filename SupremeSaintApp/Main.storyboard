@@ -880,8 +880,8 @@
                                                             <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Price" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gmE-Z4-ees">
-                                                            <rect key="frame" x="118" y="29" width="36.5" height="12"/>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Price PricePrice Price" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gmE-Z4-ees">
+                                                            <rect key="frame" x="101" y="29" width="147" height="24"/>
                                                             <fontDescription key="fontDescription" name="Courier" family="Courier" pointSize="12"/>
                                                             <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                             <nil key="highlightedColor"/>
@@ -896,8 +896,9 @@
                                                     </subviews>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <constraints>
-                                                        <constraint firstItem="gmE-Z4-ees" firstAttribute="leading" secondItem="Yj8-rc-NlQ" secondAttribute="trailing" constant="32" id="2gd-uH-0up"/>
+                                                        <constraint firstItem="gmE-Z4-ees" firstAttribute="leading" secondItem="Yj8-rc-NlQ" secondAttribute="trailing" constant="15" id="2gd-uH-0up"/>
                                                         <constraint firstItem="0hM-sb-EHb" firstAttribute="leading" secondItem="Yj8-rc-NlQ" secondAttribute="trailing" constant="16" id="3Ap-au-Rau"/>
+                                                        <constraint firstItem="eyJ-49-ddy" firstAttribute="leading" secondItem="gmE-Z4-ees" secondAttribute="trailing" constant="30" id="5mU-WX-ENa"/>
                                                         <constraint firstItem="Yj8-rc-NlQ" firstAttribute="centerY" secondItem="QKs-h6-8jO" secondAttribute="centerY" id="666-4a-dDd"/>
                                                         <constraint firstItem="gmE-Z4-ees" firstAttribute="top" secondItem="0hM-sb-EHb" secondAttribute="bottom" constant="10" id="6cD-wm-Mb8"/>
                                                         <constraint firstItem="0hM-sb-EHb" firstAttribute="top" secondItem="Yj8-rc-NlQ" secondAttribute="top" id="D4V-tX-5fL"/>
@@ -980,7 +981,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ftz-xd-JOQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-602.39999999999998" y="780.35982008995506"/>
+            <point key="canvasLocation" x="-603.75" y="779.57746478873241"/>
         </scene>
         <!--Show Item Details View Controller-->
         <scene sceneID="Jf1-Fq-bNu">
@@ -2083,9 +2084,9 @@
                                     </stackView>
                                 </subviews>
                             </stackView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZNj-dg-Blg">
-                                <rect key="frame" x="87" y="568" width="0.0" height="0.0"/>
-                                <fontDescription key="fontDescription" name="Courier" family="Courier" pointSize="14"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Version 1.0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZNj-dg-Blg">
+                                <rect key="frame" x="60.5" y="551" width="79.5" height="12"/>
+                                <fontDescription key="fontDescription" name="Courier" family="Courier" pointSize="12"/>
                                 <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -2095,13 +2096,13 @@
                         <constraints>
                             <constraint firstItem="6Lu-FQ-vnW" firstAttribute="leading" secondItem="9OF-CH-mas" secondAttribute="leading" constant="16" id="0xq-WV-O7t"/>
                             <constraint firstItem="2Ix-KZ-m0O" firstAttribute="leading" secondItem="9OF-CH-mas" secondAttribute="leading" constant="59.5" id="7Yc-Vu-Rab"/>
+                            <constraint firstItem="ZNj-dg-Blg" firstAttribute="centerX" secondItem="CPF-IV-TiJ" secondAttribute="centerX" id="A3y-GA-rhy"/>
                             <constraint firstItem="9OF-CH-mas" firstAttribute="bottom" secondItem="gwi-LJ-kBW" secondAttribute="bottom" constant="25" id="BD8-zQ-EFE"/>
                             <constraint firstItem="GKf-bO-CPD" firstAttribute="top" secondItem="9OF-CH-mas" secondAttribute="top" constant="10" id="Cgl-Cg-XmI"/>
                             <constraint firstItem="GKf-bO-CPD" firstAttribute="leading" secondItem="9OF-CH-mas" secondAttribute="leading" id="EmF-7u-C7e"/>
-                            <constraint firstItem="ZNj-dg-Blg" firstAttribute="bottom" secondItem="9OF-CH-mas" secondAttribute="bottom" id="ViD-Ju-b12"/>
+                            <constraint firstItem="ZNj-dg-Blg" firstAttribute="bottom" secondItem="9OF-CH-mas" secondAttribute="bottom" constant="-5" id="ViD-Ju-b12"/>
                             <constraint firstItem="gwi-LJ-kBW" firstAttribute="leading" secondItem="9OF-CH-mas" secondAttribute="leading" constant="9.5" id="f7I-9y-AFX"/>
                             <constraint firstItem="6Lu-FQ-vnW" firstAttribute="top" secondItem="GKf-bO-CPD" secondAttribute="bottom" constant="30" id="qzm-zF-ueu"/>
-                            <constraint firstItem="ZNj-dg-Blg" firstAttribute="leading" secondItem="9OF-CH-mas" secondAttribute="leading" constant="87" id="xMi-vh-nSQ"/>
                             <constraint firstItem="2Ix-KZ-m0O" firstAttribute="top" secondItem="6Lu-FQ-vnW" secondAttribute="bottom" constant="30" id="zwh-cE-g9P"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="9OF-CH-mas"/>
@@ -2238,6 +2239,6 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="Utv-HQ-U3f"/>
-        <segue reference="oK4-7h-yQH"/>
+        <segue reference="yd9-Jh-LTW"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -111,6 +111,7 @@ class ShopVC: TabBarViewControllerPage, UITableViewDataSource, UITableViewDelega
             self.valueIndex = 0
             value = 0
             getData(check: "True")
+            view.endEditing(true)
         }
         else{
             value = 1
@@ -139,67 +140,89 @@ class ShopVC: TabBarViewControllerPage, UITableViewDataSource, UITableViewDelega
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if searchBar.text != "" {
-            //If search is found
-            return listFiltered.count
+        
+        if segment.selectedSegmentIndex == 0
+        {
+            return feedList.count
         }
-        return feedList.count
+        else
+        {
+            if searchBar.text != "" {
+                //If search is found
+                return listFiltered.count
+            }
+            return feedList.count
+            
+        }
+        
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if searchBar.text != "" {
-            //If search is found
-            
-            let cell = tableView.dequeueReusableCell(withIdentifier: "cell") as! ItemTableCell
-            let imageUrl = URL(string: listFiltered[indexPath.row].photoUrl)
-            cell.itemImage.kf.setImage(with: imageUrl!)
-            cell.itemName.text = listFiltered[indexPath.row].name
-            cell.itemPrice.text = listFiltered[indexPath.row].priceUS
-            return cell
-        }
-        else{
+        
+        
+        if segment.selectedSegmentIndex == 0
+        {
             let cell = tableView.dequeueReusableCell(withIdentifier: "cell") as! ItemTableCell
             let imageUrl = URL(string: feedList[indexPath.row].photoUrl)
             cell.itemImage.kf.setImage(with: imageUrl!)
             cell.itemName.text = feedList[indexPath.row].name
             cell.itemPrice.text = feedList[indexPath.row].priceUS
-            //        rowIndex = indexPath.row
-            //        if valueIndex == 0{
-            //            let imageUrl = URL(string: "http://")
-            //            cell.itemImage.kf.setImage(with: imageUrl!)
-            //            cell.itemName.text = ""
-            //            cell.itemPrice.text = ""
-            //            cell.btnNext.isHidden = true
-            //        }
-            //        else if rowIndex != valueIndex{
-            //            //All data gets sets here
-            //            let imageUrl = URL(string: feedList[rowIndex].photoUrl)
-            //            cell.itemImage.kf.setImage(with: imageUrl!)
-            //            cell.itemName.text = feedList[rowIndex].name
-            //            cell.itemPrice.text = feedList[rowIndex].priceUS
-            //        }
-            //        else{
-            //            let imageUrl = URL(string: "http://")
-            //            cell.itemImage.kf.setImage(with: imageUrl!)
-            //            cell.itemName.text = ""
-            //            cell.itemPrice.text = ""
-            //            cell.btnNext.isHidden = true
-            //        }
-            //        rowIndex = rowIndex + 1
+            
             return cell
         }
+        else
+        {
+            if searchBar.text != "" {
+                //If search is found
+                
+                let cell = tableView.dequeueReusableCell(withIdentifier: "cell") as! ItemTableCell
+                let imageUrl = URL(string: listFiltered[indexPath.row].photoUrl)
+                cell.itemImage.kf.setImage(with: imageUrl!)
+                cell.itemName.text = listFiltered[indexPath.row].name
+                cell.itemPrice.text = listFiltered[indexPath.row].priceUS
+                return cell
+            }
+            else{
+                let cell = tableView.dequeueReusableCell(withIdentifier: "cell") as! ItemTableCell
+                let imageUrl = URL(string: feedList[indexPath.row].photoUrl)
+                cell.itemImage.kf.setImage(with: imageUrl!)
+                cell.itemName.text = feedList[indexPath.row].name
+                cell.itemPrice.text = feedList[indexPath.row].description
+                
+                return cell
+            }
+        }
+        
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if searchBar.text != "" {
-            //HANDLE ROW SELECTION FROM FILTERED DATA
-            self.tabBarViewController.performSegue(withIdentifier: "FeedGroupPageController", sender: FeedGroupPageController.ViewModel(feeds: self.fullCatalogarray, selectedFeed: self.listFiltered[indexPath.row]))
-            view.endEditing(true)
-        }
-        else{
+        
+        if segment.selectedSegmentIndex == 0
+        {
             self.tabBarViewController.performSegue(withIdentifier: "FeedGroupPageController", sender: FeedGroupPageController.ViewModel(feeds: feedList, selectedFeed: feedList[indexPath.row]))
         }
+        else
+        {
+            if searchBar.text != "" {
+                //HANDLE ROW SELECTION FROM FILTERED DATA
+                self.tabBarViewController.performSegue(withIdentifier: "FeedGroupPageController", sender: FeedGroupPageController.ViewModel(feeds: self.fullCatalogarray, selectedFeed: self.listFiltered[indexPath.row]))
+                view.endEditing(true)
+            }
+            else{
+                self.tabBarViewController.performSegue(withIdentifier: "FeedGroupPageController", sender: FeedGroupPageController.ViewModel(feeds: feedList, selectedFeed: feedList[indexPath.row]))
+            }
+        }
+        
+        
+        
     }
+    
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        view.endEditing(true)
+    }
+    
+    
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         let lastItem = feedList.count - 1
@@ -288,6 +311,7 @@ class ShopVC: TabBarViewControllerPage, UITableViewDataSource, UITableViewDelega
         loader.isHidden = false
         loader.startAnimating()
         self.feedList.removeAll()
+        tableView.reloadData()
         rowIndex = 0
         self.valueIndex = 0
         databaseRef.child("Catalog").observe(.childAdded, with: { (snapshot) in
