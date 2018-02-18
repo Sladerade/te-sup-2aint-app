@@ -179,7 +179,7 @@ class ShopVC: TabBarViewControllerPage, UITableViewDataSource, UITableViewDelega
                 let imageUrl = URL(string: listFiltered[indexPath.row].photoUrl)
                 cell.itemImage.kf.setImage(with: imageUrl!)
                 cell.itemName.text = listFiltered[indexPath.row].name
-                cell.itemPrice.text = listFiltered[indexPath.row].priceUS
+                cell.itemPrice.text = listFiltered[indexPath.row].description
                 return cell
             }
             else{
