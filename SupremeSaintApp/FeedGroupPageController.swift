@@ -72,14 +72,14 @@ class FeedGroupPageController: UIPageViewController {
             for feed in model.feeds
             {
                 let vc = storyboard.instantiateViewController(withIdentifier: "FeedViewController") as! FeedViewController
-                vc.feed = feed
+            
                 print(feed)
                 feedViewControllers!.append(vc)
             }
         
         dataSource = nil
         dataSource = nil
-        if let index = feedViewControllers?.index(where: {$0.feed!.name ==  model.selectedFeed.name})
+        if let index = feedViewControllers?.index(where: {$0.feed!.selectedFeed.name ==  model.selectedFeed.name})
         {
             setViewControllers([feedViewControllers![index]], direction: .forward, animated: false, completion: nil)
         }

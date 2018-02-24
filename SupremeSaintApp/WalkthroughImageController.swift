@@ -106,7 +106,7 @@ class WalkthroughImageController: UIPageViewController, UIPageViewControllerData
             pageContentViewController.imageFile = imagesArray[index]
             pageContentViewController.index = index
             pageContentViewController.numberPages = imagesArray.count
-            
+            pageContentViewController.imagesArray = imagesArray
             return pageContentViewController
         }
         

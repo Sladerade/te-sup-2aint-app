@@ -34,6 +34,7 @@ class FeedViewController: UIViewController, Alertable {
     @IBOutlet weak var copdopBtnStckView: UIStackView!
     @IBOutlet weak var copdopLblStckView: UIStackView!
     
+    let currentUser = Auth.auth().currentUser?.uid
     
     
     
@@ -51,7 +52,12 @@ class FeedViewController: UIViewController, Alertable {
     var totalVote:Double = 0
     var imagesArray = [String]()
     
-    var feed:Feed?
+    struct ViewModel {
+        var selectedFeed:Feed
+    }
+    
+    
+    var feed:ViewModel?
     {
         didSet{
             if isViewLoaded
@@ -63,6 +69,16 @@ class FeedViewController: UIViewController, Alertable {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
+        
+        let image = #imageLiteral(resourceName: "SaintNavBar")
+        let imageView = UIImageView(image: image)
+
+        self.navigationItem.titleView = UIImageView(image: image)
+        imageView.contentMode = .scaleAspectFill
+        
+        
         id = Database.database().reference().childByAutoId().key
         updateUIs()
         //getAllVotes()
@@ -73,6 +89,34 @@ class FeedViewController: UIViewController, Alertable {
     }
    
   
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(true)
+        
+        if let feed = feed {
+            Database.database().reference().child("Catalog").child(feed.selectedFeed.id).child("VotedBy").observeSingleEvent(of: .value, with: { (snapshot) in
+                
+                    if let votesBy = snapshot.value as? Dictionary<String,Any>
+                    {
+                        if votesBy.keys.contains(self.currentUser!)
+                        {
+                            UIView.animate(withDuration: 0.1, animations: {
+                                self.copdopBtnStckView.alpha = 0.0
+                            }, completion: { (finished) in
+                                if finished
+                                {
+                                    self.copdopBtnStckView.isHidden = true
+                                }
+                            })
+                        }
+                    }
+            })
+            
+        }
+        
+    }
+    
+    
+    
     
     
     func getVotes(){
@@ -81,7 +125,7 @@ class FeedViewController: UIViewController, Alertable {
                 
                 
                 //Entry in catalog
-                Database.database().reference().child("Catalog").child(feed.id).observe(.value, with: { (snapshot) in
+                Database.database().reference().child("Catalog").child(feed.selectedFeed.id).observe(.value, with: { (snapshot) in
                     for view in self.superView.subviews{
                         view.removeFromSuperview()
                     }
@@ -135,7 +179,7 @@ class FeedViewController: UIViewController, Alertable {
     func getAllVotes(){
         if let feed = feed{
             if self.storedData.integer(forKey: "ForVote") == 0{
-                Database.database().reference().child("Catalog").child(feed.id).child("Votes").observe(.childAdded, with: { (snapshot) in
+                Database.database().reference().child("Catalog").child(feed.selectedFeed.id).child("Votes").observe(.childAdded, with: { (snapshot) in
                     if snapshot.exists(){
                         self.totalVote = 1 + self.totalVote
                         let value = snapshot.value as? Bool
@@ -161,7 +205,7 @@ class FeedViewController: UIViewController, Alertable {
                 }
             }
             else{
-                Database.database().reference().child("Catalog").child(feed.id).child("Votes").observe(.childAdded, with: { (snapshot) in
+                Database.database().reference().child("Catalog").child(feed.selectedFeed.id).child("Votes").observe(.childAdded, with: { (snapshot) in
                     if snapshot.exists(){
                         self.totalVote = 1 + self.totalVote
                         let value = snapshot.value as? Bool
@@ -194,9 +238,9 @@ class FeedViewController: UIViewController, Alertable {
     func updateUIs() {
         if let feed = feed
         {
-            descriptionLabel.text = feed.description
-            titleLabel.text = feed.name
-            priceLabel.text = "\(feed.priceUS) / \(feed.priceEU)"
+            descriptionLabel.text = feed.selectedFeed.description
+            titleLabel.text = feed.selectedFeed.name
+            priceLabel.text = "\(feed.selectedFeed.priceUS) / \(feed.selectedFeed.priceEU)"
             
         }
     }
@@ -210,7 +254,7 @@ class FeedViewController: UIViewController, Alertable {
             if let feed = feed
             {
                 let embed = segue.destination as! WalkthroughImageController
-                embed.feed = feed
+                embed.feed = feed.selectedFeed
             }
         }
     }
@@ -224,7 +268,7 @@ class FeedViewController: UIViewController, Alertable {
     
     
     @IBAction func btn_buy(_ sender: UIButton) {
-        let nameRemoveAt = feed!.name.replacingOccurrences(of: "®", with: " ")
+        let nameRemoveAt = feed!.selectedFeed.name.replacingOccurrences(of: "®", with: " ")
         let nameRemoveC = nameRemoveAt.replacingOccurrences(of: "©", with: " ")
         let nameRemoveSlash = nameRemoveC.replacingOccurrences(of: "/", with: " ")
         let nameRemoveDoubleSpace = nameRemoveSlash.replacingOccurrences(of: "  ", with: " ")
@@ -285,12 +329,18 @@ class FeedViewController: UIViewController, Alertable {
         {
             if let feed = feed{
                 if self.storedData.integer(forKey: "ForVote") == 0{
-                    Database.database().reference().child("Catalog").child(feed.id).updateChildValues(["YesVotes":self.countYesVotes + 1])
+                    Database.database().reference().child("Catalog").child(feed.selectedFeed.id).updateChildValues(["YesVotes":self.countYesVotes + 1])
+                    
+                    Database.database().reference().child("Catalog").child(feed.selectedFeed.id).child("VotedBy").updateChildValues([currentUser! : true])
+                    
                     animatecopDropBtn()
                     sender.isEnabled = false
                 }
                 else{
-                    Database.database().reference().child("Catalog").child(feed.id).updateChildValues(["YesVotes":self.countYesVotes + 1])
+                    Database.database().reference().child("Catalog").child(feed.selectedFeed.id).updateChildValues(["YesVotes":self.countYesVotes + 1])
+                    
+                    Database.database().reference().child("Catalog").child(feed.selectedFeed.id).child("VotedBy").updateChildValues([currentUser! : true])
+                    
                     animatecopDropBtn()
                     sender.isEnabled = false
                 }
@@ -325,12 +375,18 @@ class FeedViewController: UIViewController, Alertable {
     @IBAction func btn_no(_ sender: UIButton) {
         if let feed = feed{
             if self.storedData.integer(forKey: "ForVote") == 0{
-                Database.database().reference().child("Catalog").child(feed.id).updateChildValues(["NoVotes":self.countNoVotes + 1])
+                Database.database().reference().child("Catalog").child(feed.selectedFeed.id).updateChildValues(["NoVotes":self.countNoVotes + 1])
+                
+                Database.database().reference().child("Catalog").child(feed.selectedFeed.id).child("VotedBy").updateChildValues([currentUser! : true])
+                
+                
                 animatecopDropBtn()
                 sender.isEnabled = false
             }
             else{
-                Database.database().reference().child("Catalog").child(feed.id).updateChildValues(["NoVotes":self.countNoVotes + 1])
+                Database.database().reference().child("Catalog").child(feed.selectedFeed.id).updateChildValues(["NoVotes":self.countNoVotes + 1])
+                
+                Database.database().reference().child("Catalog").child(feed.selectedFeed.id).child("VotedBy").updateChildValues([currentUser! : true])
                 animatecopDropBtn()
                 sender.isEnabled = false
             }

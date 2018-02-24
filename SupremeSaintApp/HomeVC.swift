@@ -1,5 +1,6 @@
 import UIKit
 import RevealingSplashView
+import ProgressHUD
 
 class HomeVC: TabBarViewControllerPage, UIScrollViewDelegate {
     
@@ -16,10 +17,11 @@ class HomeVC: TabBarViewControllerPage, UIScrollViewDelegate {
     @IBOutlet weak var scrollViewTopConstraint: NSLayoutConstraint!
     
     @IBOutlet weak var sliderContainer: UIView!
+    @IBOutlet weak var secondSlideContainer: UIView!
     
     @IBOutlet weak var scrollView: UIScrollView!
     
-    @IBOutlet weak var loader: UIActivityIndicatorView!
+    
     
     @IBOutlet weak var throwbacksMessageLabel: UILabel!
     @IBOutlet weak var dropListMessageLabel: UILabel!
@@ -31,6 +33,12 @@ class HomeVC: TabBarViewControllerPage, UIScrollViewDelegate {
     private var slidePageViewController:SlidePageViewController? {
         return isViewLoaded ? sliderContainer.subviews[0].next as? SlidePageViewController : nil
     }
+    
+    private var secondSlidePageViewController:SecondSlidePageVC? {
+        return isViewLoaded ? secondSlideContainer.subviews[0].next as? SecondSlidePageVC : nil
+    }
+    
+    
     var refresher: UIRefreshControl!
     
     let revealingSplashView = RevealingSplashView(iconImage: UIImage(named: "SaintNavBar")!, iconInitialSize: CGSize(width: 240.0, height: 240.0), backgroundColor: #colorLiteral(red: 0.9994935393, green: 0.01752460562, blue: 0.00630321214, alpha: 1))
@@ -51,24 +59,34 @@ class HomeVC: TabBarViewControllerPage, UIScrollViewDelegate {
         window?.addSubview(revealingSplashView)
         
         revealingSplashView.startAnimation {
-            //After playing splashview animtion Firebase starts loading
-//            FirebaseService.instance.loadFeeds(callback: {(feeds) in
-//                print("hello hell \(feeds)")
-//                self.throwBackDataSource.feedList = feeds.filter({ $0.throwBack})
-//                self.dropListDataSource.feedList = feeds.filter({$0.droplist})
-//                self.throwBacksCollectionView.reloadData()
-//                self.dropListCollectionView.reloadData()
-//                self.refereshThrowBackCollectionSize()
-//            })
+//            After playing splashview animtion Firebase starts loading
+            
+            ProgressHUD.show()
+            
+            FirebaseService.instance.loadFeeds(callback: {(feeds) in
+
+                self.throwBackDataSource.feedList = feeds.filter({ $0.throwBack})
+                self.dropListDataSource.feedList = feeds.filter({$0.droplist})
+                self.throwBacksCollectionView.reloadData()
+                self.dropListCollectionView.reloadData()
+                self.refereshThrowBackCollectionSize()
+            })
             
             FirebaseService.instance.loadSlides(callback: {
                 (slides) in
                 self.slidePageViewController?.slides = slides
             })
             
+            
+            FirebaseService.instance.loadSlides(callback: {
+                (slides) in
+                self.secondSlidePageViewController?.slides = slides
+            })
+            
             FirebaseService.instance.loadHomeMessage { (messages) in
                 if let messages = messages
                 {
+                    ProgressHUD.dismiss()
                     self.showBanner(message: messages.bannerMessage)
                     self.dropListMessageLabel.text = messages.droplistMessage
                     self.throwbacksMessageLabel.text = messages.throwBackMessage
@@ -86,7 +104,7 @@ class HomeVC: TabBarViewControllerPage, UIScrollViewDelegate {
         scrollView.addSubview(refresher)
         
         scrollView.delegate = self
-        loader.isHidden = true
+        
         
         
         
@@ -124,7 +142,6 @@ class HomeVC: TabBarViewControllerPage, UIScrollViewDelegate {
         
         
         FirebaseService.instance.loadFeeds(callback: {(feeds) in
-            print(feeds)
             self.throwBackDataSource.feedList = feeds.filter({ $0.throwBack })
             self.dropListDataSource.feedList = feeds.filter({$0.droplist})
             self.throwBacksCollectionView.reloadData()
@@ -136,6 +153,12 @@ class HomeVC: TabBarViewControllerPage, UIScrollViewDelegate {
             (slides) in
             self.slidePageViewController?.slides = slides
         })
+        
+        FirebaseService.instance.loadSlides(callback: {
+            (slides) in
+            self.secondSlidePageViewController?.slides = slides
+        })
+        
         
         FirebaseService.instance.loadHomeMessage { (messages) in
             if let messages = messages
@@ -270,7 +293,6 @@ class HomeVC: TabBarViewControllerPage, UIScrollViewDelegate {
     
     private func refereshThrowBackCollectionSize()
     {
-        loader.isHidden = true
         throwBacksCollectionHeightConstraint.constant = max((throwBacksCollectionView.collectionViewLayout as! UICollectionViewFlowLayout).itemSize.height, throwBacksCollectionView.collectionViewLayout.collectionViewContentSize.height)
     }
     
@@ -310,7 +332,7 @@ extension HomeVC
         
         public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
             storedData.set(0, forKey: "ForVote")
-            parentVC.tabBarViewController.performSegue(withIdentifier: "FeedGroupPageController", sender: FeedGroupPageController.ViewModel(feeds: feedList, selectedFeed: feedList[indexPath.row]))
+            parentVC.tabBarViewController.performSegue(withIdentifier: "FeedGroupPageController", sender: FeedViewController.ViewModel(selectedFeed: feedList[indexPath.row]))
         }
         
     }
@@ -344,7 +366,7 @@ extension HomeVC
         
         public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
             storedData.set(0, forKey: "ForVote")
-            parentVC.tabBarViewController.performSegue(withIdentifier: "FeedGroupPageController", sender: FeedGroupPageController.ViewModel(feeds: feedList, selectedFeed: feedList[indexPath.row]))
+            parentVC.tabBarViewController.performSegue(withIdentifier: "FeedGroupPageController", sender: FeedViewController.ViewModel( selectedFeed: feedList[indexPath.row]))
         }
     }
 }

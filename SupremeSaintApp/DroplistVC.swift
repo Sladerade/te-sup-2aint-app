@@ -199,17 +199,17 @@ class ShopVC: TabBarViewControllerPage, UITableViewDataSource, UITableViewDelega
         
         if segment.selectedSegmentIndex == 0
         {
-            self.tabBarViewController.performSegue(withIdentifier: "FeedGroupPageController", sender: FeedGroupPageController.ViewModel(feeds: feedList, selectedFeed: feedList[indexPath.row]))
+            self.tabBarViewController.performSegue(withIdentifier: "FeedGroupPageController", sender: FeedViewController.ViewModel(selectedFeed: feedList[indexPath.row]))
         }
         else
         {
             if searchBar.text != "" {
                 //HANDLE ROW SELECTION FROM FILTERED DATA
-                self.tabBarViewController.performSegue(withIdentifier: "FeedGroupPageController", sender: FeedGroupPageController.ViewModel(feeds: self.fullCatalogarray, selectedFeed: self.listFiltered[indexPath.row]))
+                self.tabBarViewController.performSegue(withIdentifier: "FeedGroupPageController", sender: FeedViewController.ViewModel(selectedFeed: self.listFiltered[indexPath.row]))
                 view.endEditing(true)
             }
             else{
-                self.tabBarViewController.performSegue(withIdentifier: "FeedGroupPageController", sender: FeedGroupPageController.ViewModel(feeds: feedList, selectedFeed: feedList[indexPath.row]))
+                self.tabBarViewController.performSegue(withIdentifier: "FeedGroupPageController", sender: FeedViewController.ViewModel(selectedFeed: feedList[indexPath.row]))
             }
         }
         
@@ -226,7 +226,8 @@ class ShopVC: TabBarViewControllerPage, UITableViewDataSource, UITableViewDelega
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         let lastItem = feedList.count - 1
-        if indexPath.row == lastItem && lastItem > 18{
+        print("Faizan ka \(lastItem)")
+        if indexPath.row == lastItem && lastItem > 16{
             loadMore(start: self.loadingStart, end: self.loadingStart + 20)
         }
     }

@@ -24,7 +24,7 @@ class NewsVC: TWTRTimelineViewController,TabBarPage, TWTRTweetViewDelegate {
         transition.timingFunction = CAMediaTimingFunction(name:kCAMediaTimingFunctionEaseInEaseOut)
         view.window!.layer.add(transition, forKey: kCATransition)
         let storyBoard = UIStoryboard(name: "Main", bundle: nil)
-        let vc = storyBoard.instantiateViewController(withIdentifier: "MyImage") as! MyImageViewController
+        let vc = storyBoard.instantiateViewController(withIdentifier: "TweetImageVc") as! TweetImageVc
         vc.img = image
         present(vc, animated: false, completion: nil)
     }

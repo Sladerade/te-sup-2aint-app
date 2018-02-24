@@ -60,16 +60,13 @@ class TabBarViewController: ViewControllerWithLogo {
 //        self.navigationItem.titleView = UIImageView(image: image)
 //        imageView.contentMode = .scaleAspectFill
         
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+        
         if revealViewController() != nil {
             menuButton.target = revealViewController()
             menuButton.action = #selector(SWRevealViewController.revealToggle(_:))
             
             view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
-            
-//            self.view.addSubview(revealingSplashView)
-//            revealingSplashView.animationType = .heartBeat
-//            revealingSplashView.startAnimation()
-//            revealingSplashView.heartAttack = true
         }
         
         // Tab Bar Image Connections
@@ -200,8 +197,8 @@ class TabBarViewController: ViewControllerWithLogo {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "FeedGroupPageController"
         {
-            let vc = segue.destination as! FeedGroupPageController
-            vc.viewModel = sender as? FeedGroupPageController.ViewModel
+            let vc = segue.destination as! FeedViewController
+            vc.feed = sender as? FeedViewController.ViewModel
         }
     }
     

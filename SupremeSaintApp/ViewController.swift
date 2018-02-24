@@ -10,12 +10,35 @@ import UIKit
 
 class ViewController: UIViewController {
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
-    }
-
-    
+//    var feed:ViewModel?
+//    {
+//        didSet{
+//            if isViewLoaded
+//            {
+//                refreshPageViewController()
+//            }
+//        }
+//    }
+//    
+//    
+//    override func viewDidLoad() {
+//        super.viewDidLoad()
+//
+//       refreshPageViewController()
+//    }
+//    
+//    
+//    private func refreshPageViewController()
+//    {
+//        if let model = feed
+//        {
+//            print(model.selectedFeed)
+//        }
+//    }
+//
+//    
+//    struct ViewModel {
+//        var selectedFeed:Feed
+//    }
 
 }

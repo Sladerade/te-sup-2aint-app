@@ -1,47 +1,33 @@
 //
-//  MyImageViewController.swift
+//  TweetImageVc.swift
 //  SupremeSaintApp
 //
-//  Created by Sanan on 2/2/18.
+//  Created by Faizan on 23/02/2018.
 //  Copyright © 2018 Sladerade. All rights reserved.
 //
 
 import UIKit
 
-class MyImageViewController: UIViewController {
+class TweetImageVc: UIViewController {
 
-    
-    var imagesArray = [String]()
-    
-    
+    @IBOutlet weak var outletImg: UIImageView!
+    var img: UIImage?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-     
-    
-        
-        
+
+        outletImg.image = img
     }
 
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if (segue.identifier == "MyImageSegue") {
-            let vc = segue.destination as! MyImagePageController
-            vc.imagesArray = imagesArray
-        }
-    }
-    
-    
-    
-    
-    
-    
     @IBAction func btn_back(_ sender: UIButton) {
-//        ModalService.dismiss(self, exitTo: .right, duration: 0.5)
-        dismiss(animated: true, completion: nil)
+        
+        ModalService.dismiss(self, exitTo: .right, duration: 0.5)
+        
     }
     
-
+    
+    
+    
     class ModalService {
         
         enum presentationDirection {
@@ -105,4 +91,5 @@ class MyImageViewController: UIViewController {
             }
         }
     }
+
 }

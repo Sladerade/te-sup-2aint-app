@@ -38,6 +38,8 @@
 		B219664D200BCD930096F607 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B219664C200BCD930096F607 /* Main.storyboard */; };
 		B308F3D22031489700244325 /* LeftMenuVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B308F3D12031489700244325 /* LeftMenuVC.swift */; };
 		B31A364220345CAA002D2506 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B31A364120345CAA002D2506 /* ViewController.swift */; };
+		B31B70EF204123F500735DC5 /* SecondSlideImageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B31B70EE204123F500735DC5 /* SecondSlideImageVC.swift */; };
+		B31B70F12041242C00735DC5 /* SecondSlidePageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B31B70F02041242C00735DC5 /* SecondSlidePageVC.swift */; };
 		B329BEEC20301B5E009CBFAA /* DesignableButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B329BEEB20301B5E009CBFAA /* DesignableButton.swift */; };
 		B386F43B20302DD70063D78F /* DesignableField.swift in Sources */ = {isa = PBXBuildFile; fileRef = B386F43A20302DD70063D78F /* DesignableField.swift */; };
 		B386F43D20302ED00063D78F /* AuthVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B386F43C20302ED00063D78F /* AuthVC.swift */; };
@@ -45,6 +47,9 @@
 		B386F44120302EEB0063D78F /* SignUpVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B386F44020302EEB0063D78F /* SignUpVC.swift */; };
 		B3E9DC372031E53A00D394B8 /* WebVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3E9DC362031E53A00D394B8 /* WebVc.swift */; };
 		B3E9DC392031F27200D394B8 /* AccountVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3E9DC382031F27200D394B8 /* AccountVC.swift */; };
+		B3EA76282040614000C142AF /* MyImagePageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3EA76272040614000C142AF /* MyImagePageController.swift */; };
+		B3EA762A2040615F00C142AF /* MyImageContainerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3EA76292040615F00C142AF /* MyImageContainerVC.swift */; };
+		B3EA762C20406F3100C142AF /* TweetImageVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3EA762B20406F3100C142AF /* TweetImageVc.swift */; };
 		B3F4BA0120374C4900946834 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B3F4BA0020374C4900946834 /* GoogleService-Info.plist */; };
 		B3F7BDA320333A4700C7C462 /* WalkthroughImageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3F7BDA220333A4700C7C462 /* WalkthroughImageController.swift */; };
 		B3F7BDA520333A5C00C7C462 /* WalkthroughImageContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3F7BDA420333A5C00C7C462 /* WalkthroughImageContentViewController.swift */; };
@@ -117,6 +122,8 @@
 		B30061772036E51C00BD8EF8 /* SupremeSaintApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SupremeSaintApp.entitlements; sourceTree = "<group>"; };
 		B308F3D12031489700244325 /* LeftMenuVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeftMenuVC.swift; sourceTree = "<group>"; };
 		B31A364120345CAA002D2506 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		B31B70EE204123F500735DC5 /* SecondSlideImageVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondSlideImageVC.swift; sourceTree = "<group>"; };
+		B31B70F02041242C00735DC5 /* SecondSlidePageVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondSlidePageVC.swift; sourceTree = "<group>"; };
 		B329BEEB20301B5E009CBFAA /* DesignableButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesignableButton.swift; sourceTree = "<group>"; };
 		B386F43A20302DD70063D78F /* DesignableField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesignableField.swift; sourceTree = "<group>"; };
 		B386F43C20302ED00063D78F /* AuthVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthVC.swift; sourceTree = "<group>"; };
@@ -124,6 +131,9 @@
 		B386F44020302EEB0063D78F /* SignUpVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpVC.swift; sourceTree = "<group>"; };
 		B3E9DC362031E53A00D394B8 /* WebVc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebVc.swift; sourceTree = "<group>"; };
 		B3E9DC382031F27200D394B8 /* AccountVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountVC.swift; sourceTree = "<group>"; };
+		B3EA76272040614000C142AF /* MyImagePageController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyImagePageController.swift; sourceTree = "<group>"; };
+		B3EA76292040615F00C142AF /* MyImageContainerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyImageContainerVC.swift; sourceTree = "<group>"; };
+		B3EA762B20406F3100C142AF /* TweetImageVc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TweetImageVc.swift; sourceTree = "<group>"; };
 		B3F4BA0020374C4900946834 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		B3F7BDA220333A4700C7C462 /* WalkthroughImageController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalkthroughImageController.swift; sourceTree = "<group>"; };
 		B3F7BDA420333A5C00C7C462 /* WalkthroughImageContentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalkthroughImageContentViewController.swift; sourceTree = "<group>"; };
@@ -258,17 +268,19 @@
 				8C1A5FA02001262400BE0BD3 /* Info.plist */,
 				8C1A5FC4200126C200BE0BD3 /* HomeVC.swift */,
 				8C1A5FC5200126C200BE0BD3 /* NewsVC.swift */,
+				B3EA762B20406F3100C142AF /* TweetImageVc.swift */,
 				8C1A5FC6200126C200BE0BD3 /* DroplistVC.swift */,
 				F666F56A201274520054D9C9 /* ItemTableCell.swift */,
 				54DD1631200E63EC007CE915 /* SlideImageController.swift */,
 				54DD1633200E645C007CE915 /* SlidePageViewController.swift */,
+				B31B70EE204123F500735DC5 /* SecondSlideImageVC.swift */,
+				B31B70F02041242C00735DC5 /* SecondSlidePageVC.swift */,
 				54147CA0200E684E00ED159C /* Extensions.swift */,
 				549049342010B88E006910AF /* FeedGroupPageControllerContainerVC.swift */,
 				549049362010BA1D006910AF /* FeedGroupPageController.swift */,
 				549049382010BB51006910AF /* FeedViewController.swift */,
 				54AB322A2011C2D9007E7218 /* RootNavigationController.swift */,
 				F65298192020A255006FC603 /* ShowItemDetailsViewController.swift */,
-				F6E7A5DF20249D3300211E62 /* MyImageViewController.swift */,
 				F6E7A5E1202500E400211E62 /* UIView.swift */,
 				B386F43C20302ED00063D78F /* AuthVC.swift */,
 				B386F43E20302EDE0063D78F /* LoginVC.swift */,
@@ -278,6 +290,9 @@
 				B3E9DC362031E53A00D394B8 /* WebVc.swift */,
 				B3F7BDA220333A4700C7C462 /* WalkthroughImageController.swift */,
 				B3F7BDA420333A5C00C7C462 /* WalkthroughImageContentViewController.swift */,
+				F6E7A5DF20249D3300211E62 /* MyImageViewController.swift */,
+				B3EA76272040614000C142AF /* MyImagePageController.swift */,
+				B3EA76292040615F00C142AF /* MyImageContainerVC.swift */,
 				B31A364120345CAA002D2506 /* ViewController.swift */,
 			);
 			path = SupremeSaintApp;
@@ -663,11 +678,14 @@
 				549049352010B88E006910AF /* FeedGroupPageControllerContainerVC.swift in Sources */,
 				B386F43F20302EDE0063D78F /* LoginVC.swift in Sources */,
 				B386F43B20302DD70063D78F /* DesignableField.swift in Sources */,
+				B3EA76282040614000C142AF /* MyImagePageController.swift in Sources */,
 				B308F3D22031489700244325 /* LeftMenuVC.swift in Sources */,
 				54AB322D2011D2CF007E7218 /* HomeMessages.swift in Sources */,
+				B31B70F12041242C00735DC5 /* SecondSlidePageVC.swift in Sources */,
 				5490492D201087CA006910AF /* Feed.swift in Sources */,
 				5490492A201080ED006910AF /* RemoveFileService.swift in Sources */,
 				F652981A2020A255006FC603 /* ShowItemDetailsViewController.swift in Sources */,
+				B3EA762A2040615F00C142AF /* MyImageContainerVC.swift in Sources */,
 				B3F7BDA320333A4700C7C462 /* WalkthroughImageController.swift in Sources */,
 				8C35A67F200129C300BCE5B2 /* TwitterViewController.swift in Sources */,
 				B3F7BDA520333A5C00C7C462 /* WalkthroughImageContentViewController.swift in Sources */,
@@ -675,11 +693,13 @@
 				8C1A5FC9200126C200BE0BD3 /* DroplistVC.swift in Sources */,
 				F6E7A5E020249D3300211E62 /* MyImageViewController.swift in Sources */,
 				8C1A5FC7200126C200BE0BD3 /* HomeVC.swift in Sources */,
+				B3EA762C20406F3100C142AF /* TweetImageVc.swift in Sources */,
 				549049372010BA1D006910AF /* FeedGroupPageController.swift in Sources */,
 				8C1A5FC8200126C200BE0BD3 /* NewsVC.swift in Sources */,
 				B31A364220345CAA002D2506 /* ViewController.swift in Sources */,
 				B329BEEC20301B5E009CBFAA /* DesignableButton.swift in Sources */,
 				549049392010BB51006910AF /* FeedViewController.swift in Sources */,
+				B31B70EF204123F500735DC5 /* SecondSlideImageVC.swift in Sources */,
 				54DD1634200E645C007CE915 /* SlidePageViewController.swift in Sources */,
 				549049332010B13C006910AF /* Slide.swift in Sources */,
 				B386F43D20302ED00063D78F /* AuthVC.swift in Sources */,

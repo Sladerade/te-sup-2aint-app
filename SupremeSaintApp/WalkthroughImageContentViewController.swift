@@ -17,6 +17,7 @@ class WalkthroughImageContentViewController: UIViewController {
     var index = 0
     var imageFile = ""
     var numberPages  = 0
+    var imagesArray = [String]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,8 +41,12 @@ class WalkthroughImageContentViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "ItemImageView"
         {
-            let vc = segue.destination as! MyImageViewController
-            vc.img = outletImg.image
+            if imagesArray.count > 0
+            {
+                let vc = segue.destination as! MyImageViewController
+                vc.imagesArray = imagesArray
+            }
+            
         }
     }
     
