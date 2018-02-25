@@ -105,6 +105,21 @@ class FirebaseService{
         }
     }
     
+    
+    func loadSecondSlides(callback:(([Slide])->())?) {
+        Database.database().reference().child("Homepage").child("NewsBanner2").observeSingleEvent(of:.value) { (datasgot) in
+            var slides = [Slide]()
+            for child in datasgot.children
+            {
+                if let child = child as? DataSnapshot,let slide = Slide.fromDict(dict: child.value as! Dictionary<String,Any?>)
+                {
+                    slides.append(slide)
+                }
+            }
+            callback?(slides)
+        }
+    }
+    
     func createFirebaseUser(uid: String, userData : Dictionary<String, Any>)
     {
         REF_USERS.child(uid).updateChildValues(userData)

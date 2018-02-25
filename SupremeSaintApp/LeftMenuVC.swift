@@ -21,6 +21,9 @@ class LeftMenuVC: UIViewController {
     @IBOutlet weak var loginBtn: UIButton!
     
     var webUrl = ""
+   
+    
+    var blurEffectView = UIVisualEffectView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,6 +41,27 @@ class LeftMenuVC: UIViewController {
         }
         
     }
+    
+    
+    override func viewWillAppear(_ animated: Bool) {
+        
+        blurEffectView = UIVisualEffectView(effect: UIBlurEffect(style: UIBlurEffectStyle.extraLight))
+        blurEffectView.addGestureRecognizer(revealViewController().tapGestureRecognizer())
+        blurEffectView.addGestureRecognizer(revealViewController().panGestureRecognizer())
+        blurEffectView.frame = self.revealViewController().frontViewController.view.bounds
+        blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        self.revealViewController().frontViewController.view.addSubview(blurEffectView)
+        
+        
+    }
+    
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        blurEffectView.removeFromSuperview()
+    }
+    
+    
+    
     
     @objc func logoImg(tap : UITapGestureRecognizer)
     {

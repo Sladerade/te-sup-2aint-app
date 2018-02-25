@@ -72,6 +72,9 @@ class FeedViewController: UIViewController, Alertable {
         
         
         
+        copdopBtnStckView.isHidden = true
+        copdopLblStckView.isHidden = true
+        
         let image = #imageLiteral(resourceName: "SaintNavBar")
         let imageView = UIImageView(image: image)
 
@@ -97,14 +100,14 @@ class FeedViewController: UIViewController, Alertable {
                 
                     if let votesBy = snapshot.value as? Dictionary<String,Any>
                     {
-                        if votesBy.keys.contains(self.currentUser!)
+                        if !votesBy.keys.contains(self.currentUser!)
                         {
                             UIView.animate(withDuration: 0.1, animations: {
-                                self.copdopBtnStckView.alpha = 0.0
+                                self.copdopBtnStckView.alpha = 1.0
                             }, completion: { (finished) in
                                 if finished
                                 {
-                                    self.copdopBtnStckView.isHidden = true
+                                    self.copdopBtnStckView.isHidden = false
                                 }
                             })
                         }
@@ -123,6 +126,8 @@ class FeedViewController: UIViewController, Alertable {
         if let feed = feed {
             if self.storedData.integer(forKey:"ForVote") == 0{
                 
+                
+                copdopLblStckView.isHidden = false
                 
                 //Entry in catalog
                 Database.database().reference().child("Catalog").child(feed.selectedFeed.id).observe(.value, with: { (snapshot) in
@@ -147,8 +152,6 @@ class FeedViewController: UIViewController, Alertable {
                 })
             }
             else{
-                copdopBtnStckView.isHidden = true
-                copdopLblStckView.isHidden = true
                 //Entry in catalog
 //                Database.database().reference().child("Catalog").child(feed.id).observe(.value, with: { (snapshot) in
 //                    for view in self.superView.subviews{

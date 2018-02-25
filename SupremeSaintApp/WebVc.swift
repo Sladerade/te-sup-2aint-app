@@ -16,6 +16,7 @@ class WebVc: UIViewController, UIWebViewDelegate {
     @IBOutlet weak var menuButton: UIBarButtonItem!
     var webUrl: String!
     
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -23,7 +24,6 @@ class WebVc: UIViewController, UIWebViewDelegate {
         if revealViewController() != nil {
             menuButton.target = revealViewController()
             menuButton.action = #selector(SWRevealViewController.revealToggle(_:))
-            view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
         }
         
         
@@ -37,8 +37,7 @@ class WebVc: UIViewController, UIWebViewDelegate {
         
         
     }
-    
-    
+
     func webViewDidStartLoad(_ webView: UIWebView)
     {
         ProgressHUD.show()
@@ -48,10 +47,6 @@ class WebVc: UIViewController, UIWebViewDelegate {
     {
         ProgressHUD.dismiss()
     }
-    
-    
-    
-
     
 
 }

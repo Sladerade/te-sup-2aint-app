@@ -63,8 +63,9 @@ class HomeVC: TabBarViewControllerPage, UIScrollViewDelegate {
             
             ProgressHUD.show()
             
+            
             FirebaseService.instance.loadFeeds(callback: {(feeds) in
-
+                
                 self.throwBackDataSource.feedList = feeds.filter({ $0.throwBack})
                 self.dropListDataSource.feedList = feeds.filter({$0.droplist})
                 self.throwBacksCollectionView.reloadData()
@@ -72,13 +73,14 @@ class HomeVC: TabBarViewControllerPage, UIScrollViewDelegate {
                 self.refereshThrowBackCollectionSize()
             })
             
+            
             FirebaseService.instance.loadSlides(callback: {
                 (slides) in
                 self.slidePageViewController?.slides = slides
             })
             
             
-            FirebaseService.instance.loadSlides(callback: {
+            FirebaseService.instance.loadSecondSlides(callback: {
                 (slides) in
                 self.secondSlidePageViewController?.slides = slides
             })
@@ -93,8 +95,10 @@ class HomeVC: TabBarViewControllerPage, UIScrollViewDelegate {
                 }
                 
             }
-           
+            
         }
+        
+        
         
         
         self.myView.frame.size.height = 0
