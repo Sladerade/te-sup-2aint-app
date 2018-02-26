@@ -48,6 +48,7 @@ class LeftMenuVC: UIViewController {
         blurEffectView = UIVisualEffectView(effect: UIBlurEffect(style: UIBlurEffectStyle.extraLight))
         blurEffectView.addGestureRecognizer(revealViewController().tapGestureRecognizer())
         blurEffectView.addGestureRecognizer(revealViewController().panGestureRecognizer())
+        blurEffectView.alpha = 0.5
         blurEffectView.frame = self.revealViewController().frontViewController.view.bounds
         blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         self.revealViewController().frontViewController.view.addSubview(blurEffectView)

@@ -65,6 +65,7 @@ class TabBarViewController: ViewControllerWithLogo {
         if revealViewController() != nil {
             menuButton.target = revealViewController()
             menuButton.action = #selector(SWRevealViewController.revealToggle(_:))
+            view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
         }
         
         // Tab Bar Image Connections

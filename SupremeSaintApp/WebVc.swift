@@ -24,6 +24,7 @@ class WebVc: UIViewController, UIWebViewDelegate {
         if revealViewController() != nil {
             menuButton.target = revealViewController()
             menuButton.action = #selector(SWRevealViewController.revealToggle(_:))
+            view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
         }
         
         

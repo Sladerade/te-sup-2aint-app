@@ -21,7 +21,7 @@ class MyImageContainerVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        outletImg.kf.setImage(with: URL(string: imageFile))
+        outletImg.kf.setImage(with: URL(string: imageFile), placeholder: #imageLiteral(resourceName: "preview"), options: [.transition(.fade(0.2))], progressBlock: nil, completionHandler: nil)
     
     }
 

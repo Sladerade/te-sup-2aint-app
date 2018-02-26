@@ -32,6 +32,9 @@ class MyImageViewController: UIViewController {
     }
     
     
+    @IBAction func swipeDown(_ sender: UISwipeGestureRecognizer) {
+        dismiss(animated: true, completion: nil)
+    }
     
     
     

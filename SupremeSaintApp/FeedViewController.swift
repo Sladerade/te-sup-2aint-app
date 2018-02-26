@@ -75,11 +75,10 @@ class FeedViewController: UIViewController, Alertable {
         copdopBtnStckView.isHidden = true
         copdopLblStckView.isHidden = true
         
-        let image = #imageLiteral(resourceName: "SaintNavBar")
-        let imageView = UIImageView(image: image)
-
-        self.navigationItem.titleView = UIImageView(image: image)
-        imageView.contentMode = .scaleAspectFill
+        let logoIV = UIImageView()
+        logoIV.contentMode = .scaleAspectFit
+        logoIV.image = #imageLiteral(resourceName: "logo")
+        navigationItem.titleView = logoIV
         
         
         id = Database.database().reference().childByAutoId().key
@@ -124,7 +123,7 @@ class FeedViewController: UIViewController, Alertable {
     
     func getVotes(){
         if let feed = feed {
-            if self.storedData.integer(forKey:"ForVote") == 0{
+            if self.storedData.integer(forKey:"ForVote") == 0 || self.storedData.integer(forKey:"ForVote") == 1{
                 
                 
                 copdopLblStckView.isHidden = false
@@ -179,63 +178,6 @@ class FeedViewController: UIViewController, Alertable {
     }
     
     
-    func getAllVotes(){
-        if let feed = feed{
-            if self.storedData.integer(forKey: "ForVote") == 0{
-                Database.database().reference().child("Catalog").child(feed.selectedFeed.id).child("Votes").observe(.childAdded, with: { (snapshot) in
-                    if snapshot.exists(){
-                        self.totalVote = 1 + self.totalVote
-                        let value = snapshot.value as? Bool
-                        if value! == true{
-                            self.totalYesVote = 1 + self.totalYesVote
-                            self.likes.text = "\(Int(self.totalYesVote) )"
-                        }
-                        else{
-                            self.totalNoVote = 1 + self.totalNoVote
-                            self.disLikes.text = "\(Int(self.totalNoVote))"
-                        }
-                        DispatchQueue.main.async {
-                            let a = self.totalYesVote/self.totalVote
-                            let screenSize: CGRect = self.superView.bounds
-                            let myView = UIView(frame: CGRect(x: 0, y: 0, width: screenSize.width * CGFloat(a), height: screenSize.height))
-                            myView.backgroundColor = UIColor.green
-                            self.superView.addSubview(myView)
-                            
-                        }
-                    }
-                }) { (error) in
-                    Toast.init(text: "\(error.localizedDescription)").show()
-                }
-            }
-            else{
-                Database.database().reference().child("Catalog").child(feed.selectedFeed.id).child("Votes").observe(.childAdded, with: { (snapshot) in
-                    if snapshot.exists(){
-                        self.totalVote = 1 + self.totalVote
-                        let value = snapshot.value as? Bool
-                        if value! == true{
-                            self.totalYesVote = 1 + self.totalYesVote
-                            self.likes.text = "\(Int(self.totalYesVote) )"
-                        }
-                        else{
-                            self.totalNoVote = 1 + self.totalNoVote
-                            self.disLikes.text = "\(Int(self.totalNoVote))"
-                        }
-                        DispatchQueue.main.async {
-                            let a = self.totalYesVote/self.totalVote
-                            let screenSize: CGRect = self.superView.bounds
-                            let myView = UIView(frame: CGRect(x: 0, y: 0, width: screenSize.width * CGFloat(a), height: screenSize.height))
-                            myView.backgroundColor = UIColor.green
-                            self.superView.addSubview(myView)
-                            
-                        }
-                    }
-                }) { (error) in
-                    Toast.init(text: "\(error.localizedDescription)").show()
-                }
-            }
-            
-        }
-    }
     
     
     func updateUIs() {
@@ -331,7 +273,7 @@ class FeedViewController: UIViewController, Alertable {
         if Auth.auth().currentUser != nil
         {
             if let feed = feed{
-                if self.storedData.integer(forKey: "ForVote") == 0{
+                if self.storedData.integer(forKey: "ForVote") == 0 || self.storedData.integer(forKey: "ForVote") == 1{
                     Database.database().reference().child("Catalog").child(feed.selectedFeed.id).updateChildValues(["YesVotes":self.countYesVotes + 1])
                     
                     Database.database().reference().child("Catalog").child(feed.selectedFeed.id).child("VotedBy").updateChildValues([currentUser! : true])
@@ -377,7 +319,7 @@ class FeedViewController: UIViewController, Alertable {
     
     @IBAction func btn_no(_ sender: UIButton) {
         if let feed = feed{
-            if self.storedData.integer(forKey: "ForVote") == 0{
+            if self.storedData.integer(forKey: "ForVote") == 0 || self.storedData.integer(forKey: "ForVote") == 1 {
                 Database.database().reference().child("Catalog").child(feed.selectedFeed.id).updateChildValues(["NoVotes":self.countNoVotes + 1])
                 
                 Database.database().reference().child("Catalog").child(feed.selectedFeed.id).child("VotedBy").updateChildValues([currentUser! : true])

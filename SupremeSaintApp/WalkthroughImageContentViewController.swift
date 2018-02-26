@@ -24,7 +24,7 @@ class WalkthroughImageContentViewController: UIViewController {
 
         pageControl.currentPage = index
         pageControl.numberOfPages = numberPages
-        outletImg.kf.setImage(with: URL(string: imageFile))
+        outletImg.kf.setImage(with: URL(string: imageFile), placeholder: #imageLiteral(resourceName: "preview"), options: [.transition(.fade(0.2))], progressBlock: nil, completionHandler: nil)
         
         let tap = UITapGestureRecognizer(target: self, action: #selector(WalkthroughImageContentViewController.itemImg(tap:)))
         tap.numberOfTapsRequired = 1

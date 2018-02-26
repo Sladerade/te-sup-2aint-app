@@ -36,6 +36,7 @@ class AccountVC: UIViewController,Alertable {
         if revealViewController() != nil {
             menuButton.target = revealViewController()
             menuButton.action = #selector(SWRevealViewController.revealToggle(_:))
+            view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
             
         }
 
