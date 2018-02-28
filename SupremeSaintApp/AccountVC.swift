@@ -133,6 +133,21 @@ class AccountVC: UIViewController,Alertable {
         })
     }
     
+    
+    @IBAction func homeTapped(_ sender: Any)
+    {
+        let board = UIStoryboard(name: "Main", bundle: nil)
+        let tabBar = board.instantiateViewController(withIdentifier: "tabBarcontroller")
+        UIApplication.shared.keyWindow?.rootViewController = tabBar
+        
+    }
+    
+    
+    
+    
+    
+    
+    
     func Message()
     {
         let alert = UIAlertController(title: "Account Updated", message: "Your Account has been updated", preferredStyle: UIAlertControllerStyle.alert)

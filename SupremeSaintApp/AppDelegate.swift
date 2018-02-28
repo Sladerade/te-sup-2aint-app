@@ -42,6 +42,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             window?.rootViewController = tabBar
         }
         
+        UserDefaults.standard.set(true, forKey: "animation")
+        
+        
         return true
     }
     

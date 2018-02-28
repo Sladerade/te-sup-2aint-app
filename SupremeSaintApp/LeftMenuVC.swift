@@ -44,22 +44,24 @@ class LeftMenuVC: UIViewController {
     
     
     override func viewWillAppear(_ animated: Bool) {
-        
+
         blurEffectView = UIVisualEffectView(effect: UIBlurEffect(style: UIBlurEffectStyle.extraLight))
         blurEffectView.addGestureRecognizer(revealViewController().tapGestureRecognizer())
-        blurEffectView.addGestureRecognizer(revealViewController().panGestureRecognizer())
+       // blurEffectView.addGestureRecognizer(revealViewController().panGestureRecognizer())
         blurEffectView.alpha = 0.5
         blurEffectView.frame = self.revealViewController().frontViewController.view.bounds
         blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         self.revealViewController().frontViewController.view.addSubview(blurEffectView)
-        
-        
+
+
     }
     
     
     override func viewWillDisappear(_ animated: Bool) {
         blurEffectView.removeFromSuperview()
     }
+    
+    
     
     
     
@@ -200,7 +202,6 @@ class LeftMenuVC: UIViewController {
     
     @IBAction func swipeToClose(_ sender: UISwipeGestureRecognizer)
     {
-        self.view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
         print("Swiping Left")
     }
     

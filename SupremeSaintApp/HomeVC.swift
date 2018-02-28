@@ -50,19 +50,25 @@ class HomeVC: TabBarViewControllerPage, UIScrollViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        let animationPlayed  = UserDefaults.standard.bool(forKey: "animation")
+            
+            
+        if animationPlayed
+        {
+            revealingSplashView.animationType = .popAndZoomOut
+            revealingSplashView.heartAttack = true
+            
+            let window = UIApplication.shared.keyWindow
+            window?.addSubview(revealingSplashView)
+        }
         
         
-        revealingSplashView.animationType = .popAndZoomOut
-        revealingSplashView.heartAttack = true
-        
-        let window = UIApplication.shared.keyWindow
-        window?.addSubview(revealingSplashView)
         
         revealingSplashView.startAnimation {
 //            After playing splashview animtion Firebase starts loading
             
             ProgressHUD.show()
-            
+            UserDefaults.standard.removeObject(forKey: "animation")
             
             FirebaseService.instance.loadFeeds(callback: {(feeds) in
                 

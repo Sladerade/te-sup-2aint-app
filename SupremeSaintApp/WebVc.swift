@@ -49,5 +49,15 @@ class WebVc: UIViewController, UIWebViewDelegate {
         ProgressHUD.dismiss()
     }
     
+    
+    @IBAction func homeTapped(_ sender: Any)
+    {
+        print("Faizannsnandasnnnsnadnsandsna")
+        let board = UIStoryboard(name: "Main", bundle: nil)
+        let tabBar = board.instantiateViewController(withIdentifier: "tabBarcontroller") 
+        UIApplication.shared.keyWindow?.rootViewController = tabBar
+        
+    }
+    
 
 }

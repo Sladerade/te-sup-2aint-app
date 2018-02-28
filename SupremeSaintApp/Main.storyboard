@@ -652,7 +652,7 @@
                                 </constraints>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zlE-IK-WON">
-                                <rect key="frame" x="85.5" y="521" width="150" height="27"/>
+                                <rect key="frame" x="85" y="521" width="150" height="27"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="150" id="EBp-Z8-54U"/>
                                 </constraints>
@@ -1981,6 +1981,11 @@
                         <barButtonItem key="leftBarButtonItem" image="menu" id="3dA-eh-uMw">
                             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" image="home (2)" id="uAl-db-Eed">
+                            <connections>
+                                <action selector="homeTapped:" destination="Djg-fa-ox8" id="b4s-H4-bH5"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="confirmPwdField" destination="eIM-bt-M8e" id="RhG-AA-Sy0"/>
@@ -2294,6 +2299,12 @@
                         <barButtonItem key="leftBarButtonItem" image="menu" id="APQ-cV-BeK">
                             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" image="home (2)" id="ADT-eO-PRu">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <connections>
+                                <action selector="homeTapped:" destination="gWC-eE-Ne3" id="hat-cI-d5j"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="menuButton" destination="APQ-cV-BeK" id="hUH-nI-gS2"/>
@@ -2352,6 +2363,7 @@
         <image name="banner_bg" width="1256" height="140"/>
         <image name="banner_close_btn" width="48" height="48"/>
         <image name="close" width="64" height="64"/>
+        <image name="home (2)" width="32" height="32"/>
         <image name="home_icon" width="107" height="89"/>
         <image name="instagram-logo" width="128" height="128"/>
         <image name="left-arrow" width="56" height="99"/>

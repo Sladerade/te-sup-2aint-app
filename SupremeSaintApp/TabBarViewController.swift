@@ -113,7 +113,7 @@ class TabBarViewController: ViewControllerWithLogo {
     
     override func viewDidAppear(_ animated: Bool) {
         selectedItem.controller.viewDidAppear(animated)
-//        setNeedsUpdateOfHomeIndicatorAutoHidden()
+        
     }
     
     
