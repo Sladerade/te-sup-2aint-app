@@ -287,7 +287,7 @@ class ShopVC: TabBarViewControllerPage, UITableViewDataSource, UITableViewDelega
                 let week = value?["Week"] as? Int ?? 0
                 
                 let model = Feed(id: snapshot.key, description: description, droplist: true, name: name, photoUrl: image, priceEU: priceEU, priceUS: priceUS, season: season, throwBack: throwback, week: week)
-                self.feedList.append(model)
+                self.feedList.insert(model, at: 0)
                 DispatchQueue.main.async {
                     self.loader.isHidden = true
                     self.loader.stopAnimating()
@@ -298,7 +298,7 @@ class ShopVC: TabBarViewControllerPage, UITableViewDataSource, UITableViewDelega
             }
         }
         else{
-            databaseRef.child("Catalog").observe(.childAdded, with: { (snapshot) in
+            databaseRef.child("Catalog").queryOrdered(byChild: "child_count").observe(.childAdded, with: { (snapshot) in
                 let value = snapshot.value as? NSDictionary
                 let Droplist = value?["Droplist"] as? String ?? ""
                 if Droplist == "True"{
@@ -314,7 +314,7 @@ class ShopVC: TabBarViewControllerPage, UITableViewDataSource, UITableViewDelega
                     let week = value?["Week"] as? Int ?? 0
 //                    let droplist_b = value?["Droplist"] as? Bool ?? false
                     let model = Feed(id: snapshot.key, description: description, droplist: true, name: name, photoUrl: image, priceEU: priceEU, priceUS: priceUS, season: season, throwBack: throwback, week: week)
-                    self.feedList.append(model)
+                    self.feedList.insert(model, at: 0)
                 }
                 DispatchQueue.main.async {
                     self.loader.isHidden = true
@@ -356,7 +356,7 @@ class ShopVC: TabBarViewControllerPage, UITableViewDataSource, UITableViewDelega
         tableView.reloadData()
         rowIndex = 0
         self.valueIndex = 0
-        databaseRef.child("Catalog").observe(.childAdded, with: { (snapshot) in
+        databaseRef.child("Catalog").queryOrdered(byChild: "child_count").observe(.childAdded, with: { (snapshot) in
             let value = snapshot.value as? NSDictionary
             let Droplist = value?["Droplist"] as? String ?? ""
             if Droplist == check{
@@ -372,7 +372,7 @@ class ShopVC: TabBarViewControllerPage, UITableViewDataSource, UITableViewDelega
                 let week = value?["Week"] as? Int ?? 0
                 //                let droplist_b = value?["Droplist"] as? Bool ?? false
                 let model = Feed(id: snapshot.key, description: description, droplist: true, name: name, photoUrl: image, priceEU: priceEU, priceUS: priceUS, season: season, throwBack: throwback, week: week)
-                self.feedList.append(model)
+                self.feedList.insert(model, at: 0)
             }
             DispatchQueue.main.async {
                 self.loader.isHidden = true
@@ -396,7 +396,7 @@ class ShopVC: TabBarViewControllerPage, UITableViewDataSource, UITableViewDelega
         tableView.reloadData()
         rowIndex = 0
         self.valueIndex = 0
-        databaseRef.child("Catalog").observe(.childAdded, with: { (snapshot) in
+        databaseRef.child("Catalog").queryOrdered(byChild: "child_count").observe(.childAdded, with: { (snapshot) in
             let value = snapshot.value as? NSDictionary
             let Droplist = value?["Droplist"] as? String ?? ""
             if Droplist == "True"{
@@ -412,7 +412,7 @@ class ShopVC: TabBarViewControllerPage, UITableViewDataSource, UITableViewDelega
                 let week = value?["Week"] as? Int ?? 0
                 //                let droplist_b = value?["Droplist"] as? Bool ?? false
                 let model = Feed(id: snapshot.key, description: description, droplist: true, name: name, photoUrl: image, priceEU: priceEU, priceUS: priceUS, season: season, throwBack: throwback, week: week)
-                self.feedList.append(model)
+                self.feedList.insert(model, at: 0)
             }
             DispatchQueue.main.async {
                 self.loader.isHidden = true
@@ -450,7 +450,7 @@ class ShopVC: TabBarViewControllerPage, UITableViewDataSource, UITableViewDelega
             let week = value?["Week"] as? Int ?? 0
             
             let model = Feed(id: snapshot.key, description: description, droplist: true, name: name, photoUrl: image, priceEU: priceEU, priceUS: priceUS, season: season, throwBack: throwback, week: week)
-            self.feedList.append(model)
+            self.feedList.insert(model, at: 0)
             DispatchQueue.main.async {
                 self.loader.isHidden = true
                 self.loader.stopAnimating()
@@ -488,7 +488,7 @@ class ShopVC: TabBarViewControllerPage, UITableViewDataSource, UITableViewDelega
                         let week = value["Week"] as? Int ?? 0
                         count += 1
                         let model = Feed(id: items.key, description: description, droplist: true, name: name, photoUrl: image, priceEU: priceEU, priceUS: priceUS, season: season, throwBack: throwback, week: week)
-                        self.fullCatalogarray.append(model)
+                        self.fullCatalogarray.insert(model, at: 0)
                     }
                 }
                 print("Total Count \(count)")
