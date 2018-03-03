@@ -34,7 +34,7 @@
                                 <rect key="frame" x="0.0" y="65" width="320" height="503"/>
                             </view>
                             <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BHo-dr-xxd">
-                                <rect key="frame" x="23" y="421" width="274" height="147"/>
+                                <rect key="frame" x="23" y="406" width="274" height="147"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cNe-mf-BgD">
                                         <rect key="frame" x="0.0" y="60" width="274" height="59"/>
@@ -157,7 +157,7 @@
                             <constraint firstItem="d7y-sb-99A" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="N1x-4k-kDP"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="BUa-wG-NFP" secondAttribute="bottom" id="OdL-g7-HiB"/>
                             <constraint firstItem="d7y-sb-99A" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="SSZ-gr-ozN"/>
-                            <constraint firstAttribute="bottom" secondItem="BHo-dr-xxd" secondAttribute="bottom" id="U7v-rh-0Ep"/>
+                            <constraint firstAttribute="bottom" secondItem="BHo-dr-xxd" secondAttribute="bottom" constant="15" id="U7v-rh-0Ep"/>
                             <constraint firstItem="6Ga-bp-565" firstAttribute="top" secondItem="d7y-sb-99A" secondAttribute="bottom" id="WT0-dc-xl1"/>
                             <constraint firstItem="6Ga-bp-565" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="Wdg-nc-EIZ"/>
                             <constraint firstItem="BUa-wG-NFP" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="b27-Vi-xv1"/>
