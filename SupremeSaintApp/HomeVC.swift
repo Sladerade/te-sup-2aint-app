@@ -285,7 +285,7 @@ class HomeVC: TabBarViewControllerPage, UIScrollViewDelegate {
             self.hideBanner()
         })
         self.scrollViewTopConstraint.constant = self.homeBanner.frame.height
-        self.bannerTopAnchorConstraint.constant = 0
+        self.bannerTopAnchorConstraint.constant = 1
         UIView.animate(withDuration: 0.5) {
             self.view.layoutIfNeeded()
             

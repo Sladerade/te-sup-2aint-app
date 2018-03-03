@@ -95,11 +95,27 @@ class FeedViewController: UIViewController, Alertable {
         super.viewDidAppear(true)
         
         if let feed = feed {
-            Database.database().reference().child("Catalog").child(feed.selectedFeed.id).child("VotedBy").observeSingleEvent(of: .value, with: { (snapshot) in
+           if self.storedData.integer(forKey:"ForVote") == 0 || self.storedData.integer(forKey:"ForVote") == 1
+           {
+            Database.database().reference().child("Catalog").child(feed.selectedFeed.id).observeSingleEvent(of: .value, with: { (snapshot) in
                 
-                    if let votesBy = snapshot.value as? Dictionary<String,Any>
+                    if let itemsSnaps = snapshot.value as? Dictionary<String,Any>
                     {
-                        if !votesBy.keys.contains(self.currentUser!)
+                        if let votesBy = itemsSnaps["VotedBy"] as? Dictionary<String,Any>
+                        {
+                            if !votesBy.keys.contains(self.currentUser!)
+                            {
+                                UIView.animate(withDuration: 0.1, animations: {
+                                    self.copdopBtnStckView.alpha = 1.0
+                                }, completion: { (finished) in
+                                    if finished
+                                    {
+                                        self.copdopBtnStckView.isHidden = false
+                                    }
+                                })
+                            }
+                        }
+                        else
                         {
                             UIView.animate(withDuration: 0.1, animations: {
                                 self.copdopBtnStckView.alpha = 1.0
@@ -110,9 +126,10 @@ class FeedViewController: UIViewController, Alertable {
                                 }
                             })
                         }
+                        
                     }
-            })
-            
+                })
+            }
         }
         
     }

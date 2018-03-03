@@ -272,60 +272,44 @@ class ShopVC: TabBarViewControllerPage, UITableViewDataSource, UITableViewDelega
         self.storedData.set(2, forKey: "ForVote")
         rowIndex = start
         self.valueIndex = end
+        loader.isHidden = false
+        loader.startAnimating()
+        
         if segment.selectedSegmentIndex == 2{
-            databaseRef.child("Catalog").queryOrdered(byChild: "child_count").queryStarting(atValue: start).queryLimited(toFirst: 20).observe(.childAdded, with: { (snapshot) in
-                let value = snapshot.value as? NSDictionary
-                self.valueIndex = self.valueIndex + 1
-                let photos = value?["Photos"] as? NSArray
-                let image = photos![1] as? String ?? "http://"
-                let name = value?["ProductName"] as? String ?? ""
-                let priceUS = value?["Price-US"] as? String ?? ""
-                let priceEU = value?["Price-EU"] as? String ?? ""
-                let description = value?["Description"] as? String ?? ""
-                let season = value?["Season"] as? String ?? ""
-                let throwback = value?["Throwback"] as? Bool ?? false
-                let week = value?["Week"] as? Int ?? 0
+        
+            databaseRef.child("Catalog").queryOrdered(byChild: "child_count").queryStarting(atValue: start).queryLimited(toFirst: 20).observeSingleEvent(of: .value, with: { (snapshots) in
                 
-                let model = Feed(id: snapshot.key, description: description, droplist: true, name: name, photoUrl: image, priceEU: priceEU, priceUS: priceUS, season: season, throwBack: throwback, week: week)
-                self.feedList.insert(model, at: 0)
-                DispatchQueue.main.async {
+                if let itemSnapshots = snapshots.children.allObjects as? [DataSnapshot]
+                {
+                    for item in itemSnapshots
+                    {
+                        if let value = item.value as? Dictionary<String,Any>
+                        {
+                            self.valueIndex = self.valueIndex + 1
+                            let photos = value["Photos"] as? NSArray
+                            let image = photos![1] as? String ?? "http://"
+                            let name = value["ProductName"] as? String ?? ""
+                            let priceUS = value["Price-US"] as? String ?? ""
+                            let priceEU = value["Price-EU"] as? String ?? ""
+                            let description = value["Description"] as? String ?? ""
+                            let season = value["Season"] as? String ?? ""
+                            let throwback = value["Throwback"] as? Bool ?? false
+                            let week = value["Week"] as? Int ?? 0
+            
+                            let model = Feed(id: item.key, description: description, droplist: true, name: name, photoUrl: image, priceEU: priceEU, priceUS: priceUS, season: season, throwBack: throwback, week: week)
+                            self.feedList.append(model)
+                        }
+                    }
+                    self.feedList.shuffle()
                     self.loader.isHidden = true
                     self.loader.stopAnimating()
                     self.tableView.reloadData()
                 }
-            }) { (Error) in
-                print(Error)
-            }
+                
+            })
+            
         }
-        else{
-            databaseRef.child("Catalog").queryOrdered(byChild: "child_count").observe(.childAdded, with: { (snapshot) in
-                let value = snapshot.value as? NSDictionary
-                let Droplist = value?["Droplist"] as? String ?? ""
-                if Droplist == "True"{
-                    self.valueIndex = self.valueIndex + 1
-                    let photos = value?["Photos"] as? NSArray
-                    let image = photos![1] as? String ?? "http://"
-                    let name = value?["ProductName"] as? String ?? ""
-                    let priceUS = value?["Price-US"] as? String ?? ""
-                    let priceEU = value?["Price-EU"] as? String ?? ""
-                    let description = value?["Description"] as? String ?? ""
-                    let season = value?["Season"] as? String ?? ""
-                    let throwback = value?["Throwback"] as? Bool ?? false
-                    let week = value?["Week"] as? Int ?? 0
-//                    let droplist_b = value?["Droplist"] as? Bool ?? false
-                    let model = Feed(id: snapshot.key, description: description, droplist: true, name: name, photoUrl: image, priceEU: priceEU, priceUS: priceUS, season: season, throwBack: throwback, week: week)
-                    self.feedList.insert(model, at: 0)
-                }
-                DispatchQueue.main.async {
-                    self.loader.isHidden = true
-                    self.loader.stopAnimating()
-                    self.tableView.reloadData()
-                    
-                }
-            }) { (Error) in
-                print(Error)
-            }
-        }
+        
     }
     
     @objc func populate(){
@@ -356,35 +340,45 @@ class ShopVC: TabBarViewControllerPage, UITableViewDataSource, UITableViewDelega
         tableView.reloadData()
         rowIndex = 0
         self.valueIndex = 0
-        databaseRef.child("Catalog").queryOrdered(byChild: "child_count").observe(.childAdded, with: { (snapshot) in
-            let value = snapshot.value as? NSDictionary
-            let Droplist = value?["Droplist"] as? String ?? ""
-            if Droplist == check{
-                self.valueIndex = self.valueIndex + 1
-                let photos = value?["Photos"] as? NSArray
-                let image = photos![1] as? String ?? "http://"
-                let name = value?["ProductName"] as? String ?? ""
-                let priceUS = value?["Price-US"] as? String ?? ""
-                let priceEU = value?["Price-EU"] as? String ?? ""
-                let description = value?["Description"] as? String ?? ""
-                let season = value?["Season"] as? String ?? ""
-                let throwback = value?["Throwback"] as? Bool ?? false
-                let week = value?["Week"] as? Int ?? 0
-                //                let droplist_b = value?["Droplist"] as? Bool ?? false
-                let model = Feed(id: snapshot.key, description: description, droplist: true, name: name, photoUrl: image, priceEU: priceEU, priceUS: priceUS, season: season, throwBack: throwback, week: week)
-                self.feedList.insert(model, at: 0)
-            }
-            DispatchQueue.main.async {
+       databaseRef.child("Catalog").queryOrdered(byChild: "child_count").observeSingleEvent(of: .value) { (snapshots) in
+            
+            if let itemSnapshots = snapshots.children.allObjects as? [DataSnapshot]
+            {
+                for item in itemSnapshots
+                {
+                    if let value = item.value as? Dictionary<String,Any>
+                    {
+                        let Droplist = value["Droplist"] as? String ?? ""
+                        if Droplist == check{
+                            self.valueIndex = self.valueIndex + 1
+                            let photos = value["Photos"] as? NSArray
+                            let image = photos![1] as? String ?? "http://"
+                            let name = value["ProductName"] as? String ?? ""
+                            let priceUS = value["Price-US"] as? String ?? ""
+                            let priceEU = value["Price-EU"] as? String ?? ""
+                            let description = value["Description"] as? String ?? ""
+                            let season = value["Season"] as? String ?? ""
+                            let throwback = value["Throwback"] as? Bool ?? false
+                            let week = value["Week"] as? Int ?? 0
+                            // let droplist_b = value?["Droplist"] as? Bool ?? false
+                            let model = Feed(id: item.key, description: description, droplist: true, name: name, photoUrl: image, priceEU: priceEU, priceUS: priceUS, season: season, throwBack: throwback, week: week)
+                            self.feedList.append(model)
+                        }
+                        
+                    }
+                }
+                self.feedList.shuffle()
                 self.loader.isHidden = true
                 self.loader.stopAnimating()
                 let HEIGHT_VIEW = 0
                 self.tableView.tableHeaderView?.frame.size = CGSize(width:self.tableView.frame.width, height: CGFloat(HEIGHT_VIEW))
                 self.tableView.reloadData()
-                
             }
-        }) { (Error) in
-            print(Error)
+            
         }
+        
+        
+        
     }
     
     func leftToDrop()
@@ -396,35 +390,42 @@ class ShopVC: TabBarViewControllerPage, UITableViewDataSource, UITableViewDelega
         tableView.reloadData()
         rowIndex = 0
         self.valueIndex = 0
-        databaseRef.child("Catalog").queryOrdered(byChild: "child_count").observe(.childAdded, with: { (snapshot) in
-            let value = snapshot.value as? NSDictionary
-            let Droplist = value?["Droplist"] as? String ?? ""
-            if Droplist == "True"{
-                self.valueIndex = self.valueIndex + 1
-                let photos = value?["Photos"] as? NSArray
-                let image = photos![1] as? String ?? "http://"
-                let name = value?["ProductName"] as? String ?? ""
-                let priceUS = value?["Price-US"] as? String ?? ""
-                let priceEU = value?["Price-EU"] as? String ?? ""
-                let description = value?["Description"] as? String ?? ""
-                let season = value?["Season"] as? String ?? ""
-                let throwback = value?["Throwback"] as? Bool ?? false
-                let week = value?["Week"] as? Int ?? 0
-                //                let droplist_b = value?["Droplist"] as? Bool ?? false
-                let model = Feed(id: snapshot.key, description: description, droplist: true, name: name, photoUrl: image, priceEU: priceEU, priceUS: priceUS, season: season, throwBack: throwback, week: week)
-                self.feedList.insert(model, at: 0)
-            }
-            DispatchQueue.main.async {
+
+        databaseRef.child("Catalog").queryOrdered(byChild: "child_count").observeSingleEvent(of: .value) { (snapshots) in
+            if let itemSnapshots = snapshots.children.allObjects as? [DataSnapshot]
+            {
+                for item in itemSnapshots
+                {
+                    if let value = item.value as? Dictionary<String,Any>
+                    {
+                        if let DropToLeft = value["DropToLeft"] as? String {
+                            if DropToLeft == "True"{
+                                self.valueIndex = self.valueIndex + 1
+                                let photos = value["Photos"] as? NSArray
+                                let image = photos![1] as? String ?? "http://"
+                                let name = value["ProductName"] as? String ?? ""
+                                let priceUS = value["Price-US"] as? String ?? ""
+                                let priceEU = value["Price-EU"] as? String ?? ""
+                                let description = value["Description"] as? String ?? ""
+                                let season = value["Season"] as? String ?? ""
+                                let throwback = value["Throwback"] as? Bool ?? false
+                                let week = value["Week"] as? Int ?? 0
+                                let model = Feed(id: item.key, description: description, droplist: true, name: name, photoUrl: image, priceEU: priceEU, priceUS: priceUS, season: season, throwBack: throwback, week: week)
+                                self.feedList.append(model)
+                            }
+                        }
+                    }
+                }
+                self.feedList.shuffle()
                 self.loader.isHidden = true
                 self.loader.stopAnimating()
                 let HEIGHT_VIEW = 0
                 self.tableView.tableHeaderView?.frame.size = CGSize(width:self.tableView.frame.width, height: CGFloat(HEIGHT_VIEW))
                 self.tableView.reloadData()
-                
             }
-        }) { (Error) in
-            print(Error)
         }
+        
+        
     }
     
     
@@ -436,31 +437,39 @@ class ShopVC: TabBarViewControllerPage, UITableViewDataSource, UITableViewDelega
         self.feedList.removeAll()
         rowIndex = 0
         self.valueIndex = 0
-        databaseRef.child("Catalog").queryOrdered(byChild: "child_count").queryStarting(atValue: 0).queryLimited(toFirst: 20).observe(.childAdded, with: { (snapshot) in
-            let value = snapshot.value as? NSDictionary
-            self.valueIndex = self.valueIndex + 1
-            let photos = value?["Photos"] as? NSArray
-            let image = photos![1] as? String ?? "http://"
-            let name = value?["ProductName"] as? String ?? ""
-            let priceUS = value?["Price-US"] as? String ?? ""
-            let priceEU = value?["Price-EU"] as? String ?? ""
-            let description = value?["Description"] as? String ?? ""
-            let season = value?["Season"] as? String ?? ""
-            let throwback = value?["Throwback"] as? Bool ?? false
-            let week = value?["Week"] as? Int ?? 0
+        
+        databaseRef.child("Catalog").queryOrdered(byChild: "child_count").queryStarting(atValue: 0).queryLimited(toFirst: 20).observeSingleEvent(of: .value) { (snapshots) in
             
-            let model = Feed(id: snapshot.key, description: description, droplist: true, name: name, photoUrl: image, priceEU: priceEU, priceUS: priceUS, season: season, throwBack: throwback, week: week)
-            self.feedList.insert(model, at: 0)
-            DispatchQueue.main.async {
+            if let itemSnapshots = snapshots.children.allObjects as? [DataSnapshot]
+            {
+                for item in itemSnapshots
+                {
+                    if let value = item.value as? Dictionary<String,Any>
+                    {
+                        self.valueIndex = self.valueIndex + 1
+                        let photos = value["Photos"] as? NSArray
+                        let image = photos![1] as? String ?? "http://"
+                        let name = value["ProductName"] as? String ?? ""
+                        let priceUS = value["Price-US"] as? String ?? ""
+                        let priceEU = value["Price-EU"] as? String ?? ""
+                        let description = value["Description"] as? String ?? ""
+                        let season = value["Season"] as? String ?? ""
+                        let throwback = value["Throwback"] as? Bool ?? false
+                        let week = value["Week"] as? Int ?? 0
+            
+                        let model = Feed(id: item.key, description: description, droplist: true, name: name, photoUrl: image, priceEU: priceEU, priceUS: priceUS, season: season, throwBack: throwback, week: week)
+                        self.feedList.append(model)
+                    }
+                }
+                self.feedList.shuffle()
                 self.loader.isHidden = true
                 self.loader.stopAnimating()
                 let HEIGHT_VIEW = 60
                 self.tableView.tableHeaderView?.frame.size = CGSize(width:self.tableView.frame.width, height: CGFloat(HEIGHT_VIEW))
                 self.tableView.reloadData()
             }
-        }) { (Error) in
-            print(Error)
         }
+        
     }
     
     
@@ -501,5 +510,17 @@ class ShopVC: TabBarViewControllerPage, UITableViewDataSource, UITableViewDelega
     }
     
     
+}
+
+
+extension Array {
+    /**
+     Randomizes the order of an array's elements
+     */
+    mutating func shuffle() {
+        for _ in 0..<count {
+            sort { (_,_) in arc4random() < arc4random() }
+        }
+    }
 }
 

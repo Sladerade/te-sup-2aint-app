@@ -21,7 +21,8 @@ class TweetImageVc: UIViewController {
 
     @IBAction func btn_back(_ sender: UIButton) {
         
-        ModalService.dismiss(self, exitTo: .right, duration: 0.5)
+        //ModalService.dismiss(self, exitTo: .right, duration: 0.5)
+        dismiss(animated: true, completion: nil)
         
     }
     
