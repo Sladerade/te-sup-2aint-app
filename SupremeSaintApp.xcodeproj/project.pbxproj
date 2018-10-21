@@ -365,8 +365,6 @@
 				8C1A5FA12001262400BE0BD3 /* Sources */,
 				8C1A5FA22001262400BE0BD3 /* Frameworks */,
 				8C1A5FA32001262400BE0BD3 /* Resources */,
-				96046693FD4C60F2957ACA79 /* [CP] Embed Pods Frameworks */,
-				D70C680275313F7E9D27E04F /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -386,8 +384,6 @@
 				8C1A5FAC2001262400BE0BD3 /* Sources */,
 				8C1A5FAD2001262400BE0BD3 /* Frameworks */,
 				8C1A5FAE2001262400BE0BD3 /* Resources */,
-				3502C82E555B70C00FC15453 /* [CP] Embed Pods Frameworks */,
-				ED8CA375FD571F51AF5093FE /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -487,21 +483,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		3502C82E555B70C00FC15453 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SupremeSaintAppUITests/Pods-SupremeSaintAppUITests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		398BB6AC6707B6659AB02D3B /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -514,7 +495,8 @@
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/TwitterKitResources.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/TwitterShareExtensionUIResources.bundle",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -537,21 +519,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		96046693FD4C60F2957ACA79 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SupremeSaintAppTests/Pods-SupremeSaintAppTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		A79ECDC72361AAB1101BA142 /* [CP] Embed Pods Frameworks */ = {
@@ -614,36 +581,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		D70C680275313F7E9D27E04F /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SupremeSaintAppTests/Pods-SupremeSaintAppTests-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		ED8CA375FD571F51AF5093FE /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SupremeSaintAppUITests/Pods-SupremeSaintAppUITests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		F491DCF77D3F993047A289C5 /* [CP] Check Pods Manifest.lock */ = {
@@ -876,7 +813,7 @@
 				CODE_SIGN_ENTITLEMENTS = SupremeSaintApp/SupremeSaintApp.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 99B264YZQX;
+				DEVELOPMENT_TEAM = UL2UQ6Q4AU;
 				INFOPLIST_FILE = SupremeSaintApp/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -900,7 +837,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 99B264YZQX;
+				DEVELOPMENT_TEAM = UL2UQ6Q4AU;
 				INFOPLIST_FILE = SupremeSaintApp/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
